@@ -2,11 +2,11 @@
 <#
 	// Settings
 	ConnectionStringName = "";			// Uses last connection string in config if not specified
-	Namespace = "";
+	Namespace = "WebAPI.ServiceModel";
 	ClassPrefix = "";
 	ClassSuffix = "";
 	bool SplitIntoMultipleFiles = false;		// if true: Generates one file for every class
-	bool MakeSingular = true;			// if true: Changes the classname to singular if tablename is not singular
+	bool MakeSingular = false;			// if true: Changes the classname to singular if tablename is not singular
 	bool UseIdAsPK = true;				// if true: Changes the primary key property name to Id
 	bool GenerateConstructor = false;		// if true: Generates the default empty constructor
 	bool UseSchemaAttribute = true;		// if true: Adds explicit '[Schema]' attribute

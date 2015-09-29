@@ -86,17 +86,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OrmLite.Poco.tt</DependentUpon>
     </Compile>
-    <Compile Include="OrmLite.SP.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>OrmLite.SP.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Types\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="OrmLite.Core.ttinclude" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -105,10 +101,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>OrmLite.Poco.cs</LastGenOutput>
     </Content>
-    <Content Include="OrmLite.SP.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>OrmLite.SP.cs</LastGenOutput>
-    </Content>
+    <Content Include="TableCreation.sql" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
