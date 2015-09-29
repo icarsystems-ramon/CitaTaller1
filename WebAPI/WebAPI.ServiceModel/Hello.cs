@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ServiceStack;
+using WebAPI.ServiceModel;
 
 namespace WebAPI.ServiceModel
 {
@@ -16,4 +17,21 @@ namespace WebAPI.ServiceModel
     {
         public string Result { get; set; }
     }
+
+
+    /*
+    public class pepe
+    {
+        public string juan;
+        public void  menea()
+        {
+            Dms luis = new Dms();
+            juan = luis.DomainUrl;
+        }
+        
+        
+    }
+    */
+
 }
+

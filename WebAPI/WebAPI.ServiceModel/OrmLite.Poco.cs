@@ -51,7 +51,8 @@ using ServiceStack.Model;
 
 namespace WebAPI.ServiceModel
 {
-    public partial class Dms : IHasId<Guid> 
+	[Alias("Dms")]
+    public partial class modelDms : IHasId<Guid> 
     {
         [Alias("Id")]
         [Required]
@@ -59,7 +60,8 @@ namespace WebAPI.ServiceModel
         public string DomainUrl { get; set;}
         public short? Idioma { get; set;}
     }
-    public partial class DmsCortesia : IHasId<Guid> 
+	[Alias("DmsCortesia")]
+    public partial class modelDmsCortesia : IHasId<Guid> 
     {
         [Alias("Id")]
         [Required]
@@ -69,7 +71,8 @@ namespace WebAPI.ServiceModel
         public string Descripcion { get; set;}
         public string DmsKey { get; set;}
     }
-    public partial class DmsJob : IHasId<Guid> 
+	[Alias("DmsJob")]
+    public partial class modelDmsJob : IHasId<Guid> 
     {
         [Alias("Id")]
         [Required]
@@ -78,7 +81,8 @@ namespace WebAPI.ServiceModel
         public Guid DmsId { get; set;}
         public string Descripcion { get; set;}
     }
-    public partial class DmsTaller : IHasId<Guid> 
+	[Alias("DmsTaller")]
+    public partial class modelDmsTaller : IHasId<Guid> 
     {
         [Alias("Id")]
         [Required]
@@ -90,7 +94,8 @@ namespace WebAPI.ServiceModel
         public bool? VehiculoCortesia { get; set;}
         public string DmsKey { get; set;}
     }
-    public partial class Solicitud : IHasId<Guid> 
+	[Alias("Solicitud")]
+    public partial class modelSolicitud : IHasId<Guid> 
     {
         [Alias("Id")]
         [Required]
@@ -113,7 +118,8 @@ namespace WebAPI.ServiceModel
         public string DmsVehiculoKey { get; set;}
         public string DmsCitaKey { get; set;}
     }
-    public partial class SolicitudHora : IHasId<Guid> 
+	[Alias("SolicitudHora")]
+    public partial class modelSolicitudHora : IHasId<Guid> 
     {
         [Alias("Id")]
         [Required]
@@ -124,7 +130,8 @@ namespace WebAPI.ServiceModel
         public byte? Hora { get; set;}
         public byte? Minuto { get; set;}
     }
-    public partial class SolicitudJob : IHasId<Guid> 
+	[Alias("SolicitudJob")]
+    public partial class modelSolicitudJob : IHasId<Guid> 
     {
         [Alias("Id")]
         [Required]

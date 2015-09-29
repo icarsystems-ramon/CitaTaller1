@@ -1,15 +1,16 @@
 <#@ include file="OrmLite.Core.ttinclude" #>
 <#
 	// Settings
-	ConnectionStringName = "";			// Uses last connection string in config if not specified
+	ConnectionStringName = "CitaTallerAzure";			// Uses last connection string in config if not specified
 	Namespace = "WebAPI.ServiceModel";
-	ClassPrefix = "";
+	ClassPrefix = "model"; 
 	ClassSuffix = "";
-	bool SplitIntoMultipleFiles = false;		// if true: Generates one file for every class
-	bool MakeSingular = false;			// if true: Changes the classname to singular if tablename is not singular
-	bool UseIdAsPK = true;				// if true: Changes the primary key property name to Id
-	bool GenerateConstructor = false;		// if true: Generates the default empty constructor
-	bool UseSchemaAttribute = true;		// if true: Adds explicit '[Schema]' attribute
+	
+	bool SplitIntoMultipleFiles = false;  // if true: Generates one file for every class
+	bool MakeSingular = false; 			  // if true: Changes the classname to singular if tablename is not singular
+	bool UseIdAsPK = true;				  // if true: Changes the primary key property name to Id
+	bool GenerateConstructor = false;	  // if true: Generates the default empty constructor
+	bool UseSchemaAttribute = true;		  // if true: Adds explicit '[Schema]' attribute
 
     // Read schema
 	var tables = LoadTables(MakeSingular);
@@ -57,7 +58,7 @@ foreach(Table tbl in from t in tables where !t.Ignore select t)
 {
 manager.StartNewFile(tbl.Name + ".cs");
 #>
-<# if (MakeSingular) {#>
+<# if ((MakeSingular) || !string.IsNullOrEmpty(ClassPrefix)) {#>
 	[Alias("<#=tbl.Name#>")]
 <#}#>
 <# if (UseSchemaAttribute && !string.IsNullOrEmpty(tbl.Schema) && tbl.Schema != "dbo") {#>
