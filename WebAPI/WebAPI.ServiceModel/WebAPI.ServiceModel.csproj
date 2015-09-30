@@ -64,6 +64,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -72,6 +73,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DmsConfig.cs" />
+    <Compile Include="Solicitud.cs" />
     <Compile Include="Hello.cs" />
     <Compile Include="OrmLite.Poco.cs">
       <AutoGen>True</AutoGen>
