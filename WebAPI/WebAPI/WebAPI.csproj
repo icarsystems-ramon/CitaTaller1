@@ -80,6 +80,10 @@
       <HintPath>..\..\packages\ServiceStack.4.0.46\lib\net40\ServiceStack.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ServiceStack.Api.Swagger, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ServiceStack.Api.Swagger.4.0.46\lib\net40\ServiceStack.Api.Swagger.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ServiceStack.Client, Version=4.0.46.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ServiceStack.Client.4.0.46\lib\net40\ServiceStack.Client.dll</HintPath>
       <Private>True</Private>
@@ -172,7 +176,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppHost.cs" />
+    <Compile Include="CitaTallerApp.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

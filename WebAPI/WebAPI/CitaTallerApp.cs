@@ -1,17 +1,17 @@
 ﻿using Funq;
 using ServiceStack;
+using ServiceStack.Logging;
 using WebAPI.ServiceInterface;
 
 namespace WebAPI
 {
-    public class AppHost : AppHostBase
+    public class CitaTallerApp : AppHostBase
     {
         /// <summary>
         /// Default constructor.
         /// Base constructor requires a name and assembly to locate web service classes. 
         /// </summary>
-        public AppHost()
-            : base("WebAPI", typeof(MyServices).Assembly)
+        public CitaTallerApp() : base("WebAPI", typeof(WebAPI.ServiceInterface.ServiceDmsConfig).Assembly)
         {
 
         }

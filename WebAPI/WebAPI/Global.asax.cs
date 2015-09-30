@@ -6,7 +6,7 @@ namespace WebAPI
     {
         protected void Application_Start(object sender, EventArgs e)
         {
-            new AppHost().Init();
+            new CitaTallerApp().Init();
         }
     }
 }
