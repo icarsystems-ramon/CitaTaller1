@@ -73,8 +73,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DmsConfig.cs" />
-    <Compile Include="Solicitud.cs" />
+    <Compile Include="DTODmsConfig.cs" />
+    <Compile Include="DTOSolicitud.cs" />
     <Compile Include="Hello.cs" />
     <Compile Include="OrmLite.Poco.cs">
       <AutoGen>True</AutoGen>

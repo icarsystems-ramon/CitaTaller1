@@ -16,7 +16,7 @@ namespace WebAPI.ServiceModel
         public List<modelDmsJob> dmsJob { get; set; }
         public DmsConfigPayload()
         {
-            //solicitud = new modelSolicitud();
+            dms = new modelDms();
             dmsTaller = new List<modelDmsTaller>();
             dmsJob = new List<modelDmsJob>();
         }
@@ -27,6 +27,7 @@ namespace WebAPI.ServiceModel
     [Route("/dmsconfigs", "GET")]
     public class GetDmsConfig : IReturn<DmsConfigPayload>
     {
+
         public Guid Id { get; set; }
     }
 
