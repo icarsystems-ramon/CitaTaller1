@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using ServiceStack;
 using CitaTaller.ServiceModel;
+using ServiceStack.DataAnnotations;
 
 namespace CitaTaller.ServiceModel
 {
+    [Exclude(Feature.Metadata)]   
     [Route("/hello/{Name}")]
     public class Hello : IReturn<HelloResponse>
     {
@@ -17,21 +19,6 @@ namespace CitaTaller.ServiceModel
     {
         public string Result { get; set; }
     }
-
-
-    /*
-    public class pepe
-    {
-        public string juan;
-        public void  menea()
-        {
-            Dms luis = new Dms();
-            juan = luis.DomainUrl;
-        }
-        
-        
-    }
-    */
 
 }
 

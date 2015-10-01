@@ -22,13 +22,16 @@ namespace CitaTaller.ServiceModel
         }
 
     }
-
-    [Route("/dmsconfig", "GET")]
-    [Route("/dmsconfigs", "GET")]
+    [Api("Configuracion del DMS")]
+    [Route("/dmsconfig", "GET", 
+        Summary = @"Obtener la configuración del DMS vinculado a la URL", 
+        Notes = @"El backend determina que DMS corresponde a la request.
+Devuelve lista de talleres y opciones rápidas de trabajos.
+")]    
     public class GetDmsConfig : IReturn<DmsConfigPayload>
     {
 
-        public Guid Id { get; set; }
+        //public Guid Id { get; set; }
     }
 
 
