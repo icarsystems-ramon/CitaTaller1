@@ -1,11 +1,11 @@
 ﻿using System;
 using NUnit.Framework;
-using WebAPI.ServiceInterface;
-using WebAPI.ServiceModel;
+using CitaTaller.ServiceInterface;
+using CitaTaller.ServiceModel;
 using ServiceStack.Testing;
 using ServiceStack;
 
-namespace WebAPI.Tests
+namespace CitaTaller.Tests
 {
     [TestFixture]
     public class UnitTests

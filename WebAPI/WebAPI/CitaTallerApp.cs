@@ -1,9 +1,9 @@
 ﻿using Funq;
 using ServiceStack;
 using ServiceStack.Logging;
-using WebAPI.ServiceInterface;
+using CitaTaller.ServiceInterface;
 
-namespace WebAPI
+namespace CitaTaller
 {
     public class CitaTallerApp : AppHostBase
     {
@@ -11,7 +11,7 @@ namespace WebAPI
         /// Default constructor.
         /// Base constructor requires a name and assembly to locate web service classes. 
         /// </summary>
-        public CitaTallerApp() : base("WebAPI", typeof(WebAPI.ServiceInterface.ServiceDmsConfig).Assembly)
+        public CitaTallerApp() : base("CitaTaller", typeof(CitaTaller.ServiceInterface.ServiceDmsConfig).Assembly)
         {
 
         }
@@ -26,6 +26,7 @@ namespace WebAPI
             //Config examples
             //this.Plugins.Add(new PostmanFeature());
             //this.Plugins.Add(new CorsFeature());
+            SetConfig(new HostConfig { HandlerFactoryPath = "api" });
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using ServiceStack;
 
-namespace WebAPI.ServiceModel
+namespace CitaTaller.ServiceModel
 {
     [DataContract]
     public class SolicitudPayload

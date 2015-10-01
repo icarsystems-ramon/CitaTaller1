@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ServiceStack;
-using WebAPI.ServiceModel;
+using CitaTaller.ServiceModel;
 
-namespace WebAPI.ServiceInterface
+namespace CitaTaller.ServiceInterface
 {
     public class ServiceDmsConfig : Service
     {

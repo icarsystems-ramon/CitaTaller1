@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ServiceStack;
-using WebAPI.ServiceModel;
+using CitaTaller.ServiceModel;
 
-namespace WebAPI.ServiceModel
+namespace CitaTaller.ServiceModel
 {
     [Route("/hello/{Name}")]
     public class Hello : IReturn<HelloResponse>

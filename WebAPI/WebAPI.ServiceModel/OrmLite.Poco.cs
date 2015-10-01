@@ -41,15 +41,15 @@
 #pragma warning disable 1591
 
 using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Web;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
-//using ServiceStack.OrmLite;
+using ServiceStack.OrmLite;
 using ServiceStack.DataAnnotations;
 using ServiceStack.Model;
 
-namespace WebAPI.ServiceModel
+namespace CitaTaller.ServiceModel
 {
 	[Alias("Dms")]
     public partial class modelDms : IHasId<Guid> 

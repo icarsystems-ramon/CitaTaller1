@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebAPI</RootNamespace>
-    <AssemblyName>WebAPI</AssemblyName>
+    <RootNamespace>CitaTaller</RootNamespace>
+    <AssemblyName>CitaTaller</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -151,13 +151,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebAPI.ServiceInterface\WebAPI.ServiceInterface.csproj">
+    <ProjectReference Include="..\WebAPI.ServiceInterface\CitaTaller.ServiceInterface.csproj">
       <Project>{801a0f89-d5f6-49a6-bcea-6624388c98a4}</Project>
-      <Name>WebAPI.ServiceInterface</Name>
+      <Name>CitaTaller.ServiceInterface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebAPI.ServiceModel\WebAPI.ServiceModel.csproj">
+    <ProjectReference Include="..\WebAPI.ServiceModel\CitaTaller.ServiceModel.csproj">
       <Project>{53E82AC1-DD1D-4C66-B55F-F9F4ACFB2F40}</Project>
-      <Name>WebAPI.ServiceModel</Name>
+      <Name>CitaTaller.ServiceModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

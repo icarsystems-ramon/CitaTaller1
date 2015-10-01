@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebAPI
+namespace CitaTaller
 {
     public class Global : System.Web.HttpApplication
     {
