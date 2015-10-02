@@ -7,10 +7,34 @@ using ServiceStack;
 namespace CitaTaller.ServiceModel
 {
     [DataContract]
+   
     public class SolicitudPayload
     {
-        [DataMember(Name = "solicitud")]
-        public modelSolicitud solicitud { get; set; }
+        [DataMember]     
+        public Guid Id { get; set; }
+        [DataMember]
+        public DateTime? CreacionFecha { get; set; }
+        public Guid? CreacionDevice { get; set; }
+        [DataMember]
+        public string Numgsm { get; set; }
+        [DataMember]
+        public string Email { get; set; }
+        [DataMember]
+        public string Nombre { get; set; }
+        [DataMember]
+        public string Apellidos { get; set; }
+        [DataMember]
+        public string Matric { get; set; }
+        [DataMember]
+        public string Chasis { get; set; }
+        [DataMember]
+        public Guid DmsTallerId { get; set; }
+        [DataMember]
+        public string Descripcion { get; set; }
+        [DataMember]
+        public bool? VehiculoCortesia { get; set; }
+
+
         [DataMember(Name = "solicitudjob")]
         public List<modelSolicitudJob> solicitudJob { get; set; }
         [DataMember(Name = "solicitudhora")]

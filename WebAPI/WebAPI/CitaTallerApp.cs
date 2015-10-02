@@ -23,8 +23,9 @@ namespace CitaTaller
         {
             
             Configure_ServiceStack();
-            Configure_CORS();           
-            
+            Configure_CORS();
+            Configure_Swagger();
+
             //Plugins.Add(new RequestLogsFeature());         
         }
         void Configure_ServiceStack()
@@ -44,7 +45,10 @@ namespace CitaTaller
         }
         public void Configure_CORS()
         {
-            Plugins.Add(new CorsFeature());
+            Plugins.Add(new CorsFeature());           
+        }
+        public void Configure_Swagger()
+        {            
             Plugins.Add(new SwaggerFeature());
             //https://github.com/ServiceStack/ServiceStack/wiki/Postman
             Plugins.Add(new PostmanFeature());

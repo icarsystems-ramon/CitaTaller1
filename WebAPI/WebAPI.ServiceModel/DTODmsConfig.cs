@@ -8,15 +8,20 @@ namespace CitaTaller.ServiceModel
     [DataContract]
     public class DmsConfigPayload
     {
-        [DataMember(Name = "dms")]
-        public modelDms dms { get; set; }
+
+        [DataMember(Name = "Id")]
+        public Guid Id { get; set; }
+        [DataMember(Name = "DomainUrl")]
+        public string DomainUrl { get; set; }
+        [DataMember(Name = "idioma")]
+        public short? Idioma { get; set; }
+        
         [DataMember(Name = "dmstaller")]
         public List<modelDmsTaller> dmsTaller { get; set; }
         [DataMember(Name = "dmsjob")]
         public List<modelDmsJob> dmsJob { get; set; }
         public DmsConfigPayload()
         {
-            dms = new modelDms();
             dmsTaller = new List<modelDmsTaller>();
             dmsJob = new List<modelDmsJob>();
         }

@@ -17,8 +17,8 @@ namespace CitaTaller.ServiceInterface
         {
             RequestUrl = Request.Headers["Host"];
             
-            payload.dms.DomainUrl = RequestUrl;
-            payload.dms.Idioma = 3082;
+            payload.DomainUrl = RequestUrl;
+            payload.Idioma = 3082;
             return payload;
         }
     }
