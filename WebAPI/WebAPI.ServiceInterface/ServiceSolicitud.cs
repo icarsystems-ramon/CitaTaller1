@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ServiceStack;
 using CitaTaller.ServiceModel;
+using ServiceStack.OrmLite;
 
 namespace CitaTaller.ServiceInterface
 {
@@ -37,6 +38,9 @@ namespace CitaTaller.ServiceInterface
         public void Delete(DeleteSolicitud request)
         {
            
+            Db.Delete<modelSolicitudJob>(s => s.SolicitudId == request.Id);
+            Db.Delete<modelSolicitudHora>(s => s.SolicitudId == request.Id);
+            Db.Delete<modelSolicitud>(s => s.Id == request.Id);
         }
     }
 }

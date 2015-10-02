@@ -1,11 +1,15 @@
-﻿using System.Net.Mime;
+﻿using System;
+using System.Net.Mime;
 using Funq;
 using ServiceStack;
 using ServiceStack.Api.Swagger;
 using ServiceStack.Logging;
 using ServiceStack.Logging.Log4Net;
 using CitaTaller.ServiceInterface;
+using ServiceStack.OrmLite;
+using ServiceStack.OrmLite.SqlServer;
 
+using ServiceStack.Data;
 
 namespace CitaTaller
 {
@@ -25,9 +29,31 @@ namespace CitaTaller
             Configure_ServiceStack();
             Configure_CORS();
             Configure_Swagger();
+            Configure_RequestLog();
+            Configure_Database(container);
+            Configure_Log();
 
-            //Plugins.Add(new RequestLogsFeature());         
+
         }
+        void Configure_Database(Container container)
+        {
+
+            var dbServer = "tcp:kmrsha0ybe.database.windows.net"; //ConfigurationManager.AppSettings["DBServer"];
+            var database = "citataller"; //ConfigurationManager.AppSettings["DBDatabase"];
+            var dbLogin = "webapi@kmrsha0ybe"; //ConfigurationManager.AppSettings["DBLogin"];
+            var dbPassword = "Bbb12345"; //ConfigurationManager.AppSettings["DBPassword"];
+
+            var connectionStr = String.Format("Server={0};Database={1};User Id={2};Password={3};Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", dbServer, database, dbLogin, dbPassword);
+            var dbFactory = new OrmLiteConnectionFactory(connectionStr, SqlServer2012Dialect.Provider); // SqlServer2012OrmLiteDialectProvider.Provider);
+            container.Register<IDbConnectionFactory>(dbFactory);
+
+            OrmLiteConfig.StringFilter = s => s.TrimEnd();
+
+            //The MaxLimit option ensures each query returns a maximum limit of 100 rows.
+            Plugins.Add(new AutoQueryFeature { MaxLimit = 100 });
+        }
+
+
         void Configure_ServiceStack()
         {
             SetConfig(new HostConfig { HandlerFactoryPath = "api" });
@@ -42,6 +68,8 @@ namespace CitaTaller
                 DefaultContentType = MimeTypes.Json, //Change default content type
                 AllowJsonpRequests = true //Enable JSONP requests
             });
+            //https://github.com/ServiceStack/ServiceStack/wiki/Auto-Query
+ 
         }
         public void Configure_CORS()
         {
@@ -63,6 +91,10 @@ namespace CitaTaller
             LogManager.LogFactory = new Log4NetFactory(true); //Also runs log4net.Config.XmlConfigurator.Configure()
             log4net.Config.XmlConfigurator.Configure();
             Log = LogManager.GetLogger(typeof(CitaTallerApp));
+        }
+        public void Configure_RequestLog()
+        {
+            //Plugins.Add(new RequestLogsFeature());
         }
 
     }    

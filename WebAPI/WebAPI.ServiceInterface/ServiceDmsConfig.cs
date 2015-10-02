@@ -4,21 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ServiceStack;
+using ServiceStack.OrmLite;
 using CitaTaller.ServiceModel;
 
 namespace CitaTaller.ServiceInterface
 {
     public class ServiceDmsConfig : Service
     {
-        private string RequestUrl;
+        private String requestUrl;
+        //private Guid dmsId;
         private DmsConfigPayload payload = new DmsConfigPayload();
+        private modelDms mydms;
 
         public object Get(GetDmsConfig request)
         {
-            RequestUrl = Request.Headers["Host"];
+            requestUrl = Request.Headers["Host"];            
+
+            using (var db = DbFactory.Open())
+            {
+                mydms = db.Single<modelDms>(q => q.DomainUrl == requestUrl);
+                payload.Id = mydms.Id;
+                payload.DomainUrl = mydms.DomainUrl;
+                payload.Idioma = mydms.Idioma;
+                payload.dmsJob = db.Select<modelDmsJob>(q => q.DmsId == mydms.Id);
+                payload.dmsTaller = db.Select<modelDmsTaller>(q => q.DmsId == mydms.Id);
+            }
             
-            payload.DomainUrl = RequestUrl;
-            payload.Idioma = 3082;
+
             return payload;
         }
     }

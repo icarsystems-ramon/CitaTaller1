@@ -14,9 +14,10 @@ namespace CitaTaller.ServiceModel
         [DataMember(Name = "DomainUrl")]
         public string DomainUrl { get; set; }
         [DataMember(Name = "idioma")]
-        public short? Idioma { get; set; }
-        
+        public short? Idioma { get; set; }        
         [DataMember(Name = "dmstaller")]
+
+        //[Relation(RelationType.HasMany, typeof(modelDmsTaller))]
         public List<modelDmsTaller> dmsTaller { get; set; }
         [DataMember(Name = "dmsjob")]
         public List<modelDmsJob> dmsJob { get; set; }
@@ -25,6 +26,7 @@ namespace CitaTaller.ServiceModel
             dmsTaller = new List<modelDmsTaller>();
             dmsJob = new List<modelDmsJob>();
         }
+     
 
     }
     [Api("Configuracion del DMS")]
