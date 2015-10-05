@@ -73,8 +73,7 @@ namespace CitaTaller.ServiceModel
         )]
     public class GetSolicitud : IReturn<SolicitudPayload>
     {
-        [ApiMember(Name = "ID", Description = "Id de la solicitud",
-        ParameterType = "path", DataType = "GUID", IsRequired = true)]
+        [ApiMember(Name = "ID", Description = "Id de la solicitud", ParameterType = "path", DataType = "GUID", IsRequired = true)]
         public Guid Id { get; set; }
     }
     [Api("Solicitudes de usuario de cita de taller")]
@@ -87,6 +86,8 @@ namespace CitaTaller.ServiceModel
     [Route("/solicitudes/{Id}", "PUT", Summary = @"Modificado de una solicitud ya guardada", Notes = @"")]
     public class UpdateSolicitud : IReturn<SolicitudPayload>
     {
+        [ApiMember(Name = "ID", Description = "Id de la solicitud", ParameterType = "path", DataType = "GUID", IsRequired = true)]
+        public Guid Id { get; set; }
         public SolicitudPayload solicitud { get; set; }
     }
     [Api("Solicitudes de usuario de cita de taller")]

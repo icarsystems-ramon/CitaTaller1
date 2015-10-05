@@ -8,7 +8,8 @@ using ServiceStack.Logging.Log4Net;
 using CitaTaller.ServiceInterface;
 using ServiceStack.OrmLite;
 using ServiceStack.OrmLite.SqlServer;
-
+using log4net.Appender;
+using System.Configuration;
 using ServiceStack.Data;
 
 namespace CitaTaller
@@ -25,26 +26,19 @@ namespace CitaTaller
 
         public override void Configure(Container container)
         {
-            
+
+            Configure_Log();
             Configure_ServiceStack();
             Configure_CORS();
             Configure_Swagger();
             Configure_RequestLog();
-            Configure_Database(container);
-            Configure_Log();
-
-
+            Configure_Database(container); 
         }
         void Configure_Database(Container container)
         {
 
-            var dbServer = "tcp:kmrsha0ybe.database.windows.net"; //ConfigurationManager.AppSettings["DBServer"];
-            var database = "citataller"; //ConfigurationManager.AppSettings["DBDatabase"];
-            var dbLogin = "webapi@kmrsha0ybe"; //ConfigurationManager.AppSettings["DBLogin"];
-            var dbPassword = "Bbb12345"; //ConfigurationManager.AppSettings["DBPassword"];
-
-            var connectionStr = String.Format("Server={0};Database={1};User Id={2};Password={3};Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;", dbServer, database, dbLogin, dbPassword);
-            var dbFactory = new OrmLiteConnectionFactory(connectionStr, SqlServer2012Dialect.Provider); // SqlServer2012OrmLiteDialectProvider.Provider);
+            var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["CitaTallerAzureSQL"].ConnectionString;
+            var dbFactory = new OrmLiteConnectionFactory(connectionString, SqlServer2012Dialect.Provider); // SqlServer2012OrmLiteDialectProvider.Provider);
             container.Register<IDbConnectionFactory>(dbFactory);
 
             OrmLiteConfig.StringFilter = s => s.TrimEnd();
@@ -77,20 +71,15 @@ namespace CitaTaller
         }
         public void Configure_Swagger()
         {            
-            Plugins.Add(new SwaggerFeature());
-            //https://github.com/ServiceStack/ServiceStack/wiki/Postman
+            Plugins.Add(new SwaggerFeature());            
             Plugins.Add(new PostmanFeature());
         }
         public void Configure_Log()
         {
 
-            LogManager.LogFactory = new DebugLogFactory();
-
-            //LogManager.LogFactory = new ConsoleLogFactory();
-            //LogManager.LogFactory = new EventLogFactory("ICarDMSWeb", "Application");
-            LogManager.LogFactory = new Log4NetFactory(true); //Also runs log4net.Config.XmlConfigurator.Configure()
-            log4net.Config.XmlConfigurator.Configure();
-            Log = LogManager.GetLogger(typeof(CitaTallerApp));
+            LogManager.LogFactory = new Log4NetFactory(configureLog4Net: true);
+            ILog logger = LogManager.GetLogger(typeof(CitaTallerApp));
+            logger.Info("Log configurado!");
         }
         public void Configure_RequestLog()
         {

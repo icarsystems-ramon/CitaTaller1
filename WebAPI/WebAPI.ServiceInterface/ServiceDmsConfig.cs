@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using ServiceStack;
 using ServiceStack.OrmLite;
+using ServiceStack.Logging;
 using CitaTaller.ServiceModel;
 
 namespace CitaTaller.ServiceInterface
 {
     public class ServiceDmsConfig : Service
     {
+        private static ILog logger = LogManager.GetLogger(typeof(ServiceDmsConfig));
         private String requestUrl;
         //private Guid dmsId;
         private DmsConfigPayload payload = new DmsConfigPayload();
@@ -22,6 +24,7 @@ namespace CitaTaller.ServiceInterface
 
             using (var db = DbFactory.Open())
             {
+                logger.Debug("Request GetDmsConfig");
                 mydms = db.Single<modelDms>(q => q.DomainUrl == requestUrl);
                 payload.Id = mydms.Id;
                 payload.DomainUrl = mydms.DomainUrl;
