@@ -20,20 +20,27 @@ namespace CitaTaller.ServiceInterface
 
         public object Get(GetDmsConfig request)
         {
-            requestUrl = Request.Headers["Host"];            
+            if (logger.IsDebugEnabled) logger.Debug("Request GetDmsConfig");
+            requestUrl = Request.Headers["Host"];
+            if (logger.IsDebugEnabled) logger.Debug("Host = " + requestUrl);
 
             using (var db = DbFactory.Open())
             {
-                logger.Debug("Request GetDmsConfig");
                 mydms = db.Single<modelDms>(q => q.DomainUrl == requestUrl);
-                payload.Id = mydms.Id;
-                payload.DomainUrl = mydms.DomainUrl;
-                payload.Idioma = mydms.Idioma;
-                payload.dmsJob = db.Select<modelDmsJob>(q => q.DmsId == mydms.Id);
-                payload.dmsTaller = db.Select<modelDmsTaller>(q => q.DmsId == mydms.Id);
-            }
-            
-
+                if (mydms != null)
+                {
+                    payload.Id = mydms.Id;
+                    payload.DomainUrl = mydms.DomainUrl;
+                    payload.Idioma = mydms.Idioma;
+                    payload.dmsJob = db.Select<modelDmsJob>(q => q.DmsId == mydms.Id);
+                    payload.dmsTaller = db.Select<modelDmsTaller>(q => q.DmsId == mydms.Id);
+                }
+                else
+                {
+                    if (logger.IsDebugEnabled) logger.Debug("DMS not found");
+                    throw HttpError.NotFound("No encontrado");
+                }
+            }        
             return payload;
         }
     }

@@ -16,7 +16,7 @@ namespace CitaTaller.ServiceInterface
         private static ILog logger = LogManager.GetLogger(typeof(ServiceDmsConfig));
         public object Get(GetSolicitudes request)
         {
-            logger.Debug("Request GetSolicitudes");
+            if (logger.IsDebugEnabled) logger.Debug("Request GetSolicitudes");
             GetSolicitudesResponse results = new GetSolicitudesResponse();
             return results;
         }

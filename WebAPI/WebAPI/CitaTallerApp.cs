@@ -17,7 +17,7 @@ namespace CitaTaller
     public class CitaTallerApp : AppHostBase
     {
 
-        private static ILog Log;
+        private static ILog logger;
 
         public CitaTallerApp() : base("CitaTaller", typeof(CitaTaller.ServiceInterface.ServiceDmsConfig).Assembly)
         {
@@ -45,6 +45,7 @@ namespace CitaTaller
 
             //The MaxLimit option ensures each query returns a maximum limit of 100 rows.
             Plugins.Add(new AutoQueryFeature { MaxLimit = 100 });
+            if (logger.IsDebugEnabled) logger.Info("Configure_Database()");
         }
 
 
@@ -63,23 +64,26 @@ namespace CitaTaller
                 AllowJsonpRequests = true //Enable JSONP requests
             });
             //https://github.com/ServiceStack/ServiceStack/wiki/Auto-Query
- 
+            if (logger.IsDebugEnabled) logger.Info("Configure_ServiceStack()");
+
         }
         public void Configure_CORS()
         {
-            Plugins.Add(new CorsFeature());           
+            Plugins.Add(new CorsFeature());
+            if (logger.IsDebugEnabled) logger.Info("Configure_CORS()");
         }
         public void Configure_Swagger()
         {            
             Plugins.Add(new SwaggerFeature());            
             Plugins.Add(new PostmanFeature());
+            if (logger.IsDebugEnabled) logger.Info("Configure_Swagger()");
         }
         public void Configure_Log()
         {
 
             LogManager.LogFactory = new Log4NetFactory(configureLog4Net: true);
-            ILog logger = LogManager.GetLogger(typeof(CitaTallerApp));
-            logger.Info("Log configurado!");
+            logger = LogManager.GetLogger(typeof(CitaTallerApp));
+            if (logger.IsDebugEnabled) logger.Info("Configure_Log()");
         }
         public void Configure_RequestLog()
         {
