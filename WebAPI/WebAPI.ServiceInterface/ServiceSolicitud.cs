@@ -28,6 +28,8 @@ namespace CitaTaller.ServiceInterface
             if (myresult != null)
             {
                 resultsList = myresult.ConvertAll(x => x.ConvertTo<SolicitudPayload>());
+                resultsList.ForEach(a => a.solicitudJob = Db.Select<modelSolicitudJob>(q => q.SolicitudId == a.Id));
+                resultsList.ForEach(a => a.solicitudHora = Db.Select<modelSolicitudHora>(q => q.SolicitudId == a.Id));
             }
     
             return resultsList;

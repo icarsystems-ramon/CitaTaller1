@@ -95,7 +95,8 @@ namespace CitaTaller
         {
             //Set JSON web services to return idiomatic JSON camelCase properties
             ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
-            ServiceStack.Text.JsConfig.IncludeNullValues = true; // false;
+            // Si IncludeNullValues = true => No funciona Swagger !!
+            //ServiceStack.Text.JsConfig.IncludeNullValues = true; // false;
             ServiceStack.Text.JsConfig.DateHandler = DateHandler.ISO8601;
             ServiceStack.Text.JsConfig.AlwaysUseUtc = true;
             if (logger.IsDebugEnabled) logger.Info("Configure_JSON()");
