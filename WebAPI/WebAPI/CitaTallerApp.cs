@@ -11,6 +11,7 @@ using ServiceStack.OrmLite.SqlServer;
 using log4net.Appender;
 using System.Configuration;
 using ServiceStack.Data;
+using ServiceStack.Text;
 
 namespace CitaTaller
 {
@@ -32,6 +33,7 @@ namespace CitaTaller
             Configure_CORS();
             Configure_Swagger();
             Configure_RequestLog();
+            Configure_JSON();
             Configure_Database(container); 
         }
         void Configure_Database(Container container)
@@ -53,7 +55,7 @@ namespace CitaTaller
         {
             SetConfig(new HostConfig { HandlerFactoryPath = "api" });
             //https://github.com/ServiceStack/ServiceStack/wiki/Configuration-options
-            ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
+            
             Feature disableFeatures = Feature.Jsv | Feature.Soap;
             SetConfig(new HostConfig
             {
@@ -89,6 +91,13 @@ namespace CitaTaller
         {
             //Plugins.Add(new RequestLogsFeature());
         }
-
-    }    
+        public void Configure_JSON()
+        {
+            //Set JSON web services to return idiomatic JSON camelCase properties
+            ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
+            ServiceStack.Text.JsConfig.IncludeNullValues = true; // false;
+            ServiceStack.Text.JsConfig.DateHandler = DateHandler.ISO8601;
+            ServiceStack.Text.JsConfig.AlwaysUseUtc = true;
+        }
+     }    
 }

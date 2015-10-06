@@ -15,7 +15,7 @@ namespace CitaTaller.ServiceInterface
         private static ILog logger = LogManager.GetLogger(typeof(ServiceDmsConfig));
         private String requestUrl;
         //private Guid dmsId;
-        private DmsConfigPayload payload = new DmsConfigPayload();
+        private DmsConfigPayload payload; // = new DmsConfigPayload();
         private modelDms mydms;
 
         public object Get(GetDmsConfig request)
@@ -24,23 +24,20 @@ namespace CitaTaller.ServiceInterface
             requestUrl = Request.Headers["Host"];
             if (logger.IsDebugEnabled) logger.Debug("Host = " + requestUrl);
 
-            using (var db = DbFactory.Open())
+ 
+            mydms = Db.Single<modelDms>(q => q.DomainUrl == requestUrl);
+            if (mydms != null)
             {
-                mydms = db.Single<modelDms>(q => q.DomainUrl == requestUrl);
-                if (mydms != null)
-                {
-                    payload.Id = mydms.Id;
-                    payload.DomainUrl = mydms.DomainUrl;
-                    payload.Idioma = mydms.Idioma;
-                    payload.dmsJob = db.Select<modelDmsJob>(q => q.DmsId == mydms.Id);
-                    payload.dmsTaller = db.Select<modelDmsTaller>(q => q.DmsId == mydms.Id);
-                }
-                else
-                {
-                    if (logger.IsDebugEnabled) logger.Debug("DMS not found");
-                    throw HttpError.NotFound("No encontrado");
-                }
-            }        
+                payload = mydms.ConvertTo<DmsConfigPayload>();
+                payload.dmsJob = Db.Select<modelDmsJob>(q => q.DmsId == mydms.Id);
+                payload.dmsTaller = Db.Select<modelDmsTaller>(q => q.DmsId == mydms.Id);
+            }
+            else
+            {
+                if (logger.IsDebugEnabled) logger.Debug("DMS not found");
+                throw HttpError.NotFound("No encontrado");
+            }
+       
             return payload;
         }
     }
