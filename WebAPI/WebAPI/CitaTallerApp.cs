@@ -98,6 +98,7 @@ namespace CitaTaller
             ServiceStack.Text.JsConfig.IncludeNullValues = true; // false;
             ServiceStack.Text.JsConfig.DateHandler = DateHandler.ISO8601;
             ServiceStack.Text.JsConfig.AlwaysUseUtc = true;
+            if (logger.IsDebugEnabled) logger.Info("Configure_JSON()");
         }
      }    
 }
