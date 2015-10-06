@@ -36,26 +36,25 @@ namespace CitaTaller.ServiceInterface
         public object Get(GetSolicitud request)
         {
             if (logger.IsDebugEnabled) logger.Debug("Request GetSolicitud");
-            using (var db = DbFactory.Open())
+    
+            if (!Db.Exists<modelSolicitud>(s => s.Id == request.Id))
             {
-                if (!db.Exists<modelSolicitud>(s => s.Id == request.Id))
-                {
-                    if (logger.IsDebugEnabled) logger.Debug("Not Found: " + request.Id.ToString());
-                    throw HttpError.NotFound("No encontrado");
-                };
-                mysolicitud = db.Single<modelSolicitud>(q => q.Id == request.Id);
-                if (mysolicitud != null)
-                {
-                    results = mysolicitud.ConvertTo<SolicitudPayload>();
-                    results.solicitudJob = db.Select<modelSolicitudJob>(q => q.SolicitudId == request.Id);
-                    results.solicitudHora = db.Select<modelSolicitudHora>(q => q.SolicitudId == request.Id);
-                    return results;
-                }
-                else
-                {
-                    throw HttpError.NotFound("No encontrado");
-                }
-            }    
+                if (logger.IsDebugEnabled) logger.Debug("Not Found: " + request.Id.ToString());
+                throw HttpError.NotFound("No encontrado");
+            };
+            mysolicitud = Db.Single<modelSolicitud>(q => q.Id == request.Id);
+            if (mysolicitud != null)
+            {
+                results = mysolicitud.ConvertTo<SolicitudPayload>();
+                results.solicitudJob = Db.Select<modelSolicitudJob>(q => q.SolicitudId == request.Id);
+                results.solicitudHora = Db.Select<modelSolicitudHora>(q => q.SolicitudId == request.Id);
+                return results;
+            }
+            else
+            {
+                throw HttpError.NotFound("No encontrado");
+            }
+           
             
         }
 
@@ -93,16 +92,13 @@ namespace CitaTaller.ServiceInterface
         
         public void Delete(DeleteSolicitud request)
         {
-            using (var db = DbFactory.Open())
+            if (!Db.Exists<modelSolicitud>(s => s.Id == request.Id))
             {
-                if (!db.Exists<modelSolicitud>(s => s.Id == request.Id))
-                {
-                    throw HttpError.NotFound("No encontrado");
-                };
-                db.Delete<modelSolicitudJob>(s => s.SolicitudId == request.Id);
-                db.Delete<modelSolicitudHora>(s => s.SolicitudId == request.Id);
-                db.Delete<modelSolicitud>(s => s.Id == request.Id);
-            }
+                throw HttpError.NotFound("No encontrado");
+            };
+            Db.Delete<modelSolicitudJob>(s => s.SolicitudId == request.Id);
+            Db.Delete<modelSolicitudHora>(s => s.SolicitudId == request.Id);
+            Db.Delete<modelSolicitud>(s => s.Id == request.Id);          
         }
     }
 }
