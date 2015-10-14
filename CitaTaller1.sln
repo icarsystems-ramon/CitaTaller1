@@ -56,6 +56,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CitaTaller.Frontend", "Cita
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "62802"
+		SlnRelativePath = "CitaTaller.Frontend\"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
