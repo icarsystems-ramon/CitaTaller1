@@ -38,6 +38,27 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Frontend", "Frontend\", "{3
 		SlnRelativePath = "Frontend\"
 	EndProjectSection
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "CitaTaller.Frontend", "CitaTaller.Frontend\", "{19E4A8D9-77DF-4DA4-9E4E-ABC6C35DA65B}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_62802"
+		Debug.AspNetCompiler.PhysicalPath = "CitaTaller.Frontend\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62802\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_62802"
+		Release.AspNetCompiler.PhysicalPath = "CitaTaller.Frontend\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_62802\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "62802"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +85,10 @@ Global
 		{347AF069-09DD-4BD5-A8C6-5628B702DACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{347AF069-09DD-4BD5-A8C6-5628B702DACE}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{347AF069-09DD-4BD5-A8C6-5628B702DACE}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{19E4A8D9-77DF-4DA4-9E4E-ABC6C35DA65B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19E4A8D9-77DF-4DA4-9E4E-ABC6C35DA65B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19E4A8D9-77DF-4DA4-9E4E-ABC6C35DA65B}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{19E4A8D9-77DF-4DA4-9E4E-ABC6C35DA65B}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
