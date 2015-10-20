@@ -3,12 +3,21 @@
     bower = require('gulp-bower');
 
 // build
-gulp.task('build:development', shell.task([
+gulp.task('ember_build_development', shell.task([
     'ember build --environment development'
 ]));
 
+// build
+gulp.task('ember_build_production', shell.task([
+    'ember build --environment production'
+]));
+
+gulp.task('ember_build_test', shell.task([
+    'ember build --environment test'
+]));
+
 // serve
-gulp.task('build:serve', shell.task([
+gulp.task('ember_serve', shell.task([
     'ember serve'
 ]));
 
@@ -25,3 +34,8 @@ gulp.task('bower:update', function () {
     });
 });
 
+gulp.task('deploy_azure', function () {
+    return bower({
+        cmd: ''
+    });
+});

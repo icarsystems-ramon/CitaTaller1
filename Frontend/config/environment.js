@@ -2,11 +2,11 @@
 
 module.exports = function(environment) {
   var ENV = {
-    modulePrefix: 'frontend',
+    modulePrefix: 'citataller',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
-    EmberENV: {
+    EmberENV: {       
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
@@ -18,6 +18,9 @@ module.exports = function(environment) {
       // when it is created
     }
   };
+
+  ENV.API_HOST = 'http://citatallerapi.azurewebsites.net';
+  ENV.API_NAMESPACE = "api";
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
