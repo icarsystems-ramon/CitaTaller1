@@ -17,8 +17,8 @@ gulp.task('ember_build_test', shell.task([
 ]));
 
 // serve
-gulp.task('ember_serve', shell.task([
-    'ember serve'
+gulp.task('ember_server', shell.task([
+    'ember server'
 ]));
 
 // bower
