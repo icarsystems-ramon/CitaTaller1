@@ -17,11 +17,12 @@ module.exports = function(environment) {
       // Here you can pass flags/options to your application instance
       // when it is created
     },
+
     contentSecurityPolicy: {
-        'default-src': "'self' 'citatallerapi.azurewebsites.net'",
+        'default-src': "'self'",
         'script-src': "'self'",
         'font-src': "'self'",
-        'connect-src': "'self'",
+        'connect-src': "'self' http://citatallerapi.azurewebsites.net",
         'img-src': "'self'",
         'style-src': "'self'",
         'media-src': "'self'"
