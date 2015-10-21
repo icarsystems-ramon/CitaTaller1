@@ -48,8 +48,10 @@ namespace CitaTaller.ServiceModel
 
     }
 
+    [DataContract]
     public class GetSolicitudesResponse
     {
+        [DataMember(Name = "solicitudes")]
         public List<SolicitudPayload> Results { get; set; }
     }
 

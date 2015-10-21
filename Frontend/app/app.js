@@ -15,4 +15,8 @@ App = Ember.Application.extend({
 
 loadInitializers(App, config.modulePrefix);
 
+var inflector = Ember.Inflector.inflector;
+
+inflector.irregular('solicitud', 'solicitudes');
+
 export default App;
