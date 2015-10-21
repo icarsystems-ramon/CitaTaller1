@@ -1,6 +1,8 @@
+<h2>SOLICITUDES</h2>
 <ul>
-    {{#each}}
-    <li>{{nombre}}</li>
+    {{#each model as |item|}}
+    <li>{{item.apellidos}}</li>
+    {{else}}
+    Sorry, nobody is here.
     {{/each}}
 </ul>
-

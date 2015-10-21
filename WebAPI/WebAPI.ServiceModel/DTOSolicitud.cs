@@ -7,10 +7,10 @@ using ServiceStack;
 namespace CitaTaller.ServiceModel
 {
     [DataContract]
-   
-    public class SolicitudPayload
+
+    public class Solicitud
     {
-        [DataMember]     
+        [DataMember]
         public Guid Id { get; set; }
         [DataMember]
         public DateTime? CreacionFecha { get; set; }
@@ -39,16 +39,27 @@ namespace CitaTaller.ServiceModel
         public List<modelSolicitudJob> solicitudJob { get; set; }
         [DataMember(Name = "solicitudhora")]
         public List<modelSolicitudHora> solicitudHora { get; set; }
-        public SolicitudPayload()
+        public Solicitud()
         {
             //solicitud = new modelSolicitud();
             solicitudJob = new List<modelSolicitudJob>();
             solicitudHora = new List<modelSolicitudHora>();
         }
-
     }
 
     [DataContract]
+    public class SolicitudPayload
+    {
+        [DataMember(Name = "solicitud")]
+        public List<Solicitud> solicitud { get; set; }
+        public SolicitudPayload()
+        {
+            solicitud = new List<Solicitud>();
+        }
+    }
+
+    [DataContract]
+  
     public class GetSolicitudesResponse
     {
         [DataMember(Name = "solicitudes")]
