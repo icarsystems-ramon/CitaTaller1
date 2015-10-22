@@ -10,34 +10,68 @@ using CitaTaller.ServiceModel;
 
 namespace CitaTaller.ServiceInterface
 {
-    public class ServiceDmsConfig : Service
+    public class ServiceDms : Service
     {
-        private static ILog logger = LogManager.GetLogger(typeof(ServiceDmsConfig));
+        private static ILog logger = LogManager.GetLogger(typeof(ServiceDms));
         private String requestUrl;
         //private Guid dmsId;
-        private DmsConfigPayload payload; // = new DmsConfigPayload();
-        private modelDms mydms;
+        private DmsPayload payload; // = new DmsConfigPayload();
+        private modelDms dbdms;
 
-        public object Get(GetDmsConfig request)
+        public object Get(GetDms request)
         {
             if (logger.IsDebugEnabled) logger.Debug("Request GetDmsConfig");
             requestUrl = Request.Headers["Host"];
+            requestUrl = "citataller1.azurewebsites.net";
             if (logger.IsDebugEnabled) logger.Debug("Host = " + requestUrl);
 
- 
-            mydms = Db.Single<modelDms>(q => q.DomainUrl == requestUrl);
-            if (mydms != null)
-            {
-                payload = mydms.ConvertTo<DmsConfigPayload>();
-                payload.dmsJob = Db.Select<modelDmsJob>(q => q.DmsId == mydms.Id);
-                payload.dmsTaller = Db.Select<modelDmsTaller>(q => q.DmsId == mydms.Id);
-            }
-            else
+
+            dbdms = Db.Single<modelDms>(q => q.DomainUrl == requestUrl);
+            if (dbdms == null)
             {
                 if (logger.IsDebugEnabled) logger.Debug("DMS not found");
                 throw HttpError.NotFound("No encontrado");
+            }           
+            
+            payload = new DmsPayload();
+            payload.dms = dbdms.ConvertTo<Dms>(); 
+
+            List<DmsJob> dmsjob;
+            List<modelDmsJob> dbdmsjob;
+            dbdmsjob = Db.Select<modelDmsJob>(q => q.DmsId == dbdms.Id);
+            dmsjob = dbdmsjob.ConvertAll(x => x.ConvertTo<DmsJob>());
+
+            foreach (DmsJob itemjob in dmsjob)
+            {
+                payload.dmsJob.Add(itemjob);
+                payload.dms.dmsjob.Add(itemjob.Id);
             }
-       
+
+
+            List<DmsTaller> dmstaller;
+            List<modelDmsTaller> dbdmstaller;
+            dbdmstaller = Db.Select<modelDmsTaller>(q => q.DmsId == dbdms.Id);
+            dmstaller = dbdmstaller.ConvertAll(x => x.ConvertTo<DmsTaller>());
+
+            foreach (DmsTaller itemtaller in dmstaller)
+            {
+                payload.dmsTaller.Add(itemtaller);
+                payload.dms.dmstaller.Add(itemtaller.Id);
+            }
+
+
+            List<DmsCortesia> dmsCortesia;
+            List<modelDmsCortesia> dbdmsCortesia;
+            dbdmsCortesia = Db.Select<modelDmsCortesia>(q => q.DmsId == dbdms.Id);
+            dmsCortesia = dbdmsCortesia.ConvertAll(x => x.ConvertTo<DmsCortesia>());
+
+            foreach (DmsCortesia itemCortesia in dmsCortesia)
+            {
+                payload.dmsCortesia.Add(itemCortesia);
+                payload.dms.dmscortesia.Add(itemCortesia.Id);
+            }
+
+
             return payload;
         }
     }

@@ -5,26 +5,89 @@ using ServiceStack;
 
 namespace CitaTaller.ServiceModel
 {
+
+
     [DataContract]
-    public class DmsConfigPayload
+    public class Dms
     {
-
-        [DataMember(Name = "Id")]
+        [DataMember]
         public Guid Id { get; set; }
-        [DataMember(Name = "DomainUrl")]
+        [DataMember]
         public string DomainUrl { get; set; }
-        [DataMember(Name = "idioma")]
-        public short? Idioma { get; set; }        
-        [DataMember(Name = "dmstaller")]
-
-        //[Relation(RelationType.HasMany, typeof(modelDmsTaller))]
-        public List<modelDmsTaller> dmsTaller { get; set; }
-        [DataMember(Name = "dmsjob")]
-        public List<modelDmsJob> dmsJob { get; set; }
-        public DmsConfigPayload()
+        [DataMember]
+        public short? Idioma { get; set; }
+        [DataMember(Name = "dmstalleres")]
+        public List<Guid> dmstaller { get; set; }
+        [DataMember(Name = "dmsjobs")]
+        public List<Guid> dmsjob { get; set; }
+        [DataMember(Name = "dmscortesias")]
+        public List<Guid> dmscortesia { get; set; }
+        public Dms()
         {
-            dmsTaller = new List<modelDmsTaller>();
-            dmsJob = new List<modelDmsJob>();
+            dmstaller = new List<Guid>();
+            dmsjob = new List<Guid>();
+            dmscortesia = new List<Guid>();
+        }
+    }
+
+    [DataContract]
+    public class DmsTaller
+    {
+        [DataMember]
+        public Guid Id { get; set; }
+        [DataMember(Name = "dms")]
+        public Guid DmsId { get; set; }
+        [DataMember]
+        public string Descripcion { get; set; }
+        [DataMember]
+        public string Direccion { get; set; }
+        [DataMember]
+        public bool? VehiculoCortesia { get; set; }
+        [DataMember]
+        public string DmsKey { get; set; }
+    }
+
+    [DataContract]
+    public class DmsJob
+    {
+        [DataMember]
+        public Guid Id { get; set; }
+        [DataMember(Name = "dms")]
+        public Guid DmsId { get; set; }
+        [DataMember]
+        public string Descripcion { get; set; }
+    }
+
+    [DataContract]
+    public class DmsCortesia
+    {
+        [DataMember]
+        public Guid Id { get; set; }
+        [DataMember(Name = "dms")]
+        public Guid DmsId { get; set; }
+        [DataMember]
+        public string Descripcion { get; set; }
+        [DataMember]
+        public string DmsKey { get; set; }
+    }
+
+    [DataContract]
+    public class DmsPayload
+    {
+        [DataMember(Name = "dms")]
+        public Dms dms { get; set; }
+        [DataMember(Name = "dmstalleres")]        
+        public List<DmsTaller> dmsTaller { get; set; }
+        [DataMember(Name = "dmsjobs")]
+        public List<DmsJob> dmsJob { get; set; }
+        [DataMember(Name = "dmscortesia")]
+        public List<DmsCortesia> dmsCortesia { get; set; }
+        public DmsPayload()
+        {
+            dms = new Dms();
+            dmsTaller = new List<DmsTaller>();
+            dmsJob = new List<DmsJob>();
+            dmsCortesia = new List<DmsCortesia>();
         }
      
 
@@ -35,7 +98,7 @@ namespace CitaTaller.ServiceModel
         Notes = @"El backend determina que DMS corresponde a la request.
 Devuelve lista de talleres y opciones rápidas de trabajos.
 ")]    
-    public class GetDmsConfig : IReturn<DmsConfigPayload>
+    public class GetDms : IReturn<DmsPayload>
     {
 
         //public Guid Id { get; set; }

@@ -69,27 +69,8 @@ namespace CitaTaller.ServiceModel
         public byte? Minuto { get; set; }
     }
 
-
-    //[DataContract]
-    //public class SolicitudPayload
-    //{
-    //    [DataMember(Name = "solicitud")]
-    //    public List<Solicitud> solicitud { get; set; }
-    //    [DataMember(Name = "solicitudjobs")]
-    //    public List<modelSolicitudJob> solicitudJob { get; set; }
-    //    [DataMember(Name = "solicitudhoras")]
-    //    public List<modelSolicitudHora> solicitudHora { get; set; }
-    //    public SolicitudPayload()
-    //    {
-    //        solicitud = new List<Solicitud>();
-    //        solicitudJob = new List<modelSolicitudJob>();
-    //        solicitudHora = new List<modelSolicitudHora>();
-    //    }
-    //}
-
-    [DataContract]
-  
-    public class GetSolicitudesResponse
+    [DataContract] 
+    public class SolicitudPayload
     {
         [DataMember(Name = "solicitudes")]
         public List<Solicitud> solicitud { get; set; }
@@ -97,7 +78,7 @@ namespace CitaTaller.ServiceModel
         public List<SolicitudJob> solicitudjob { get; set; }
         [DataMember(Name = "solicitudhoras")]
         public List<SolicitudHora> solicitudhora { get; set; }
-        public GetSolicitudesResponse()
+        public SolicitudPayload()
         {
             solicitud = new List<Solicitud>();
             solicitudjob = new List<SolicitudJob>();
@@ -108,47 +89,44 @@ namespace CitaTaller.ServiceModel
     //Web Service DTO's
     
     [Api("Solicitudes de usuario de cita de taller")]
-    [Route("/solicitudes", "GET",
-        Summary = @"Obtener lista de solicitudes",
-        Notes = @""
-        )]   
-    public class GetSolicitudes : IReturn<GetSolicitudesResponse>
+    [Route("/solicitudes", "GET", Summary = @"Obtener lista de solicitudes", Notes = @"")]   
+    public class GetSolicitudes : IReturn<SolicitudPayload>
     {
         public String QueryParam1 { get; set; }
         public String QueryParam2 { get; set; }
     }
 
     [Api("Solicitudes de usuario de cita de taller")]
-    [Route("/solicitudes/{Id}", "GET",
-        Summary = @"Obtener datos de una solicitud en concreto",
-        Notes = @""
-        )]
-    public class GetSolicitud : IReturn<GetSolicitudesResponse>
+    [Route("/solicitudes/{Id}", "GET", Summary = @"Obtener datos de una solicitud en concreto", Notes = @"")]
+    public class GetSolicitud : IReturn<SolicitudPayload>
     {
         [ApiMember(Name = "ID", Description = "Id de la solicitud", ParameterType = "path", DataType = "GUID", IsRequired = true)]
         public Guid Id { get; set; }
     }
+
+
     [Api("Solicitudes de usuario de cita de taller")]
     [Route("/solicitudes", "POST", Summary = @"Creación de nueva solicitud", Notes = @"")]
-    public class CreateSolicitud : IReturn<GetSolicitudesResponse>
+    public class CreateSolicitud : IReturn<SolicitudPayload>
     {
-        public GetSolicitudesResponse solicitud { get; set; }
+        public SolicitudPayload solicitud { get; set; }
     }
+
+
     [Api("Solicitudes de usuario de cita de taller")]
     [Route("/solicitudes/{Id}", "PUT", Summary = @"Modificado de una solicitud ya guardada", Notes = @"")]
-    public class UpdateSolicitud : IReturn<GetSolicitudesResponse>
+    public class UpdateSolicitud : IReturn<SolicitudPayload>
     {
         [ApiMember(Name = "ID", Description = "Id de la solicitud", ParameterType = "path", DataType = "GUID", IsRequired = true)]
         public Guid Id { get; set; }
-        public GetSolicitudesResponse solicitud { get; set; }
+        public SolicitudPayload solicitud { get; set; }
     }
+
     [Api("Solicitudes de usuario de cita de taller")]
     [Route("/solicitudes/{Id}", "DELETE", Summary = @"Borrado de una solicitud", Notes = @"")]
     public class DeleteSolicitud : IReturnVoid
     {
-
-        [ApiMember(Name = "ID", Description = "Id de la solicitud",
-        ParameterType = "path", DataType = "GUID", IsRequired = true)]
+        [ApiMember(Name = "ID", Description = "Id de la solicitud", ParameterType = "path", DataType = "GUID", IsRequired = true)]
         public Guid Id { get; set; }
     }
     

@@ -20,7 +20,7 @@ namespace CitaTaller
 
         private static ILog logger;
 
-        public CitaTallerApp() : base("CitaTaller", typeof(CitaTaller.ServiceInterface.ServiceDmsConfig).Assembly)
+        public CitaTallerApp() : base("CitaTaller", typeof(CitaTaller.ServiceInterface.ServiceDms).Assembly)
         {
             Configure_Log();           
         }

@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\CitaTallerAPI.Debug.pubxml" />
     <None Include="Properties\PublishProfiles\citatallerapi.pubxml" />
     <None Include="Properties\PublishProfiles\CitaTallerAPI.Release.pubxml" />
     <None Include="Properties\PublishProfiles\WebDeploy.Release.pubxml" />
