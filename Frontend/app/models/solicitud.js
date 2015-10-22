@@ -9,5 +9,7 @@ export default DS.Model.extend({
   chasis: DS.attr('string'),
   descripcion: DS.attr('string'),
  
-  vehiculoCortesia: DS.attr('boolean')
+  vehiculoCortesia: DS.attr('boolean', { defaultValue: false }),
+  solicitudjobs: DS.hasMany('solicitudjob'),
+  solicitudhoras: DS.hasMany('solicitudhora')
 });

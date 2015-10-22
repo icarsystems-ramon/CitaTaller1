@@ -18,64 +18,81 @@ namespace CitaTaller.ServiceInterface
         private List<modelSolicitudJob> mysolicitudJob;
         private List<modelSolicitudHora> mysolicitudHora;
         private List<Solicitud> solicitudList;
-        private SolicitudPayload results = new SolicitudPayload();
+        private GetSolicitudesResponse payload = new GetSolicitudesResponse();
         private Guid nullGuid = new Guid();
         public object Get(GetSolicitudes request)
         {
     
-            List<modelSolicitud> myresult;
+            List<modelSolicitud> dbsolicitud;
 
             if (logger.IsDebugEnabled) logger.Debug("Request GetSolicitudes");
-            myresult = Db.Select<modelSolicitud>();
-            if (myresult != null)
+            dbsolicitud = Db.Select<modelSolicitud>();
+            if (dbsolicitud != null)
             {
-                solicitudList = myresult.ConvertAll(x => x.ConvertTo<Solicitud>());
-                solicitudList.ForEach(a => a.solicitudJob = Db.Select<modelSolicitudJob>(q => q.SolicitudId == a.Id));
-                solicitudList.ForEach(a => a.solicitudHora = Db.Select<modelSolicitudHora>(q => q.SolicitudId == a.Id));
+                payload.solicitud = dbsolicitud.ConvertAll(x => x.ConvertTo<Solicitud>());
+                foreach (Solicitud itemsolicitud in payload.solicitud)
+                {
+                    List<SolicitudJob> solicitudjob;
+                    List<modelSolicitudJob> dbsolicitudjob;
+                    dbsolicitudjob = Db.Select<modelSolicitudJob>(q => q.SolicitudId == itemsolicitud.Id);
+                    solicitudjob = dbsolicitudjob.ConvertAll (x => x.ConvertTo<SolicitudJob>());
+                    
+                    foreach (SolicitudJob itemjob in solicitudjob)
+                    {
+                        payload.solicitudjob.Add(itemjob);
+                        itemsolicitud.solicitudjob.Add(itemjob.Id);
+                    }
+
+                    List<SolicitudHora> solicitudhora;
+                    List<modelSolicitudHora> dbsolicitudhora;
+                    dbsolicitudhora = Db.Select<modelSolicitudHora>(q => q.SolicitudId == itemsolicitud.Id);
+                    solicitudhora = dbsolicitudhora.ConvertAll (x => x.ConvertTo<SolicitudHora>());
+                   
+                    foreach (SolicitudHora itemhora in solicitudhora)
+                    {
+                        payload.solicitudhora.Add(itemhora);
+                        itemsolicitud.solicitudhora.Add(itemhora.Id);
+                    }
+
+         
+                };
+
+               
             }
 
-            results.solicitud = solicitudList;
-            return results;
+            return payload;
         }
 
-        public object Get(GetSolicitud request)
-        {
 
-            List<modelSolicitud> myresult;
-            if (logger.IsDebugEnabled) logger.Debug("Request GetSolicitud");
+        //public object Get(GetSolicitud request)
+        //{
+
+        //    List<modelSolicitud> myresult;
+        //    if (logger.IsDebugEnabled) logger.Debug("Request GetSolicitud");
     
-            if (!Db.Exists<modelSolicitud>(s => s.Id == request.Id))
-            {
-                if (logger.IsDebugEnabled) logger.Debug("Not Found: " + request.Id.ToString());
-                throw HttpError.NotFound("No encontrado");
-            };
+        //    if (!Db.Exists<modelSolicitud>(s => s.Id == request.Id))
+        //    {
+        //        if (logger.IsDebugEnabled) logger.Debug("Not Found: " + request.Id.ToString());
+        //        throw HttpError.NotFound("No encontrado");
+        //    };
 
-            myresult = Db.Select<modelSolicitud>(q => q.Id == request.Id);
-            if (myresult != null)
-            {
-                solicitudList = myresult.ConvertAll(x => x.ConvertTo<Solicitud>());
-                solicitudList.ForEach(a => a.solicitudJob = Db.Select<modelSolicitudJob>(q => q.SolicitudId == a.Id));
-                solicitudList.ForEach(a => a.solicitudHora = Db.Select<modelSolicitudHora>(q => q.SolicitudId == a.Id));
-            }
+        //    myresult = Db.Select<modelSolicitud>(q => q.Id == request.Id);
+        //    if (myresult != null)
+        //    {
+        //        solicitudList = myresult.ConvertAll(x => x.ConvertTo<Solicitud>());
+        //        solicitudList.ForEach(a => a.solicitudJob = Db.Select<modelSolicitudJob>(q => q.SolicitudId == a.Id));
+        //        solicitudList.ForEach(a => a.solicitudHora = Db.Select<modelSolicitudHora>(q => q.SolicitudId == a.Id));
+        //    }
 
 
-            //mysolicitud = Db.Single<modelSolicitud>(q => q.Id == request.Id);
-            //if (mysolicitud != null)
-            //{
-            //    results = mysolicitud.ConvertTo<Solicitud>();
-            //    results.solicitudJob = Db.Select<modelSolicitudJob>(q => q.SolicitudId == request.Id);
-            //    results.solicitudHora = Db.Select<modelSolicitudHora>(q => q.SolicitudId == request.Id);
-            //    results.solicitud = solicitudList;
-            //    return results;
-            //}
-            else
-            {
-                throw HttpError.NotFound("No encontrado");
-            }
+        //    else
+        //    {
+        //        throw HttpError.NotFound("No encontrado");
+        //    }
 
-            results.solicitud = solicitudList;
-            return results;
-        }
+        //    results.solicitud = solicitudList;
+        //    return results;
+        //}
 
         //public object Post(CreateSolicitud request)
         //{

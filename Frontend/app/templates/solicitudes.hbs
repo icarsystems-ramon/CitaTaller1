@@ -2,6 +2,16 @@
 <ul>
     {{#each model as |item|}}
     <li>{{item.apellidos}}</li>
+    <li>{{item.solicitudjobs.length}}</li>
+        <div>
+        {{#each item.solicitudjobs as |job|}}
+            <div>
+            {{job.id}}
+            </div>
+         {{else}}
+           No jobs
+        {{/each}}
+        </div>
     {{else}}
     Sorry, nobody is here.
     {{/each}}
