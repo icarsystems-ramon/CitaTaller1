@@ -20,7 +20,7 @@ var inflector = Ember.Inflector.inflector;
 inflector.irregular('solicitud'     , 'solicitudes');
 inflector.irregular('solicitudjob'  , 'solicitudesjobs');
 inflector.irregular('solicitudhora' , 'solicitudeshoras');
-inflector.irregular('dms'           , 'dms');
+inflector.irregular('dms'           , 'dmsconfig');
 inflector.irregular('dmstaller'     , 'dmstalleres');
 inflector.irregular('dmsjob'        , 'dmsjobs');
 inflector.irregular('dmscortesia'   , 'dmscortesias');
