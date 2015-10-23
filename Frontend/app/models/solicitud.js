@@ -4,12 +4,14 @@ export default DS.Model.extend({
  
   numgsm: DS.attr('string'),
   email: DS.attr('string'),
+  nombre: DS.attr('string'),
   apellidos: DS.attr('string'),
   matric: DS.attr('string'),
   chasis: DS.attr('string'),
   descripcion: DS.attr('string'),
  
   vehiculoCortesia: DS.attr('boolean', { defaultValue: false }),
+  dmsTaller: DS.belongsTo('dmstaller'),
   solicitudjobs: DS.hasMany('solicitudjob'),
   solicitudhoras: DS.hasMany('solicitudhora')
 });

@@ -6,42 +6,7 @@ using ServiceStack;
 
 namespace CitaTaller.ServiceModel
 {
-    [DataContract]
-    public class Solicitud
-    {
-        [DataMember]
-        public Guid Id { get; set; }
-        [DataMember]
-        public DateTime? CreacionFecha { get; set; }
-        public Guid? CreacionDevice { get; set; }
-        [DataMember]
-        public string Numgsm { get; set; }
-        [DataMember]
-        public string Email { get; set; }
-        [DataMember]
-        public string Nombre { get; set; }
-        [DataMember]
-        public string Apellidos { get; set; }
-        [DataMember]
-        public string Matric { get; set; }
-        [DataMember]
-        public string Chasis { get; set; }
-        [DataMember(Name = "dmstaller")]
-        public Guid DmsTallerId { get; set; }
-        [DataMember]
-        public string Descripcion { get; set; }
-        [DataMember]
-        public bool? VehiculoCortesia { get; set; }
-        [DataMember(Name = "solicitudjobs")]
-        public List<Guid> solicitudjob { get; set; }
-        [DataMember(Name = "solicitudhoras")]
-        public List<Guid> solicitudhora { get; set; }
-        public Solicitud()
-        {
-            solicitudjob = new List<Guid>();
-            solicitudhora = new List<Guid>();
-        }
-    }
+
 
     [DataContract]
     public class SolicitudJob
@@ -69,28 +34,56 @@ namespace CitaTaller.ServiceModel
         public byte? Minuto { get; set; }
     }
 
-    [DataContract] 
-    public class SolicitudPayload
-    {
-        [DataMember(Name = "solicitudes")]
-        public List<Solicitud> solicitud { get; set; }
+    [DataContract]
+    public class Solicitud    {
+        [DataMember]
+        public Guid Id { get; set; }
+        [DataMember]
+        public DateTime? CreacionFecha { get; set; }        
+        public Guid? CreacionDevice { get; set; }
+        [DataMember]
+        public string Numgsm { get; set; }
+        [DataMember]
+        public string Email { get; set; }
+        [DataMember]
+        public string Nombre { get; set; }
+        [DataMember]
+        public string Apellidos { get; set; }
+        [DataMember]
+        public string Matric { get; set; }
+        [DataMember]
+        public string Chasis { get; set; }
+        [DataMember(Name = "dmstaller")]
+        public Guid DmsTallerId { get; set; }
+        [DataMember]
+        public string Descripcion { get; set; }
+        [DataMember]
+        public bool? VehiculoCortesia { get; set; }
         [DataMember(Name = "solicitudjobs")]
-        public List<SolicitudJob> solicitudjob { get; set; }
+        public List<SolicitudJob> solicitudjobs { get; set; }
         [DataMember(Name = "solicitudhoras")]
-        public List<SolicitudHora> solicitudhora { get; set; }
-        public SolicitudPayload()
+        public List<SolicitudHora> solicitudhoras { get; set; }       
+        public Solicitud()
         {
-            solicitud = new List<Solicitud>();
-            solicitudjob = new List<SolicitudJob>();
-            solicitudhora = new List<SolicitudHora>();
+            solicitudjobs = new List<SolicitudJob>();
+            solicitudhoras = new List<SolicitudHora> ();
         }
+    }
+   
+    [DataContract] 
+    public class SolicitudResponse
+    {
+        [DataMember(Name = "solicitud")]
+        public Solicitud solicitud { get; set; }
+        [DataMember(Name = "solicitudes")]
+        public List<Solicitud> solicitudes { get; set; }       
     }
 
     //Web Service DTO's
     
     [Api("Solicitudes de usuario de cita de taller")]
     [Route("/solicitudes", "GET", Summary = @"Obtener lista de solicitudes", Notes = @"")]   
-    public class GetSolicitudes : IReturn<SolicitudPayload>
+    public class GetSolicitudes : IReturn<SolicitudResponse>
     {
         public String QueryParam1 { get; set; }
         public String QueryParam2 { get; set; }
@@ -98,7 +91,8 @@ namespace CitaTaller.ServiceModel
 
     [Api("Solicitudes de usuario de cita de taller")]
     [Route("/solicitudes/{Id}", "GET", Summary = @"Obtener datos de una solicitud en concreto", Notes = @"")]
-    public class GetSolicitud : IReturn<SolicitudPayload>
+    [Route("/solicitud/{Id}", "GET", Summary = @"Obtener datos de una solicitud en concreto", Notes = @"")]
+    public class GetSolicitud : IReturn<SolicitudResponse>
     {
         [ApiMember(Name = "ID", Description = "Id de la solicitud", ParameterType = "path", DataType = "GUID", IsRequired = true)]
         public Guid Id { get; set; }
@@ -106,20 +100,20 @@ namespace CitaTaller.ServiceModel
 
 
     [Api("Solicitudes de usuario de cita de taller")]
-    [Route("/solicitudes", "POST", Summary = @"Creación de nueva solicitud", Notes = @"")]
-    public class CreateSolicitud : IReturn<SolicitudPayload>
+    [Route("/solicitudes",   "POST", Summary = @"Creación de nueva solicitud", Notes = @"")]
+    public class CreateSolicitud : IReturn<SolicitudResponse>
     {
-        public SolicitudPayload solicitud { get; set; }
+        public Solicitud solicitud { get; set; }          
     }
 
 
     [Api("Solicitudes de usuario de cita de taller")]
     [Route("/solicitudes/{Id}", "PUT", Summary = @"Modificado de una solicitud ya guardada", Notes = @"")]
-    public class UpdateSolicitud : IReturn<SolicitudPayload>
+    public class UpdateSolicitud : IReturn<SolicitudResponse>
     {
         [ApiMember(Name = "ID", Description = "Id de la solicitud", ParameterType = "path", DataType = "GUID", IsRequired = true)]
         public Guid Id { get; set; }
-        public SolicitudPayload solicitud { get; set; }
+        public Solicitud solicitud { get; set; }
     }
 
     [Api("Solicitudes de usuario de cita de taller")]

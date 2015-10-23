@@ -7,6 +7,9 @@ using ServiceStack;
 using CitaTaller.ServiceModel;
 using ServiceStack.OrmLite;
 using ServiceStack.Logging;
+using System.Net;
+
+//using ServiceStack.Web;
 
 namespace CitaTaller.ServiceInterface
 {
@@ -14,39 +17,41 @@ namespace CitaTaller.ServiceInterface
 
     {
         private static ILog logger = LogManager.GetLogger(typeof(ServiceDms));
-        private SolicitudPayload payload = new SolicitudPayload();
         private Guid nullGuid = new Guid();
-
         private List<modelSolicitud> dbsolicitud;
 
-        private SolicitudPayload BuildPayload (List<modelSolicitud> dbsolicitud)
+        private SolicitudResponse BuildPayload (Guid id)
         {
-            SolicitudPayload payload = new SolicitudPayload();
-            payload.solicitud = dbsolicitud.ConvertAll(x => x.ConvertTo<Solicitud>());
-            foreach (Solicitud itemsolicitud in payload.solicitud)
+            List<modelSolicitud> mysolicitud;
+            //if (id == nullGuid) return;
+            mysolicitud = Db.Select<modelSolicitud>(q => q.Id == id);
+            if (mysolicitud.Count == 0)
             {
-                List<SolicitudJob> solicitudjob;
-                List<modelSolicitudJob> dbsolicitudjob;
-                dbsolicitudjob = Db.Select<modelSolicitudJob>(q => q.SolicitudId == itemsolicitud.Id);
-                solicitudjob = dbsolicitudjob.ConvertAll(x => x.ConvertTo<SolicitudJob>());
+                if (logger.IsDebugEnabled) logger.Debug("Not Found: " + id.ToString());
+                throw HttpError.NotFound("No encontrado");
+            }
+            return BuildSolicitudResponse(mysolicitud);
+        }
 
-                foreach (SolicitudJob itemjob in solicitudjob)
-                {
-                    payload.solicitudjob.Add(itemjob);
-                    itemsolicitud.solicitudjob.Add(itemjob.Id);
-                }
+        private SolicitudResponse BuildSolicitudResponse (List<modelSolicitud> dbsolicitud)
+        {
+            
+            List<Solicitud> solicitudlist = new List<Solicitud>();
+            //List<SolicitudJob> solicitudjoblist = new List<SolicitudJob>();
+            //List<SolicitudHora> solicitudhoralist = new List<SolicitudHora>();
 
-                List<SolicitudHora> solicitudhora;
-                List<modelSolicitudHora> dbsolicitudhora;
-                dbsolicitudhora = Db.Select<modelSolicitudHora>(q => q.SolicitudId == itemsolicitud.Id);
-                solicitudhora = dbsolicitudhora.ConvertAll(x => x.ConvertTo<SolicitudHora>());
+            solicitudlist = dbsolicitud.ConvertAll(x => x.ConvertTo<Solicitud>());
+            foreach (Solicitud itemsolicitud in solicitudlist)
+            {
 
-                foreach (SolicitudHora itemhora in solicitudhora)
-                {
-                    payload.solicitudhora.Add(itemhora);
-                    itemsolicitud.solicitudhora.Add(itemhora.Id);
-                }
+                itemsolicitud.solicitudjobs = Db.Select<SolicitudJob>(q => q.SolicitudId == itemsolicitud.Id).ConvertAll(x => x.ConvertTo<SolicitudJob>());
+                itemsolicitud.solicitudhoras = Db.Select<modelSolicitudHora>(q => q.SolicitudId == itemsolicitud.Id).ConvertAll(x => x.ConvertTo<SolicitudHora>());
             };
+
+            SolicitudResponse payload = new SolicitudResponse();
+            if (solicitudlist.Count > 1) payload.solicitudes = solicitudlist;
+            else payload.solicitud = solicitudlist.First();           
+ 
             return payload;
         }
 
@@ -59,9 +64,8 @@ namespace CitaTaller.ServiceInterface
                 if (logger.IsDebugEnabled) logger.Debug("Not Found: ");
                 throw HttpError.NotFound("No encontrado");                
             }
-            payload = BuildPayload(dbsolicitud);
-            return payload;
-        }
+            return BuildSolicitudResponse(dbsolicitud);
+         }
 
 
         public object Get(GetSolicitud request)
@@ -72,76 +76,57 @@ namespace CitaTaller.ServiceInterface
                 if (logger.IsDebugEnabled) logger.Debug("Not Found: " + request.Id.ToString());
                 throw HttpError.NotFound("No encontrado");
             }
-            dbsolicitud = Db.Select<modelSolicitud>(q => q.Id == request.Id);
-            if (dbsolicitud.Count == 0)
-            {
-                if (logger.IsDebugEnabled) logger.Debug("Not Found: " + request.Id.ToString());
-                throw HttpError.NotFound("No encontrado");
-            }
-            payload = BuildPayload(dbsolicitud);
-            return payload;
+
+            if (Db.Exists<modelSolicitud>(q => q.Id == request.Id)) return BuildPayload(request.Id);
+            else throw HttpError.NotFound("No encontrado");
         }
 
         public object Post(CreateSolicitud request)
         {
-            //using (var db = DbFactory.Open())
-            //{
+           Guid solicitudId;
 
-            //    if (request.solicitud == null) throw HttpError.Conflict("Se requieren datos");
-            //    if (!db.Exists<modelDmsTaller>(s => s.Id == request.solicitud.DmsTallerId)) throw HttpError.Conflict("No existe el taller");
-            //    if (request.solicitud.Id != nullGuid) if (db.Exists<modelSolicitud>(s => s.Id == request.solicitud.Id)) throw HttpError.Conflict("La solicitud ya existe");
+           if (request.solicitud == null) throw HttpError.Conflict("Se requieren datos");
 
-
-            //    mysolicitud = new modelSolicitud();
-            //    mysolicitudJob = new List<modelSolicitudJob>();
-            //    mysolicitudHora = new List<modelSolicitudHora>();
-
-            //    mysolicitud = request.solicitud.ConvertTo<modelSolicitud>();
-            //    mysolicitudJob = request.solicitud.solicitudJob.ConvertTo<List<modelSolicitudJob>>();
-            //    mysolicitudHora = request.solicitud.solicitudHora.ConvertTo<List<modelSolicitudHora>>();
-
-            //    if (mysolicitud.Id == nullGuid)
-            //    {
-            //        mysolicitud.Id = Guid.NewGuid();
-            //    }
+            Solicitud solicitud = request.solicitud;
+            using (var db = DbFactory.Open())
+            {
+                if (!db.Exists<modelDmsTaller>(s => s.Id == solicitud.DmsTallerId)) throw HttpError.Conflict("No existe el taller");
+                if (solicitud.Id != nullGuid) if (db.Exists<modelSolicitud>(s => s.Id == solicitud.Id)) throw HttpError.Conflict("La solicitud ya existe");
 
 
-            //    Db.Insert(mysolicitud);
-            //    foreach (modelSolicitudJob job in mysolicitudJob)
-            //    {
+                modelSolicitud dbsolicitud = new modelSolicitud();
+                List<modelSolicitudJob> dbsolicitudJob = new List<modelSolicitudJob>();
+                List<modelSolicitudHora> dbsolicitudHora = new List<modelSolicitudHora>();
 
-            //        if (job.Id == nullGuid)
-            //        {
-            //            job.Id = Guid.NewGuid();
-            //        }
-            //        job.SolicitudId = mysolicitud.Id;
+                dbsolicitud = solicitud.ConvertTo<modelSolicitud>();
+                dbsolicitudJob = solicitud.solicitudjobs.ConvertAll(x => x.ConvertTo<modelSolicitudJob>());
+                dbsolicitudHora = solicitud.solicitudhoras.ConvertAll(x => x.ConvertTo<modelSolicitudHora>());
 
-            //        Db.Insert(job);
-            //    }
-            //    foreach (modelSolicitudHora hora in mysolicitudHora)
-            //    {
-            //        if (hora.Id == nullGuid)
-            //        {
-            //            hora.Id = Guid.NewGuid();
-            //        }
-            //        hora.SolicitudId = mysolicitud.Id;
-            //        Db.Insert(hora);
-            //    }
+                if (dbsolicitud.Id == nullGuid) dbsolicitud.Id = Guid.NewGuid();
+                solicitudId = dbsolicitud.Id;
+                Db.Insert(dbsolicitud);
 
-            //    //Db.InsertAll(mysolicitudJob);                
-            //    //Db.InsertAll(mysolicitudHora);
+                if (dbsolicitudJob != null)
+                {
+                    foreach (modelSolicitudJob job in dbsolicitudJob)
+                    {
 
-
-            //    if (mysolicitud != null)
-            //    {
-            //        results = mysolicitud.ConvertTo<SolicitudPayload>();
-            //        results.solicitudJob = Db.Select<modelSolicitudJob>(q => q.SolicitudId == mysolicitud.Id);
-            //        results.solicitudHora = Db.Select<modelSolicitudHora>(q => q.SolicitudId == mysolicitud.Id);
-            //        return results;
-            //    }
-            //    return results;
-            //}
-            return payload;
+                        if (job.Id == nullGuid) job.Id = Guid.NewGuid();
+                        job.SolicitudId = solicitudId;
+                        Db.Insert(job);
+                    }
+                }
+                if (dbsolicitudJob != null)
+                {
+                    foreach (modelSolicitudHora hora in dbsolicitudHora)
+                    {
+                        if (hora.Id == nullGuid) hora.Id = Guid.NewGuid();
+                        hora.SolicitudId = solicitudId;
+                        Db.Insert(hora);
+                    }
+                }     
+            }
+            return BuildPayload(solicitudId);
         }
 
         //public object Put(UpdateSolicitud request)
