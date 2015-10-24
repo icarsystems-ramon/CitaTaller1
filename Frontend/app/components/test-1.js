@@ -4,6 +4,7 @@ export default Ember.Component.extend({
     actions: {
         insertrow: function() {
             var store = this.get('targetObject.store');
+            
             console.log("InsertRow >>>>");
             //var memos = store.findAll('solicitud');
 
@@ -27,6 +28,9 @@ export default Ember.Component.extend({
                 );
             
             job.set('dmsjob',store.peekRecord('dmsjob',"0a9e85a126754908a35411abc76261cb")); //,dmsjob.get('firstObject').get('id'));
+            //Ember.guidFor(job);
+            //job.set('id', store.generateIdForRecord(store,solicitudjob));
+            //job.set('id',App.generateUUIDWithStatisticallyLowOddsOfCollision());
             soli.get("solicitudjobs").pushObject(job);
             //var soli2 = store.createRecord ('solicitud',
             //   {
