@@ -18,11 +18,11 @@ loadInitializers(App, config.modulePrefix);
 var inflector = Ember.Inflector.inflector;
 
 inflector.irregular('solicitud'     , 'solicitudes');
-inflector.irregular('solicitudjob'  , 'solicitudesjobs');
-inflector.irregular('solicitudhora' , 'solicitudeshoras');
+inflector.irregular('solicitudJob'  , 'solicitudJobs');
+inflector.irregular('solicitudHora' , 'solicitudHoras');
 inflector.irregular('dms'           , 'dmsconfig');
-inflector.irregular('dmstaller'     , 'dmstalleres');
-inflector.irregular('dmsjob'        , 'dmsjobs');
-inflector.irregular('dmscortesia'   , 'dmscortesias');
+inflector.irregular('dms-taller'     , 'dms-talleres');
+inflector.irregular('dms-job'        , 'dms-jobs');
+inflector.irregular('dms-cortesia'   , 'dms-cortesias');
 
 export default App;

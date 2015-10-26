@@ -16,11 +16,11 @@ namespace CitaTaller.ServiceModel
         public string DomainUrl { get; set; }
         [DataMember]
         public short? Idioma { get; set; }
-        [DataMember(Name = "dmstalleres")]
+        [DataMember(Name = "dmsTalleres")]
         public List<Guid> dmstaller { get; set; }
-        [DataMember(Name = "dmsjobs")]
+        [DataMember(Name = "dmsJobs")]
         public List<Guid> dmsjob { get; set; }
-        [DataMember(Name = "dmscortesias")]
+        [DataMember(Name = "dmsCortesias")]
         public List<Guid> dmscortesia { get; set; }
         public Dms()
         {
@@ -76,11 +76,11 @@ namespace CitaTaller.ServiceModel
     {
         [DataMember(Name = "dms")]
         public Dms dms { get; set; }
-        [DataMember(Name = "dmstalleres")]        
+        [DataMember(Name = "dmsTalleres")]        
         public List<DmsTaller> dmsTaller { get; set; }
-        [DataMember(Name = "dmsjobs")]
+        [DataMember(Name = "dmsJobs")]
         public List<DmsJob> dmsJob { get; set; }
-        [DataMember(Name = "dmscortesia")]
+        [DataMember(Name = "dmsCortesias")]
         public List<DmsCortesia> dmsCortesia { get; set; }
         public DmsPayload()
         {

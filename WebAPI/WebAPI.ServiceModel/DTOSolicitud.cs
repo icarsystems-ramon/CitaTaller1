@@ -15,7 +15,7 @@ namespace CitaTaller.ServiceModel
         public Guid Id { get; set; }
         [DataMember(Name = "solicitud")]
         public Guid SolicitudId { get; set; }
-        [DataMember(Name = "dmsjob")]
+        [DataMember(Name = "dmsJob")]
         public Guid DmsJobId { get; set; }
     }
 
@@ -53,15 +53,15 @@ namespace CitaTaller.ServiceModel
         public string Matric { get; set; }
         [DataMember]
         public string Chasis { get; set; }
-        [DataMember(Name = "dmstaller")]
+        [DataMember(Name = "dmsTaller")]
         public Guid DmsTallerId { get; set; }
         [DataMember]
         public string Descripcion { get; set; }
         [DataMember]
         public bool? VehiculoCortesia { get; set; }
-        [DataMember(Name = "solicitudjobs")]
+        [DataMember(Name = "solicitudJobs")]
         public List<SolicitudJob> solicitudjobs { get; set; }
-        [DataMember(Name = "solicitudhoras")]
+        [DataMember(Name = "solicitudHoras")]
         public List<SolicitudHora> solicitudhoras { get; set; }       
         public Solicitud()
         {

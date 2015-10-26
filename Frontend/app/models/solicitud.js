@@ -11,7 +11,7 @@ export default DS.Model.extend({
   descripcion: DS.attr('string'),
  
   vehiculoCortesia: DS.attr('boolean', { defaultValue: false }),
-  dmsTaller: DS.belongsTo('dmstaller'),
-  solicitudjobs: DS.hasMany('solicitudjob'),
-  solicitudhoras: DS.hasMany('solicitudhora')
+  dmsTaller: DS.belongsTo('dmsTaller'),
+  solicitudJobs: DS.hasMany('solicitudJob'),
+  solicitudHoras: DS.hasMany('solicitudHora')
 });
