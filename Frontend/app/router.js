@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('solicitudes', {});
+  this.route('nuevacita');
 });
 
 export default Router;

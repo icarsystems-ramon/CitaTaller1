@@ -16,6 +16,7 @@ export default Ember.Component.extend({
             soli.set('numgsm','650393696');
             soli.set('matric','47478KLM');
             soli.set('dmsTaller',store.peekRecord('dmsTaller',"e8c341450e5b4a10abde50fe55fcc5ec"));           
+
             var job = store.createRecord('solicitudJob',
                 {
                     solicitud: soli

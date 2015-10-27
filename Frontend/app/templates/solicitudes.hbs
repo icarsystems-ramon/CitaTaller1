@@ -2,14 +2,14 @@
 <ul>
     {{#each model as |item|}}
     <li>{{item.apellidos}}</li>
-    <li>{{item.solicitudjobs.length}}</li>
+    <li>{{item.solicitudJobs.length}}</li>
         <div>
-        {{#each item.solicitudjobs as |job|}}
+        {{#each item.solicitudJobs as |job|}}
             <div>
             {{job.id}}
             </div>
          {{else}}
-           No jobs
+           Solicitud sin Jobs
         {{/each}}
         </div>
     {{else}}
