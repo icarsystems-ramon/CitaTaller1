@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
     beforeModel: function(){
+        // Ojo! Devuelvo una promise
         return this.store.findAll('dms'); 
         },
 
