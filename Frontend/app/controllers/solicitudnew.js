@@ -9,9 +9,9 @@ export default Ember.Controller.extend({
     {
         var mandatory = true;
         var solicitud = this.get('model');    
-        if (typeof solicitud.get('numgsm') == 'undefined') {mandatory = false;}
+        if (typeof solicitud.get('numgsm') === 'undefined') {mandatory = false;}
         else {if (solicitud.get('numgsm').length < 4) {mandatory = false;}};    
-        if (typeof solicitud.get('apellidos') == 'undefined') {mandatory = false;}
+        if (typeof solicitud.get('apellidos') === 'undefined') {mandatory = false;}
         else {if (solicitud.get('apellidos').length < 3) {mandatory = false;}};   
         
         

@@ -1,4 +1,3 @@
-<h2 id="title">Nueva Solicitud</h2>
 <form>
 <div class="row">
     <fieldset>
@@ -7,6 +6,12 @@
         {{input value=model.numgsm}}
         {{input value=model.descripcion}}        
         
+        {{#form-fieldset klass="col-xs-12 col-sm-6 col-md-6 col-lg-4"}}
+        {{form-input model=model field=nombre i18nKey='solicitud_nombre' }}
+        {{form-input model=model field=apellidos i18nKey='solicitud_apellidos'}}
+        {{/form-fieldset}}
+
+
         </fieldset>
 </div>
 </form>
