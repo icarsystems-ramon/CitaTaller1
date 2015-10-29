@@ -1,0 +1,19 @@
+<h2 id="title">Nueva Solicitud</h2>
+<form>
+<div class="row">
+    <fieldset>
+        {{input value=model.nombre}}
+        {{input value=model.apellidos}}
+        {{input value=model.numgsm}}
+        {{input value=model.descripcion}}        
+        
+        </fieldset>
+</div>
+</form>
+<div class="buttons">
+    <button {{action "saveSolicitud"}} disabled={{savingDisabled}} class="button save">
+        Enviar Solicitud
+    </button>
+</div>
+{{outlet}}
+

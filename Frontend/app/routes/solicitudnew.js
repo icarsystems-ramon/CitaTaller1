@@ -34,7 +34,7 @@ export default Ember.Route.extend({
             var dmstaller = this.store.peekAll('dmsTaller')|| [];
             console.log ('talleres.count=' + dmstaller.get('length'));
 
-            var model = this.modelFor('nuevacita');
+            var model = this.modelFor('solicitudnew');
             //var model = this.store.modelFor ('solicitud');
             model.save();
             }

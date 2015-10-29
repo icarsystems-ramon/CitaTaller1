@@ -1,14 +1,7 @@
-//export function initialize(/* container, application */) {
-  // application.inject('route', 'foo', 'service:foo');
-//}
-
 export function initialize (applicationInstance) {
-    // application.inject('route', 'foo', 'service:foo');
-    
-    //var store = applicationInstance.lookup("service:store");
-    
-    //store.findAll('dms'); 
-   
+    // Nota: Se ha comentado, porque se ha pasado el código al beforeModel de la route nuevacita
+    //var store = applicationInstance.lookup("service:store");    
+    //store.findAll('dms');   
 }
 
 export default {
