@@ -3,8 +3,8 @@ import DS from 'ember-data';
 export default DS.Model.extend({
  
   numgsm: DS.attr('string'),
-  email: DS.attr('string', { defaultValue: "" }),
-  nombre: DS.attr('string',  { defaultValue: "pepe" }),
+  email: DS.attr('string'),
+  nombre: DS.attr('string'),
   apellidos: DS.attr('string'),
   matric: DS.attr('string'),
   chasis: DS.attr('string'),

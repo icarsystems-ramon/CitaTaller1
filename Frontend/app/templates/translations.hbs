@@ -1,0 +1,9 @@
+{{bs-page-header title="Translations" sub=translations.length}}
+
+<ul>
+    {{#each model as |translation|}}   
+    <li>
+        <strong>{{translation.key}}</strong>: {{translation.text}}
+    </li>
+    {{/each}}
+</ul>

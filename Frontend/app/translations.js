@@ -24,6 +24,14 @@
   },
 
   '3082': {
+      "solicitud_matric": "Matrícula",
+      "solicitud_nombre": "No*bre",
+      "solicitud_apellidos": "Apel*idos",
+      "solicitud_numgsm": "Móvil",
+      "solicitud_email": "E-mail",
+      "solicitud_descripcion": "Descripción",
+      "solicitud_vehiculocortesia": "Vehículo cortesía",
+      "button_save": "Enviar Solicitud",
       "client_search.loading": "Cargando...",
       "client_search.loading_more": "Cargando más resultados...",
       "client_search.no_results": "No se han encontrado resultados.",

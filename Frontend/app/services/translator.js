@@ -1,7 +1,8 @@
 import Ember from "ember";
 import localTranslations from '../translations';
 
-export default Ember.Object.extend({
+//export default Ember.Object.extend({
+export default Ember.Service.extend({
     translations: null,
 
     init: function(){

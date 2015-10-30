@@ -3,6 +3,14 @@ import Resolver from 'ember/resolver';
 import loadInitializers from 'ember/load-initializers';
 import config from './config/environment';
 
+//import TranslationComponent from "./components/translated-text";
+//
+//export default Ember.Handlebars.registerHelper('t', function(value, options){
+//    options.hash.key = value;
+//    return Ember.Handlebars.helpers.view.call(this, TranslationComponent, options);
+//});
+
+
 var App;
 
 Ember.MODEL_FACTORY_INJECTIONS = true;

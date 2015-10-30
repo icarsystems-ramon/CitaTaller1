@@ -1,23 +1,25 @@
 <form>
 <div class="row">
-    <fieldset>
-        {{input value=model.nombre}}
-        {{input value=model.apellidos}}
-        {{input value=model.numgsm}}
-        {{input value=model.descripcion}}        
-        
+    
         {{#form-fieldset klass="col-xs-12 col-sm-6 col-md-6 col-lg-4"}}
-        {{form-input model=model field=nombre i18nKey='solicitud_nombre' }}
-        {{form-input model=model field=apellidos i18nKey='solicitud_apellidos'}}
+        {{form-input model=model field='matric' i18nKey='solicitud_matric'}}
+        {{form-input model=model field='nombre' i18nKey='solicitud_nombre'}}
+        {{form-input model=model field='apellidos' i18nKey='solicitud_apellidos'}}
+        {{form-input model=model field='numgsm' i18nKey='solicitud_numgsm'}}
+        {{form-input model=model field='email' i18nKey='solicitud_email'}}
+        {{form-input model=model field='descripcion' i18nKey='solicitud_descripcion'}}
+        {{form-checkbox model=model field='vehiculoCortesia' i18nKey='solicitud_vehiculocortesia'}}
+
+   
         {{/form-fieldset}}
 
-
-        </fieldset>
+        
 </div>
 </form>
 <div class="buttons">
     <button {{action "saveSolicitud"}} disabled={{savingDisabled}} class="button save">
-        Enviar Solicitud
+          Enviar
+        
     </button>
 </div>
 {{outlet}}

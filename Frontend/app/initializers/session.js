@@ -14,11 +14,11 @@ export default {
         application.inject('service', 'session', 'session:main');
         //application.inject('session', 'store', 'store:main');
 
-        application.deferReadiness();
+        //application.deferReadiness();
 
         //container.lookup('session:main').initFromStore().finally(function(){
         //    application.advanceReadiness();
         //});
-        application.advanceReadiness();
+        //application.advanceReadiness();
     }
 };
