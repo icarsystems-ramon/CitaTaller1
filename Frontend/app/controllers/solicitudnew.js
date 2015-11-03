@@ -17,10 +17,10 @@ export default Ember.Controller.extend({
             return Ember.Object.create().setProperties(obj);
         });
         retorno.forEach(function(item){
-            item.set('selected',false);
+            item.set('choosed',false);
         });
 
-        retorno.objectAt(0).set ('selected',true);
+        retorno.objectAt(0).set ('choosed',true);
         //return this.store.peekAll('dmsJob')|| []; 
         return retorno;
     }.property('isDirty'),
