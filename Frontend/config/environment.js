@@ -21,10 +21,10 @@ module.exports = function(environment) {
     contentSecurityPolicy: {
         'default-src': "'self'",
         'script-src': "'self'",
-        'font-src': "'self' http://fonts.gstatic.com",
+        'font-src': "'self' http://fonts.gstatic.com https://fonts.gstatic.com http://fonts.googleapis.com",
         'connect-src': "'self' http://citatallerapi.azurewebsites.net",
-        'img-src': "'self'",
-        'style-src': "'self'  http://fonts.gstatic.com http://fonts.googleapis.com",
+        'img-src': "'self' data:",
+        'style-src': "'self' 'unsafe-inline' http://fonts.gstatic.com https://fonts.gstatic.com http://fonts.googleapis.com",
         'media-src': "'self'"
     }
   };
