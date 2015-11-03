@@ -1,18 +1,20 @@
-{{select-taller model=listtaller}}
-
-
+<h2 id="title">Bienvenido a taller</h2>
 {{paper-input label="Nombre" value=model.nombre icon="person" icon-class="name"}}
 {{paper-input label="Apellidos" value=model.apellidos icon="person" icon-class="name" required=true required-errortext="Se requiere apellidos"}}
 {{paper-input label="Teléfono" value=model.numgsm icon="phone" md-no-float=''}}
 {{paper-input label="Email" value=model.email icon="email" icon-class="email"}}
 {{paper-input label='Matrícula' value=model.matric icon="maps" icon-class="directions-car"}}
-{{!--
-{{#paper-checkbox checked=model.vehiculoCortesia}}Vehículo cortesía{{value1}}{{/paper-checkbox}}
---}}
+
+{{select-taller model=listTaller}}
 {{#paper-switch checked=model.vehiculoCortesia}}Vehículo cortesía{{/paper-switch}}
 
-{{paper-input label='Descripción del problema' value=model.descripcion icon="maps" icon-class="directions-car"}}
- 
+{{paper-divider}}
+{{paper-input label='Descripción del problema' value=model.descripcion icon="build" icon-class="action"}}
+{{select-job model=listJob}}
+{{paper-divider}}
 
 
+
+
+{{paper-divider}}
 {{#paper-button action='saveSolicitud' raised=true primary=true disabled=savingDisabled}}Enviar solicitud{{/paper-button}}

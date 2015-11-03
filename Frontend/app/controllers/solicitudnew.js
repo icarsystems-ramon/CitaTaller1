@@ -1,10 +1,14 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({ 
-    listtaller: function(){
-        //var store = this.get('targetObject.store');
-        console.log ('paso por list_taller en controller');
+    listTaller: function(){       
+        console.log ('Debug: Loading controller.ListTaller');
         return this.store.peekAll('dmsTaller')|| []; 
+    }.property('isDirty'),
+
+    listJob: function(){       
+        console.log ('Debug: Loading controller.listJob');
+        return this.store.peekAll('dmsJob')|| []; 
     }.property('isDirty'),
 
     // savingEnabled: Es una propiedad observer. 
@@ -14,6 +18,7 @@ export default Ember.Controller.extend({
 
     savingEnabled: function()
     {
+        console.log ('Debug: Evaluating controller.savingEnabled');
         var mandatory = true;
         var solicitud = this.get('model');    
         if (typeof solicitud.get('numgsm') === 'undefined') {mandatory = false;}

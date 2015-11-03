@@ -1,1 +1,9 @@
-{{yield}}
+{{#paper-list}}
+    {{#each model as |job|}}
+        {{#paper-item}}    
+            {{paper-icon icon="build" icon-class="action"}}        
+            <p>{{job.descripcion}}</p>
+            {{paper-switch class="md-secondary" checked=wifiEnabled}}
+        {{/paper-item}}
+    {{/each}}
+{{/paper-list}}

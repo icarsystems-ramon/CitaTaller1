@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({   
     beforeModel: function(){
         // Ojo! Devuelvo una promise
+        console.log ('Debug: Paso por route.beforModel()');
         return this.store.findAll('dms'); 
         },
 
@@ -17,7 +18,7 @@ export default Ember.Route.extend({
         
         //if (this.store.all('solicitud').get('length') > 0)
         var dmstaller = this.store.peekAll('dmsTaller')|| [];
-        console.log ('talleres.count=' + dmstaller.get('length'));
+        console.log ('Debug: router.model. Tenemos ' + dmstaller.get('length') + ' talleres en memoria');
         if (dmstaller.get('length') === 1)
         {
             var firsttaller = dmstaller.objectAt(0);
@@ -43,7 +44,7 @@ export default Ember.Route.extend({
             //var model = this.get('model');
             //var model = this.modelFor (this.get('currentUrl'));
             var dmstaller = this.store.peekAll('dmsTaller')|| [];
-            console.log ('talleres.count=' + dmstaller.get('length'));
+            console.log ('Debug: talleres.count=' + dmstaller.get('length'));
 
             var modelo = this.modelFor('solicitudnew');
             //var model = this.store.modelFor ('solicitud');
