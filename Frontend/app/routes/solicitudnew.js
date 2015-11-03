@@ -1,6 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+    list_taller: function(){
+        var store = this.get('targetObject.store');
+        return store.peekAll('dmsTaller')|| []; 
+    },
     beforeModel: function(){
         // Ojo! Devuelvo una promise
         return this.store.findAll('dms'); 
@@ -22,6 +26,10 @@ export default Ember.Route.extend({
         //{
         //    solicitud.set('dmsTaller',store.peekRecord('dmsTaller',"e8c341450e5b4a10abde50fe55fcc5ec"));
         //}
+        //return Ember.RSVP.hash({ 
+        //    solicitud: solicitud,
+        //    talleres: dmstaller
+        //});
         return solicitud;
     },
 
@@ -34,9 +42,9 @@ export default Ember.Route.extend({
             var dmstaller = this.store.peekAll('dmsTaller')|| [];
             console.log ('talleres.count=' + dmstaller.get('length'));
 
-            var model = this.modelFor('solicitudnew');
+            var modelo = this.modelFor('solicitudnew');
             //var model = this.store.modelFor ('solicitud');
-            model.save();
+            modelo.save();
             }
         }
  
