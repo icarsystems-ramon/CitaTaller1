@@ -49,8 +49,9 @@ export default Ember.Route.extend({
             var modelo = this.modelFor('solicitudnew');
             //var model = this.store.modelFor ('solicitud');
             modelo.save();
-            },
-        selectTaller: function(id)
+        },
+       
+        toggleJob: function(id)
             {
                 console.log ('selectTaller: ' + id);
             },

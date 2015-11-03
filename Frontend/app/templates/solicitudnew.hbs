@@ -5,16 +5,26 @@
 {{paper-input label="Email" value=model.email icon="email" icon-class="email"}}
 {{paper-input label='Matrícula' value=model.matric icon="maps" icon-class="directions-car"}}
 
-{{select-taller model=listTaller}}
+{{paper-divider}}
+
+{{#if multiTaller}}
+    {{select-taller model=listTaller}}
+{{/if}}
+    
 {{#paper-switch checked=model.vehiculoCortesia}}Vehículo cortesía{{/paper-switch}}
 
 {{paper-divider}}
-{{paper-input label='Descripción del problema' value=model.descripcion icon="build" icon-class="action"}}
+
 {{select-job model=listJob}}
+
+{{#paper-subheader class="md-no-sticky"}}Ó facilite una breve descripción:{{/paper-subheader}}
+{{paper-input label='Descripción del problema' value=model.descripcion icon="build" icon-class="action"}}
+
 {{paper-divider}}
 
+{{select-hora model=listHora}}
 
-
+{{paper-divider}}
 
 {{paper-divider}}
 {{#paper-button action='saveSolicitud' raised=true primary=true disabled=savingDisabled}}Enviar solicitud{{/paper-button}}

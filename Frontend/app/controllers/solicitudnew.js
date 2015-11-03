@@ -1,14 +1,38 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({ 
-    listTaller: function(){       
-        console.log ('Debug: Loading controller.ListTaller');
-        return this.store.peekAll('dmsTaller')|| []; 
+
+    multiTaller: function(){
+        console.log ('Debug: Evaluating controller.multiTaller');
+        var dmstaller = this.store.peekAll('dmsTaller')|| [];        
+        if (dmstaller.get('length') > 1){return true;}
+        else {return false;}   
     }.property('isDirty'),
 
-    listJob: function(){       
+    listTaller: function(){       
+        console.log ('Debug: Loading controller.ListTaller');
+        //return this.store.peekAll('dmsTaller')|| []; 
+        var modelTaller = this.store.peekAll('dmsTaller')|| []; 
+        var retorno = modelTaller.map(function(obj){
+            return Ember.Object.create().setProperties(obj);
+        });
+        retorno.forEach(function(item){
+            item.set('selected',false);
+        });
+
+        retorno.objectAt(0).set ('selected',true);
+        //return this.store.peekAll('dmsJob')|| []; 
+        return retorno;
+    }.property('isDirty'),
+
+    listJob: function(){         
         console.log ('Debug: Loading controller.listJob');
-        return this.store.peekAll('dmsJob')|| []; 
+        var modelJob = this.store.peekAll('dmsJob')|| []; 
+        var retorno = modelJob.map(function(obj){
+            return Ember.Object.create().setProperties(obj);
+        });
+        //return this.store.peekAll('dmsJob')|| []; 
+        return retorno;
     }.property('isDirty'),
 
     // savingEnabled: Es una propiedad observer. 
@@ -32,5 +56,7 @@ export default Ember.Controller.extend({
     }.property('isDirty', 'isSaving', 'model.numgsm', 'model.apellidos', 'model.email'),
    
     // savingDisabled es la negacion de savingEnabled
-    savingDisabled: Ember.computed.not('savingEnabled')  
+    savingDisabled: Ember.computed.not('savingEnabled'),
+
+    
 });
