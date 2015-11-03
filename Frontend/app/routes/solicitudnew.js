@@ -1,10 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.Route.extend({
-    list_taller: function(){
-        var store = this.get('targetObject.store');
-        return store.peekAll('dmsTaller')|| []; 
-    },
+export default Ember.Route.extend({   
     beforeModel: function(){
         // Ojo! Devuelvo una promise
         return this.store.findAll('dms'); 
@@ -22,14 +18,21 @@ export default Ember.Route.extend({
         //if (this.store.all('solicitud').get('length') > 0)
         var dmstaller = this.store.peekAll('dmsTaller')|| [];
         console.log ('talleres.count=' + dmstaller.get('length'));
-        //if (App.dms-taller.get('length') > 0)
-        //{
-        //    solicitud.set('dmsTaller',store.peekRecord('dmsTaller',"e8c341450e5b4a10abde50fe55fcc5ec"));
-        //}
+        if (dmstaller.get('length') === 1)
+        {
+            var firsttaller = dmstaller.objectAt(0);
+            solicitud.set('dmsTaller',firsttaller);
+        }
+
+        //var secondt = dmstaller.objectAt(0);
+        //solicitud.set('dmsTaller',secondt);
+       
+
         //return Ember.RSVP.hash({ 
         //    solicitud: solicitud,
         //    talleres: dmstaller
         //});
+       
         return solicitud;
     },
 
@@ -45,6 +48,22 @@ export default Ember.Route.extend({
             var modelo = this.modelFor('solicitudnew');
             //var model = this.store.modelFor ('solicitud');
             modelo.save();
+            },
+        selectTaller: function(id)
+            {
+                console.log ('selectTaller: ' + id);
+            },
+        deselectTaller: function (id)
+            {
+                console.log ('deselectTaller: ' + id);
+            },
+        selectJob: function(id)
+            {
+                console.log ('selectJob: ' + id);
+            },
+        deselectJob:function(id)
+            {
+                console.log ('deleselectJob: ' + id);
             }
         }
  

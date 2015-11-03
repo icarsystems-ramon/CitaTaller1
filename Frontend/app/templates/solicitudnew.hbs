@@ -1,3 +1,6 @@
+{{select-taller model=listtaller}}
+
+
 {{paper-input label="Nombre" value=model.nombre icon="person" icon-class="name"}}
 {{paper-input label="Apellidos" value=model.apellidos icon="person" icon-class="name" required=true required-errortext="Se requiere apellidos"}}
 {{paper-input label="Teléfono" value=model.numgsm icon="phone" md-no-float=''}}
@@ -10,9 +13,6 @@
 
 {{paper-input label='Descripción del problema' value=model.descripcion icon="maps" icon-class="directions-car"}}
  
-{{#each list_taller as |dmstaller|}}
-{{descripcion}}
-{{/each}}
 
 
 {{#paper-button action='saveSolicitud' raised=true primary=true disabled=savingDisabled}}Enviar solicitud{{/paper-button}}

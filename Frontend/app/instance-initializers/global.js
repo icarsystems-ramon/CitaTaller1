@@ -1,5 +1,5 @@
 // Nos permite tener acceso a App.store en la consola.
-// También nos permite probar los instance initializer
+// Tambien nos permite probar los instance initializer
 // http://emberigniter.com/accessing-global-object-in-ember-cli-app/
 
 export function initialize (applicationInstance) {
