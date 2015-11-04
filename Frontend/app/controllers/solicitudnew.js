@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
+
 export default Ember.Controller.extend({ 
+
+   
 
     multiTaller: function(){
         console.log ('Debug: Evaluating controller.multiTaller');
@@ -113,6 +116,9 @@ export default Ember.Controller.extend({
 
     actions: {
        
+        //hideWelcomeMessage: function() {
+        //    this.set('settings.welcomeMessageSeen', true);
+        //},
        
         chooseTaller: function(id)
         {

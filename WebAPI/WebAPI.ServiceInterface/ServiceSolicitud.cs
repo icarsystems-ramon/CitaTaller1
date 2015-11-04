@@ -112,6 +112,16 @@ namespace CitaTaller.ServiceInterface
                 DateTime now = DateTime.Now;
                 dbsolicitud.CreacionFecha = now;
 
+                Guid guidOutput;
+                if (!Guid.TryParse(dbsolicitud.CreacionDevice.ToString(), out guidOutput))
+                {
+                    dbsolicitud.CreacionDevice = Guid.NewGuid();
+                }
+
+                //if (dbsolicitud.CreacionDevice == nullGuid) dbsolicitud.CreacionDevice = Guid.NewGuid();
+                
+
+
                 Db.Insert(dbsolicitud);
 
                 if (dbsolicitudJob != null)

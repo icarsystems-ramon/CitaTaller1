@@ -39,7 +39,8 @@ namespace CitaTaller.ServiceModel
         [DataMember]
         public Guid Id { get; set; }
         [DataMember]
-        public DateTime? CreacionFecha { get; set; }        
+        public DateTime? CreacionFecha { get; set; }
+        [DataMember]
         public Guid? CreacionDevice { get; set; }
         [DataMember]
         public string Numgsm { get; set; }

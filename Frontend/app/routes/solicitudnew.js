@@ -1,18 +1,24 @@
 import Ember from 'ember';
+import Settings from '../models/settings';
 
 export default Ember.Route.extend({   
+
+  
     beforeModel: function(){
         // Ojo! Devuelvo una promise
         console.log ('Debug: Paso por route.beforModel()');
         return this.store.findAll('dms'); 
         },
 
-    model: function(){
- 
+    model: function(){       
         var solicitud = this.store.createRecord ('solicitud',
             {
-            'nombre': 'Ramon',
-            'apellidos': 'Moliner'
+                'creacionDevice':  this.get ('settings.creacionDevice'),
+                'nombre': this.get ('settings.nombre'),
+                'apellidos': this.get ('settings.apellidos'),
+                'numgsm': this.get ('settings.numgsm'),
+                'email': this.get ('settings.email'),
+                'matric': this.get ('settings.matric')
             });
 
         var dmstaller = this.store.peekAll('dmsTaller')|| [];
@@ -25,6 +31,19 @@ export default Ember.Route.extend({
         return solicitud;
     },
 
+    settings: Settings.create(),
+
+    localStoreSolicitud: function(solicitud) {
+        this.set ('settings.nombre',solicitud.get('nombre'));
+        this.set ('settings.apellidos',solicitud.get('apellidos'));
+        this.set ('settings.numgsm',solicitud.get('numgsm'));
+        this.set ('settings.email',solicitud.get('email'));
+        this.set ('settings.matric',solicitud.get('matric'));
+        this.set ('settings.lastSolicitudId',solicitud.get('id'));
+        this.set ('settings.creacionDevice',solicitud.get('creacionDevice'));
+        
+    },
+
     actions: {
         saveSolicitud: function()
             {
@@ -35,6 +54,7 @@ export default Ember.Route.extend({
             var modelo = self.modelFor('solicitudnew');
             //var model = this.store.modelFor ('solicitud');
             modelo.save().then(function(){
+                self.localStoreSolicitud (modelo);
                 self.transitionTo('solicitudok');
             });
         }

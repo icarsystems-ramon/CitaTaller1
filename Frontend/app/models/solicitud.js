@@ -9,7 +9,7 @@ export default DS.Model.extend({
   matric: DS.attr('string'),
   chasis: DS.attr('string'),
   descripcion: DS.attr('string'),
- 
+  creacionDevice: DS.attr('string'),
   vehiculoCortesia: DS.attr('boolean', { defaultValue: false }),
   dmsTaller: DS.belongsTo('dmsTaller'),
   solicitudJobs: DS.hasMany('solicitudJob'),
