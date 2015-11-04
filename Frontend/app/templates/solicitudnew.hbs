@@ -8,14 +8,16 @@
 {{paper-divider}}
 
 {{#if multiTaller}}
-    {{select-taller model=listTaller}}
+    {{select-taller model=listTaller chooseTaller="chooseTaller"}}
 {{/if}}
-    
-{{#paper-switch checked=model.vehiculoCortesia}}Vehículo cortesía{{/paper-switch}}
+
+{{#if vehiculoCortesiaEnabled}}
+    {{#paper-switch checked=model.vehiculoCortesia}}Vehículo cortesía{{/paper-switch}}
+{{/if}}
 
 {{paper-divider}}
 
-{{select-job model=listJob}}
+{{select-job model=listJob selectJob="selectJob" unselectJob="unselectJob"}}
 
 {{#paper-subheader class="md-no-sticky"}}Ó facilite una breve descripción:{{/paper-subheader}}
 {{paper-input label='Descripción del problema' value=model.descripcion icon="build" icon-class="action"}}
@@ -23,8 +25,6 @@
 {{paper-divider}}
 
 {{select-hora model=listHora}}
-
-{{paper-divider}}
 
 {{paper-divider}}
 {{#paper-button action='saveSolicitud' raised=true primary=true disabled=savingDisabled}}Enviar solicitud{{/paper-button}}

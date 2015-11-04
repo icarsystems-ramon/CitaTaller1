@@ -4,7 +4,7 @@
         {{#paper-item  param=job action="toggleJob"}}    
             {{paper-icon icon="build" icon-class="action"}}        
             <p>{{job.descripcion}}</p>
-            {{paper-switch class="md-secondary" checked=job.selected}}
+            {{paper-switch class="md-secondary" checked=job.selected value=job action="toggleJob"}}
         {{/paper-item}}
     {{/each}}
 	

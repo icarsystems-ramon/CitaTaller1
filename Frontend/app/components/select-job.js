@@ -6,6 +6,16 @@ export default Ember.Component.extend({
         toggleJob: function(job) {
             console.log ('Debug: Component. ToggleJob ' + job.id );
             //this.toggleProperty('isShowingConfirmation');
+            if (job.get('selected')) {
+                console.log ('Debug: Component. sendAction selectJob');
+                this.sendAction('selectJob', job.get('id'));
+            }
+            else
+            {
+                console.log ('Debug: Component. sendAction unselectJob');
+                this.sendAction('unselectJob', job.get('id'));
+            }
+            return true;
         }
     }
 });

@@ -9,9 +9,16 @@ export default Ember.Controller.extend({
         else {return false;}   
     }.property('isDirty'),
 
+    vehiculoCortesiaEnabled: function(){
+        console.log ('Debug: Evaluating controller.vehiculoCortesiaEnabled');
+        var retorno = this.model.get('dmsTaller').get('vehiculoCortesia');
+        if (retorno === undefined) {return false;}
+        return retorno;
+
+    }.property('model.dmsTaller'),
+
     listTaller: function(){       
         console.log ('Debug: Loading controller.ListTaller');
-        //return this.store.peekAll('dmsTaller')|| []; 
         var modelTaller = this.store.peekAll('dmsTaller')|| []; 
         var retorno = modelTaller.map(function(obj){
             return Ember.Object.create().setProperties(obj);
@@ -20,8 +27,9 @@ export default Ember.Controller.extend({
             item.set('choosed',false);
         });
 
+
         retorno.objectAt(0).set ('choosed',true);
-        //return this.store.peekAll('dmsJob')|| []; 
+        this.setChooseTaller (retorno.objectAt(0).get('id'));
         return retorno;
     }.property('isDirty'),
 
@@ -58,5 +66,70 @@ export default Ember.Controller.extend({
     // savingDisabled es la negacion de savingEnabled
     savingDisabled: Ember.computed.not('savingEnabled'),
 
+    setChooseTaller: function (id){
+        var pepe = this.store.peekRecord('dmsTaller',id);
+        this.model.set('dmsTaller',pepe); 
+    },
+
+    addJob: function (id){
+        var job = this.store.createRecord('solicitudJob',
+         {
+             solicitud: this.model
+         }
+         );
+            
+        job.set('dmsJob',this.store.peekRecord('dmsJob',id)); 
+        this.model.get("solicitudJobs").pushObject(job);
+
+    },
+    deleteJob: function (id){
+        var lista = this.model.get("solicitudJobs");
+        var count = lista.get('length');
+        for (var i = 0; i < count; i++){
+            var pepe = lista.objectAt(i);
+            if (pepe.get('dmsJob').get('id') === id) {this.store.deleteRecord(pepe);}
+        }
+    
+    },
+
+   
+    addHora: function(fecha,hora){
+
+    },
+
+    deleteHora: function(fecha,hora){
+    },
+
+    actions: {
+       
+       
+        chooseTaller: function(id)
+        {
+            console.log ('Controller chooseTaller: ' + id);
+            this.setChooseTaller (id);       
+
+        },
+        selectJob: function (id)
+        {
+            console.log ('Controller selectJob: ' + id);
+            this.addJob(id);
+        },
+        unselectJob: function(id)
+        {
+            console.log ('Controller unselectJob: ' + id);
+            this.deleteJob(id);
+        },
+        selectHora: function(fecha,hora)
+        {
+            console.log('Controller selectHora: ' + fecha + hora);
+            this.addHora (fecha,hora);
+        },
+        unselectHora: function(fecha,hora)
+        {
+            console.log('Controller unselectHora: ' + fecha + hora);
+            this.deleteHora (fecha,hora);
+        }
+    
+    }
     
 });

@@ -7,7 +7,7 @@
             {{taller.descripcion}}
             <p>{{taller.direccion}}</p>          
          </div>
-         {{paper-radio class="md-secondary" selected=taller.choosed  }}
+         {{paper-radio value=taller class="md-secondary" selected=taller.choosed changed="chooseTaller" }}
     {{/paper-item}}
 
 {{/each}}

@@ -51,22 +51,19 @@ export default Ember.Route.extend({
             modelo.save();
         },
        
-        toggleJob: function(id)
+        chooseTaller: function(id)
             {
-                console.log ('selectTaller: ' + id);
+            console.log ('Route chooseTaller: ' + id);
             },
-        deselectTaller: function (id)
+        selectJob: function (id)
             {
-                console.log ('deselectTaller: ' + id);
+            console.log ('Route selectJob: ' + id);
             },
-        selectJob: function(id)
+        unselectJob: function(id)
             {
-                console.log ('selectJob: ' + id);
-            },
-        deselectJob:function(id)
-            {
-                console.log ('deleselectJob: ' + id);
+            console.log ('Route unselectJob: ' + id);
             }
+    
         }
  
 });

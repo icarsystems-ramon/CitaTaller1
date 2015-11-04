@@ -7,11 +7,14 @@ export default Ember.Component.extend({
             //this.toggleProperty('isShowingConfirmation');
             //taller.set('choosed',true);
             this.model.forEach(function(item){
-                //console.log ('Debug: forEach ' + item.get('id'));
-                //console.log ('Debug: forEach ' + taller.get('id'));
                 if (item.get('id') === taller.get('id')) {}
                 else {item.set('choosed',false);}
             });
+            //if (taller.get('choosed')) {
+                console.log ('Debug: Component. sendAction chooseTaller');
+                this.sendAction('chooseTaller', taller.get('id'));
+            //}
+                return true;
         }
     }
 });
