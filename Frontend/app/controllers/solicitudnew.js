@@ -66,6 +66,17 @@ export default Ember.Controller.extend({
     // savingDisabled es la negacion de savingEnabled
     savingDisabled: Ember.computed.not('savingEnabled'),
 
+
+    emailValidation: {
+        
+        'errorMessage': 'Introduzca un email válido',
+        'isError': (inputValue) => {
+            console.log ('Debug: Evaluating emailValidation');
+            var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            return !emailPattern.test(inputValue);
+        }
+    },
+
     setChooseTaller: function (id){
         var pepe = this.store.peekRecord('dmsTaller',id);
         this.model.set('dmsTaller',pepe); 

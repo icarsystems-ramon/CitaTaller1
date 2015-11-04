@@ -58,7 +58,10 @@ namespace CitaTaller.ServiceInterface
         public object Get(GetSolicitudes request)
         {           
             if (logger.IsDebugEnabled) logger.Debug("Request GetSolicitudes");
-            dbsolicitud = Db.Select<modelSolicitud>();
+            //dbsolicitud = Db.Select<modelSolicitud>();
+            var q = Db.From<modelSolicitud>().OrderByDescending(o => o.CreacionFecha);
+            dbsolicitud = Db.Select(q);            
+
             if (dbsolicitud.Count == 0)
             {
                 if (logger.IsDebugEnabled) logger.Debug("Not Found: ");
@@ -103,7 +106,12 @@ namespace CitaTaller.ServiceInterface
                 dbsolicitudHora = solicitud.solicitudhoras.ConvertAll(x => x.ConvertTo<modelSolicitudHora>());
 
                 if (dbsolicitud.Id == nullGuid) dbsolicitud.Id = Guid.NewGuid();
+          
                 solicitudId = dbsolicitud.Id;
+
+                DateTime now = DateTime.Now;
+                dbsolicitud.CreacionFecha = now;
+
                 Db.Insert(dbsolicitud);
 
                 if (dbsolicitudJob != null)

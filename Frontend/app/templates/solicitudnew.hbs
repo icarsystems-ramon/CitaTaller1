@@ -1,30 +1,39 @@
+
 <h2 id="title">Bienvenido a taller</h2>
-{{paper-input label="Nombre" value=model.nombre icon="person" icon-class="name"}}
-{{paper-input label="Apellidos" value=model.apellidos icon="person" icon-class="name" required=true required-errortext="Se requiere apellidos"}}
-{{paper-input label="Teléfono" value=model.numgsm icon="phone" md-no-float=''}}
-{{paper-input label="Email" value=model.email icon="email" icon-class="email"}}
-{{paper-input label='Matrícula' value=model.matric icon="maps" icon-class="directions-car"}}
+{{#paper-content class="md-padding"}}
+<div class="doc-content">
+    <div layout="" layout-sm="column">
+        {{paper-input flex=50  label="Nombre" value=model.nombre icon="person" icon-class="name"}}
+        {{paper-input flex=50 label="Apellidos" value=model.apellidos required=true required-errortext="Se requiere apellidos"}}
+    </div>
+    <div layout="" layout-sm="column">
+        {{paper-input flex=50  label="Teléfono" required=true value=model.numgsm icon="phone" md-no-float='' required-errortext="Se requiere teléfono"}}
+        {{paper-input flex=50  label="Email"    required=true type="email" value=model.email customValidation=emailValidation icon="email" icon-class="email" required-errortext="Se requiere email" }}
+    </div>
+    <div layout="" layout-sm="column">
+        {{paper-input flex=50 label='Matrícula' maxlength="15" maxlength-errortext="Máximo 15 dígitos" value=model.matric icon="maps" icon-class="directions-car"}}
+        {{paper-input flex=50 label='Chasis'    maxlength="17" maxlength-errortext="Máximo 17 dígitos" value=model.chasis }}
+    </div>
+ </div>
+{{/paper-content}}
 
-{{paper-divider}}
-
-{{#if multiTaller}}
+    {{#paper-content class="md-whiteframe-z1 grid-list-demo1"}}
+    {{#if multiTaller}}
     {{select-taller model=listTaller chooseTaller="chooseTaller"}}
-{{/if}}
+    {{/if}}
+    {{#if vehiculoCortesiaEnabled}}
 
-{{#if vehiculoCortesiaEnabled}}
     {{#paper-switch checked=model.vehiculoCortesia}}Vehículo cortesía{{/paper-switch}}
-{{/if}}
+    {{/if}}
+    {{/paper-content}}
+    {{#paper-content class="md-whiteframe-z1 grid-list-demo1"}}
 
-{{paper-divider}}
 
-{{select-job model=listJob selectJob="selectJob" unselectJob="unselectJob"}}
+    {{select-job model=listJob selectJob="selectJob" unselectJob="unselectJob"}}
+    {{#paper-subheader class="md-no-sticky"}}Ó facilite una breve descripción:{{/paper-subheader}}
+    {{paper-input textarea=true label='Descripción del problema' value=model.descripcion icon="build" icon-class="action"}}
+{{/paper-content}}
 
-{{#paper-subheader class="md-no-sticky"}}Ó facilite una breve descripción:{{/paper-subheader}}
-{{paper-input label='Descripción del problema' value=model.descripcion icon="build" icon-class="action"}}
-
-{{paper-divider}}
-
-{{select-hora model=listHora}}
-
-{{paper-divider}}
-{{#paper-button action='saveSolicitud' raised=true primary=true disabled=savingDisabled}}Enviar solicitud{{/paper-button}}
+    {{select-hora model=listHora}}
+    {{paper-divider}}
+    {{#paper-button action='saveSolicitud' raised=true primary=true disabled=savingDisabled}}Enviar solicitud{{/paper-button}}
