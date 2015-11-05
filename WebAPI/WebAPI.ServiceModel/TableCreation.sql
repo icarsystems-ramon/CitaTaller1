@@ -37,8 +37,10 @@ CREATE TABLE [dbo].[DmsTaller](
 	[DmsId] [uniqueidentifier] NOT NULL,
 	[Descripcion] [nvarchar](50) NULL,
 	[Direccion] [nvarchar](150) NULL,
-	[VehiculoCortesia] [bit] NULL,
+	[VehiculoCortesia] [bit] NULL DEFAULT 0,
 	[DmsKey] [varchar](25) NULL,
+	[GeoLat] DECIMAL(9, 6) NULL DEFAULT 0, 
+    [GeoLng] DECIMAL(9, 6) NULL DEFAULT 0, 
  CONSTRAINT [PK_DmsTaller] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -59,7 +61,7 @@ CREATE TABLE [dbo].[Solicitud](
 	[Chasis] [nvarchar](17) NULL,
 	[DmsTallerId] [uniqueidentifier] NOT NULL,
 	[Descripcion] [nvarchar](250) NULL,
-	[VehiculoCortesia] [bit] NULL,
+	[VehiculoCortesia] [bit] NULL DEFAULT 0,
 	[DmsCitaCreada] [bit] NULL,
 	[DmsClienteKey] [varchar](15) NULL,
 	[DmsVehiculoKey] [varchar](15) NULL,

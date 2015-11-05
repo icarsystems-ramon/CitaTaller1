@@ -20,17 +20,21 @@ module.exports = function(environment) {
 
     contentSecurityPolicy: {
         'default-src': "'self'",
-        'script-src': "'self'",
+        'script-src': "'self' 'unsafe-eval' *.googleapis.com maps.gstatic.com",
         'font-src': "'self' http://fonts.gstatic.com https://fonts.gstatic.com http://fonts.googleapis.com",
-        'connect-src': "'self' http://citatallerapi.azurewebsites.net",
-        'img-src': "'self' data:",
-        'style-src': "'self' 'unsafe-inline' http://fonts.gstatic.com https://fonts.gstatic.com http://fonts.googleapis.com",
+        'connect-src': "'self' http://citatallerapi.azurewebsites.net maps.gstatic.com",
+        'img-src': "'self' data: *.googleapis.com maps.gstatic.com csi.gstatic.com",
+        'style-src': "'self' 'unsafe-inline' http://fonts.gstatic.com https://fonts.gstatic.com http://fonts.googleapis.com maps.gstatic.com",
         'media-src': "'self'"
     }
   };
 
   ENV.API_HOST = 'http://citatallerapi.azurewebsites.net';
   ENV.API_NAMESPACE = "api";
+  ENV['g-map'] = {
+      libraries: ['places', 'geometry'],
+      key: 'AIzaSyD9xpLbzOw0sGXCWbeG4gDwPcwVgjd5sX4'
+  };
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;

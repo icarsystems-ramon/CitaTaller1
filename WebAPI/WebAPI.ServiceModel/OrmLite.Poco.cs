@@ -93,6 +93,8 @@ namespace CitaTaller.ServiceModel
         public string Direccion { get; set;}
         public bool? VehiculoCortesia { get; set;}
         public string DmsKey { get; set;}
+        public decimal GeoLat { get; set; }
+        public decimal GeoLng { get; set; }
     }
 	[Alias("Solicitud")]
     public partial class modelSolicitud : IHasId<Guid> 

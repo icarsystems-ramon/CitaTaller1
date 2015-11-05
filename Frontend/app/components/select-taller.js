@@ -11,11 +11,15 @@ export default Ember.Component.extend({
                 else {item.set('choosed',false);}
             });
             //if (taller.get('choosed')) {
-                console.log ('Debug: Component. sendAction chooseTaller');
-                this.sendAction('chooseTaller', taller.get('id'));
-            //}
-                return true;
-        }
+            console.log ('Debug: Component. sendAction chooseTaller');
+            this.sendAction('chooseTaller', taller.get('id'));
+            return true;
+        },
+        toggleGeo: function(taller) {
+            console.log ('Debug: Component. sendAction toggleGeo ' + taller.get('id'));
+            this.sendAction('toggleGeo', taller);
+            return true;
+        },
     }
 });
 

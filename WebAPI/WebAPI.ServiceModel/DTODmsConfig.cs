@@ -45,6 +45,10 @@ namespace CitaTaller.ServiceModel
         public bool? VehiculoCortesia { get; set; }
         [DataMember]
         public string DmsKey { get; set; }
+        [DataMember]
+        public decimal GeoLat { get; set; }
+        [DataMember]
+        public decimal GeoLng { get; set; }
     }
 
     [DataContract]

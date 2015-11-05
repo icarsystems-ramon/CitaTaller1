@@ -21,6 +21,14 @@
     {{#if multiTaller}}
     {{select-taller model=listTaller chooseTaller="chooseTaller"}}
     {{/if}}
+
+    
+    {{#if geoVisible}}
+    {{#g-map lat=geoLat lng=geoLng zoom=18 as |contexto|}}
+        {{g-map-marker contexto lat=geoLat lng=geoLng}}
+    {{/g-map}}
+    {{/if}}
+
     {{#if vehiculoCortesiaEnabled}}
 
     {{#paper-switch checked=model.vehiculoCortesia}}Vehículo cortesía{{/paper-switch}}

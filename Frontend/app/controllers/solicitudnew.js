@@ -20,6 +20,17 @@ export default Ember.Controller.extend({
 
     }.property('model.dmsTaller'),
 
+    geoLat: 41.474887,
+    geoLng: 2.084788,
+    geoVisible: false,
+    
+    toggleGeoVisible: function()
+    {
+        if (this.get('geoVisible')) {this.set('geoVisible',false);}
+        else {this.set('geoVisible',true);}
+    },
+
+
     listTaller: function(){       
         console.log ('Debug: Loading controller.ListTaller');
         var modelTaller = this.store.peekAll('dmsTaller')|| []; 
@@ -83,6 +94,8 @@ export default Ember.Controller.extend({
     setChooseTaller: function (id){
         var pepe = this.store.peekRecord('dmsTaller',id);
         this.model.set('dmsTaller',pepe); 
+        this.set('geoLat',pepe.get('geoLat'));
+        this.set('geoLng',pepe.get('geoLng'));
     },
 
     addJob: function (id){
@@ -114,36 +127,45 @@ export default Ember.Controller.extend({
     deleteHora: function(fecha,hora){
     },
 
-    actions: {
-       
-        //hideWelcomeMessage: function() {
-        //    this.set('settings.welcomeMessageSeen', true);
+    actions: {       
+      
+        toggleGeo: function(taller)
+        {
+            var id = taller.get('id');
+            console.log ('Debug: Controller xxxxxx: ' + id);
+            this.setChooseTaller (id); 
+        },
+
+        //toggleGeo: function(id)
+        //{
+        //    console.log ('Debug: Controller. toggleGeo' + id);
+        //    this.toggleGeoVisible();
         //},
-       
+
         chooseTaller: function(id)
         {
-            console.log ('Controller chooseTaller: ' + id);
-            this.setChooseTaller (id);       
-
+            console.log ('Debug: Controller chooseTaller: ' + id);
+            this.setChooseTaller (id); 
         },
+       
         selectJob: function (id)
         {
-            console.log ('Controller selectJob: ' + id);
+            console.log ('Debug: Controller selectJob: ' + id);
             this.addJob(id);
         },
         unselectJob: function(id)
         {
-            console.log ('Controller unselectJob: ' + id);
+            console.log ('Debug: Controller unselectJob: ' + id);
             this.deleteJob(id);
         },
         selectHora: function(fecha,hora)
         {
-            console.log('Controller selectHora: ' + fecha + hora);
+            console.log('Debug: Controller selectHora: ' + fecha + hora);
             this.addHora (fecha,hora);
         },
         unselectHora: function(fecha,hora)
         {
-            console.log('Controller unselectHora: ' + fecha + hora);
+            console.log('Debug: Controller unselectHora: ' + fecha + hora);
             this.deleteHora (fecha,hora);
         }
     

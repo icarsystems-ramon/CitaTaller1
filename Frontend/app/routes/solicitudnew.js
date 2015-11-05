@@ -44,34 +44,20 @@ export default Ember.Route.extend({
         
     },
 
+    saveModel: function(){
+        var self = this;     
+        var modelo = self.modelFor('solicitudnew');
+        modelo.save().then(function(){
+            self.localStoreSolicitud (modelo);
+            self.transitionTo('solicitudok');
+        });
+    },
+
     actions: {
         saveSolicitud: function()
             {
-            var self = this;            
-            var dmstaller = self.store.peekAll('dmsTaller')|| [];
-            console.log ('Debug: talleres.count=' + dmstaller.get('length'));
-
-            var modelo = self.modelFor('solicitudnew');
-            //var model = this.store.modelFor ('solicitud');
-            modelo.save().then(function(){
-                self.localStoreSolicitud (modelo);
-                self.transitionTo('solicitudok');
-            });
-        }
-       
-        //chooseTaller: function(id)
-        //    {
-        //    console.log ('Route chooseTaller: ' + id);
-        //    },
-        //selectJob: function (id)
-        //    {
-        //    console.log ('Route selectJob: ' + id);
-        //    },
-        //unselectJob: function(id)
-        //    {
-        //    console.log ('Route unselectJob: ' + id);
-        //    }
-    
+                this.saveModel();           
+            }
         }
  
 });
