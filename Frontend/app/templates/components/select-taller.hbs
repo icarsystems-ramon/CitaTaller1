@@ -1,7 +1,7 @@
 {{#paper-list}}
 {{#paper-subheader class="md-no-sticky"}}Escoja el taller de su preferencia:{{/paper-subheader}}
     {{#each model as |taller|}}
-        {{#paper-button icon-button=true param=taller action="toggleGeo" }}
+        {{#paper-button icon-button=true param=taller action="toggleGeo" target=component}}
         {{paper-icon icon="place"}}
         {{/paper-button}}
         {{#paper-item class="md-3-line" param=taller action="chooseTaller"}}           
