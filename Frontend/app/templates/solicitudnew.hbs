@@ -1,47 +1,57 @@
-
-<h2 id="title">Bienvenido a taller</h2>
 {{#paper-content class="md-padding"}}
 <div class="doc-content">
+    {{#paper-content class="md-whiteframe-z1 grid-list-demo1"}}
+
+   {{#paper-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="6"
+        md-row-height-gt-md="1:1" md-row-height="2:2"
+        md-gutter="12px" md-gutter-gt-sm="8px"}}
+
+    {{#paper-grid-tile class="red" md-rowspan="2" md-colspan="2" md-colspan-sm="1"}}
+    {{#paper-grid-tile-footer}}
+    <h3>#5: (2r x 2c)</h3>
+    {{/paper-grid-tile-footer}}
+    {{/paper-grid-tile}}
+
+
+    {{/paper-grid-list}}
+    {{/paper-content}}
+
+
+
     <div layout="" layout-sm="column">
         {{paper-input flex=50  label="Nombre" value=model.nombre icon="person" icon-class="name"}}
         {{paper-input flex=50 label="Apellidos" value=model.apellidos required=true required-errortext="Se requiere apellidos"}}
     </div>
     <div layout="" layout-sm="column">
-        {{paper-input flex=50  label="Teléfono" required=true value=model.numgsm icon="phone" md-no-float='' required-errortext="Se requiere teléfono"}}
-        {{paper-input flex=50  label="Email"    required=true type="email" value=model.email customValidation=emailValidation icon="email" icon-class="email" required-errortext="Se requiere email" }}
+        {{paper-input flex=50  label="Teléfono" required=true type="tel"   value=model.numgsm icon="phone" md-no-float='' required-errortext="Se requiere teléfono"}}
+        {{paper-input flex=50  label="Email"    required=true type="email" value=model.email  customValidation=emailValidation icon="email" icon-class="email" required-errortext="Se requiere email" }}
     </div>
     <div layout="" layout-sm="column">
-        {{paper-input flex=50 label='Matrícula' maxlength="15" maxlength-errortext="Máximo 15 dígitos" value=model.matric icon="maps" icon-class="directions-car"}}
-        {{paper-input flex=50 label='Chasis'    maxlength="17" maxlength-errortext="Máximo 17 dígitos" value=model.chasis }}
+        {{paper-input flex=50 label='Matrícula' value=model.matric icon="maps" icon-class="directions-car"}}
+        {{paper-input flex=50 label='Chasis'    value=model.chasis }}
     </div>
- </div>
-{{/paper-content}}
 
-    {{#paper-content class="md-whiteframe-z1 grid-list-demo1"}}
+
     {{#if multiTaller}}
-    {{select-taller model=listTaller chooseTaller="chooseTaller"}}
+    {{select-taller model=listTaller chooseTaller="chooseTaller" toggleGeo="toggleGeo"}}
     {{/if}}
 
-    
-    {{#if geoVisible}}
-    {{#g-map lat=geoLat lng=geoLng zoom=18 as |contexto|}}
-        {{g-map-marker contexto lat=geoLat lng=geoLng}}
-    {{/g-map}}
-    {{/if}}
 
     {{#if vehiculoCortesiaEnabled}}
 
     {{#paper-switch checked=model.vehiculoCortesia}}Vehículo cortesía{{/paper-switch}}
     {{/if}}
-    {{/paper-content}}
-    {{#paper-content class="md-whiteframe-z1 grid-list-demo1"}}
+
 
 
     {{select-job model=listJob selectJob="selectJob" unselectJob="unselectJob"}}
     {{#paper-subheader class="md-no-sticky"}}Ó facilite una breve descripción:{{/paper-subheader}}
     {{paper-input textarea=true label='Descripción del problema' value=model.descripcion icon="build" icon-class="action"}}
-{{/paper-content}}
+
 
     {{select-hora model=listHora}}
     {{paper-divider}}
     {{#paper-button action='saveSolicitud' raised=true primary=true disabled=savingDisabled}}Enviar solicitud{{/paper-button}}
+
+</div>
+{{/paper-content}}

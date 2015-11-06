@@ -20,15 +20,15 @@ export default Ember.Controller.extend({
 
     }.property('model.dmsTaller'),
 
-    geoLat: 41.474887,
-    geoLng: 2.084788,
-    geoVisible: false,
+    //geoLat: 41.474887,
+    ///geoLng: 2.084788,
+    //geoVisible: false,
     
-    toggleGeoVisible: function()
-    {
-        if (this.get('geoVisible')) {this.set('geoVisible',false);}
-        else {this.set('geoVisible',true);}
-    },
+    //toggleGeoVisible: function()
+    //{
+    //    if (this.get('geoVisible')) {this.set('geoVisible',false);}
+    //    else {this.set('geoVisible',true);}
+    //},
 
 
     listTaller: function(){       
@@ -37,8 +37,11 @@ export default Ember.Controller.extend({
         var retorno = modelTaller.map(function(obj){
             return Ember.Object.create().setProperties(obj);
         });
+
+        //retorno.setEach ('choosed',false);
         retorno.forEach(function(item){
             item.set('choosed',false);
+            item.set('geoVisible',false);
         });
 
 
@@ -94,8 +97,8 @@ export default Ember.Controller.extend({
     setChooseTaller: function (id){
         var pepe = this.store.peekRecord('dmsTaller',id);
         this.model.set('dmsTaller',pepe); 
-        this.set('geoLat',pepe.get('geoLat'));
-        this.set('geoLng',pepe.get('geoLng'));
+        //this.set('geoLat',pepe.get('geoLat'));
+        //this.set('geoLng',pepe.get('geoLng'));
     },
 
     addJob: function (id){
@@ -133,7 +136,13 @@ export default Ember.Controller.extend({
         {
             var id = taller.get('id');
             console.log ('Debug: Controller xxxxxx: ' + id);
-            this.setChooseTaller (id); 
+            //this.setChooseTaller (id); 
+           // this.toggleGeoVisible();
+        },
+
+        emailValidation: function()
+        {
+            console.log ('Debug: Controller emailValidation: ' );
         },
 
         //toggleGeo: function(id)

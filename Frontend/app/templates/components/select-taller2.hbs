@@ -1,0 +1,26 @@
+{{#paper-list}}
+{{#paper-subheader class="md-no-sticky"}}Escoja el taller de su preferencia:{{/paper-subheader}}
+    {{#each model as |taller|}}
+        {{#paper-button icon-button=true param=taller action="toggleGeo" }}
+        {{paper-icon icon="place" spin=taller.geoVisible}}
+        {{/paper-button}}
+        {{#paper-item class="md-3-line" param=taller action="chooseTaller"}}           
+            <div class="md-list-item-text">
+                {{#if taller.geoVisible}}
+                    {{#g-map lat=taller.geoLat lng=taller.geoLng zoom=18 as |contexto|}}
+                    {{g-map-marker contexto lat=taller.geoLat lng=taller.geoLng}}
+                    {{/g-map}}
+                {{else}}
+                    {{taller.descripcion}}
+                    <p>{{taller.direccion}}</p>
+                {{/if}}
+
+                
+                
+            </div>
+            {{paper-radio value=taller class="md-secondary" selected=taller.choosed param=taller changed="chooseTaller" }}
+        {{/paper-item}}
+        
+    {{/each}}
+{{/paper-list}}
+

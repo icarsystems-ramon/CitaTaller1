@@ -16,8 +16,12 @@ export default Ember.Component.extend({
             return true;
         },
         toggleGeo: function(taller) {
-            console.log ('Debug: Component. sendAction toggleGeo ' + taller.get('id'));
-            this.sendAction('toggleGeo', taller);
+            console.log ('Debug: Component. toggleGeo ' + taller.get('descripcion') + ' ' + taller.get('id'));            
+            this.model.forEach(function(item){
+                if (item.get('id') === taller.get('id')) {item.toggleProperty ('geoVisible');}
+                else {item.set('geoVisible',false);}
+            });
+            //this.sendAction('toggleGeo', taller);
             return true;
         },
     }
