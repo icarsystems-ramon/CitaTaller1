@@ -1,15 +1,15 @@
 import Ember from 'ember';
+import moment from 'moment';
+
+export default Ember.Controller.extend({
 
 
-export default Ember.Controller.extend({ 
-
-   
 
     multiTaller: function(){
         console.log ('Debug: Evaluating controller.multiTaller');
-        var dmstaller = this.store.peekAll('dmsTaller')|| [];        
+        var dmstaller = this.store.peekAll('dmsTaller')|| [];
         if (dmstaller.get('length') > 1){return true;}
-        else {return false;}   
+        else {return false;}
     }.property('isDirty'),
 
     vehiculoCortesiaEnabled: function(){
@@ -20,20 +20,12 @@ export default Ember.Controller.extend({
 
     }.property('model.dmsTaller'),
 
-    //geoLat: 41.474887,
-    ///geoLng: 2.084788,
-    //geoVisible: false,
-    
-    //toggleGeoVisible: function()
-    //{
-    //    if (this.get('geoVisible')) {this.set('geoVisible',false);}
-    //    else {this.set('geoVisible',true);}
-    //},
 
 
-    listTaller: function(){       
+
+    listTaller: function(){
         console.log ('Debug: Loading controller.ListTaller');
-        var modelTaller = this.store.peekAll('dmsTaller')|| []; 
+        var modelTaller = this.store.peekAll('dmsTaller')|| [];
         var retorno = modelTaller.map(function(obj){
             return Ember.Object.create().setProperties(obj);
         });
@@ -46,22 +38,52 @@ export default Ember.Controller.extend({
 
 
         retorno.objectAt(0).set ('choosed',true);
-        this.setChooseTaller (retorno.objectAt(0).get('id'));
+        //this.setChooseTaller (retorno.objectAt(0).get('id'));
         return retorno;
     }.property('isDirty'),
 
-    listJob: function(){         
+    listJob: function(){
         console.log ('Debug: Loading controller.listJob');
-        var modelJob = this.store.peekAll('dmsJob')|| []; 
+        var modelJob = this.store.peekAll('dmsJob')|| [];
         var retorno = modelJob.map(function(obj){
             return Ember.Object.create().setProperties(obj);
         });
-        //return this.store.peekAll('dmsJob')|| []; 
+        //return this.store.peekAll('dmsJob')|| [];
         return retorno;
     }.property('isDirty'),
 
-    // savingEnabled: Es una propiedad observer. 
-    // Indica si se puede grabar el registro. 
+    listHora: function(){
+        console.log ('Debug: Loading controller.listHora');
+        var retorno = [];
+        var x=0;
+        var y=0;
+        moment.locale('es');
+        var now = moment();
+        var xfecha = now.startOf('day');
+        var dfecha;
+        for (; x<6; x++) {
+            xfecha.add(1,'days');
+            dfecha = xfecha.calendar();
+            console.log ('Debug: Loading controller.listHora ' + dfecha);
+            var fecha = Ember.Object.create();
+            fecha.set ('fechaValue',xfecha);
+            fecha.set ('fechaDisplay',dfecha);
+            fecha.set ('listHora',[]);
+
+            for (y=0;y<8;y++)
+            {
+              var hora = Ember.Object.create();
+              hora.set ('fechaValue',xfecha);
+              hora.set ('hora', 8 + y);
+              fecha.listHora.pushObject(hora);
+            };
+            retorno.pushObject (fecha);            
+        };
+        return retorno;
+    }.property('isDirty'),
+
+    // savingEnabled: Es una propiedad observer.
+    // Indica si se puede grabar el registro.
     // isSaving: No se debe grabar porque se esta en el proceso de grabarlo.
     // hasDirtyAttributes: El modelo tiene algun campo modificado.
 
@@ -69,24 +91,24 @@ export default Ember.Controller.extend({
     {
         console.log ('Debug: Evaluating controller.savingEnabled');
         var mandatory = true;
-        var solicitud = this.get('model');    
+        var solicitud = this.get('model');
         if (typeof solicitud.get('numgsm') === 'undefined') {mandatory = false;}
-        else {if (solicitud.get('numgsm').length < 4) {mandatory = false;}}    
+        else {if (solicitud.get('numgsm').length < 4) {mandatory = false;}}
         if (typeof solicitud.get('apellidos') === 'undefined') {mandatory = false;}
-        else {if (solicitud.get('apellidos').length < 3) {mandatory = false;}}   
-        
-        
+        else {if (solicitud.get('apellidos').length < 3) {mandatory = false;}}
 
-        return mandatory && solicitud.get('hasDirtyAttributes') && !solicitud.get('isSaving');      
+
+
+        return mandatory && solicitud.get('hasDirtyAttributes') && !solicitud.get('isSaving');
     }.property('isDirty', 'isSaving', 'model.numgsm', 'model.apellidos', 'model.email'),
-   
+
     // savingDisabled es la negacion de savingEnabled
     savingDisabled: Ember.computed.not('savingEnabled'),
 
 
     emailValidation: {
-        
-        'errorMessage': 'Introduzca un email válido',
+
+        'errorMessage': 'Introduzca un email vÃ¡lido',
         'isError': (inputValue) => {
             console.log ('Debug: Evaluating emailValidation');
             var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -96,7 +118,7 @@ export default Ember.Controller.extend({
 
     setChooseTaller: function (id){
         var pepe = this.store.peekRecord('dmsTaller',id);
-        this.model.set('dmsTaller',pepe); 
+        this.model.set('dmsTaller',pepe);
         //this.set('geoLat',pepe.get('geoLat'));
         //this.set('geoLng',pepe.get('geoLng'));
     },
@@ -107,8 +129,8 @@ export default Ember.Controller.extend({
              solicitud: this.model
          }
          );
-            
-        job.set('dmsJob',this.store.peekRecord('dmsJob',id)); 
+
+        job.set('dmsJob',this.store.peekRecord('dmsJob',id));
         this.model.get("solicitudJobs").pushObject(job);
 
     },
@@ -119,10 +141,14 @@ export default Ember.Controller.extend({
             var pepe = lista.objectAt(i);
             if (pepe.get('dmsJob').get('id') === id) {this.store.deleteRecord(pepe);}
         }
-    
+
     },
 
-   
+
+    addFecha: function(fecha){
+
+    },
+
     addHora: function(fecha,hora){
 
     },
@@ -130,13 +156,13 @@ export default Ember.Controller.extend({
     deleteHora: function(fecha,hora){
     },
 
-    actions: {       
-      
+    actions: {
+
         toggleGeo: function(taller)
         {
             var id = taller.get('id');
             console.log ('Debug: Controller xxxxxx: ' + id);
-            //this.setChooseTaller (id); 
+            //this.setChooseTaller (id);
            // this.toggleGeoVisible();
         },
 
@@ -154,9 +180,9 @@ export default Ember.Controller.extend({
         chooseTaller: function(id)
         {
             console.log ('Debug: Controller chooseTaller: ' + id);
-            this.setChooseTaller (id); 
+            this.setChooseTaller (id);
         },
-       
+
         selectJob: function (id)
         {
             console.log ('Debug: Controller selectJob: ' + id);
@@ -167,17 +193,24 @@ export default Ember.Controller.extend({
             console.log ('Debug: Controller unselectJob: ' + id);
             this.deleteJob(id);
         },
+
+        selectFecha: function(fecha)
+        {
+            console.log('Debug: Controller selectFecha: ' + fecha);
+            this.addFecha (fecha);
+        },
+
         selectHora: function(fecha,hora)
         {
-            console.log('Debug: Controller selectHora: ' + fecha + hora);
+            console.log('Debug: Controller selectHora: ' + fecha + " " + hora);
             this.addHora (fecha,hora);
         },
         unselectHora: function(fecha,hora)
         {
-            console.log('Debug: Controller unselectHora: ' + fecha + hora);
+            console.log('Debug: Controller unselectHora: ' + fecha + " " + hora);
             this.deleteHora (fecha,hora);
         }
-    
+
     }
-    
+
 });

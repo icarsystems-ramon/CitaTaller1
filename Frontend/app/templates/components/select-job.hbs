@@ -1,11 +1,11 @@
 {{#paper-list}}
-    {{#paper-subheader class="md-no-sticky"}}Escoja lo más conveniente:{{/paper-subheader}}
+    <div layout-sm="column" layout-gt-lg="row">
     {{#each model as |job|}}
         {{#paper-item  param=job action="toggleJob"}}    
-            {{paper-icon icon="build" icon-class="action"}}        
-            <p>{{job.descripcion}}</p>
-            {{paper-switch class="md-secondary" checked=job.selected value=job action="toggleJob"}}
+            {{#paper-switch checked=model.vehiculoCortesia checked=job.selected value=job param=job action="toggleJob"}}
+                 {{job.descripcion}}
+            {{/paper-switch}}
         {{/paper-item}}
     {{/each}}
-	
+	</div>
 {{/paper-list}}

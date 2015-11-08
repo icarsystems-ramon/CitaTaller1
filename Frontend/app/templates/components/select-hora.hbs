@@ -1,1 +1,9 @@
-{{yield}}
+{{#paper-list}}
+    <div layout="column">
+    {{#each model as |fecha|}}
+        {{#paper-item  param=job action="toggleJob"}}
+             {{fecha.fechaDisplay}}
+        {{/paper-item}}
+    {{/each}}
+	</div>
+{{/paper-list}}

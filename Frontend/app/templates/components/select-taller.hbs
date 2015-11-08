@@ -1,30 +1,30 @@
 {{#paper-list}}
-{{#paper-subheader class="md-no-sticky"}}Escoja el taller de su preferencia:{{/paper-subheader}}
+    <div layout-sm="column" layout-gt-lg="row">
     {{#each model as |taller|}}
-        <div horizontal layout>
-    {{#paper-button icon-button=false param=taller action="toggleGeo" }}    
+        {{#paper-item  layout-align="start start"}} 
             {{#if taller.geoVisible}}
-            {{paper-icon icon="map" }}
+                <div layout="column">
+                    {{taller.direccion}}
+                    {{#g-map lat=taller.geoLat lng=taller.geoLng zoom=18 as |contexto|}}
+                        {{g-map-marker contexto lat=taller.geoLat lng=taller.geoLng}}
+                    {{/g-map}}
+                </div>
             {{else}}
-            {{paper-icon icon="place"}}
-            {{/if}}
-    {{/paper-button}}
-    {{#paper-item class="md-3-line" param=taller action="chooseTaller"}}
-    
-        {{#if taller.geoVisible}}
-        {{taller.direccion}}
-        {{#g-map lat=taller.geoLat lng=taller.geoLng zoom=18 as |contexto|}}
-        {{g-map-marker contexto lat=taller.geoLat lng=taller.geoLng}}
-        {{/g-map}}
-        {{else}}
-        {{taller.descripcion}}
-        
-        {{/if}}
-
-
-   
-    {{paper-radio value=taller class="md-secondary" selected=taller.choosed param=taller changed="chooseTaller" }}
-    {{/paper-item}}
-    </div>
+                {{#paper-radio value=taller selected=taller.choosed param=taller param=taller changed="chooseTaller"}}
+                    {{taller.descripcion}}
+                {{/paper-radio}}
+            {{/if}}  
+            {{#paper-button icon-button=true param=taller action="toggleGeo"}}
+                {{#if taller.geoVisible}}
+                    {{paper-icon icon="map" }}
+                {{else}}
+                    {{paper-icon icon="place"}}
+                {{/if}}
+            {{/paper-button}}
+            
+        {{/paper-item}}
     {{/each}}
-    {{/paper-list}}
+	</div>
+{{/paper-list}}
+
+

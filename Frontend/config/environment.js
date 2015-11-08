@@ -6,7 +6,7 @@ module.exports = function(environment) {
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
-    EmberENV: {       
+    EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
@@ -26,7 +26,14 @@ module.exports = function(environment) {
         'img-src': "'self' data: *.googleapis.com maps.gstatic.com csi.gstatic.com",
         'style-src': "'self' 'unsafe-inline' http://fonts.gstatic.com https://fonts.gstatic.com http://fonts.googleapis.com maps.gstatic.com",
         'media-src': "'self'"
+    },
+
+    moment: {
+      // To cherry-pick specific locale support into your application.
+      // Full list of locales: https://github.com/moment/moment/tree/2.10.3/locale
+      includeLocales: ['es', 'fr']
     }
+
   };
 
   ENV.API_HOST = 'http://citatallerapi.azurewebsites.net';
