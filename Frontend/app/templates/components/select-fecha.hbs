@@ -1,0 +1,12 @@
+{{#paper-list}}
+    <div layout="column">
+    {{#each model as |fecha|}}
+        {{#paper-item}}
+        <div layout="row" layout-align="start center">
+            <div>{{fecha.fechaDisplay}}</div>
+            <div>{{select-hora model=fecha.listHora toggleHora="toggleHora"}}</div>
+        </div>
+        {{/paper-item}}
+    {{/each}}
+	</div>
+{{/paper-list}}

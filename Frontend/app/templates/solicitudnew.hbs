@@ -36,7 +36,7 @@
        {{select-taller model=listTaller chooseTaller="chooseTaller" toggleGeo="toggleGeo"}}
     {{/paper-content}}
 {{/if}}
-   
+
 {{#if vehiculoCortesiaEnabled}}
     {{#paper-content class="md-padding md-whiteframe-z3"}}
         {{#paper-subheader class="md-no-sticky"}}El taller dispone de vehículos de cortesía{{/paper-subheader}}
@@ -74,13 +74,12 @@
         <div>{{paper-icon icon="access-time"}}</div>
         <div>{{#paper-subheader class="md-no-sticky"}}¿A qué hora le va bien?{{/paper-subheader}}</div>
     </div>
-    {{select-hora model=listHora selectHora="selectHora" selectFecha="selectFecha" unselectHora="unselectHora" unselectFecha="unselectFecha"}}
+    {{select-fecha model=listFecha toggleHora="toggleHora" selectFecha="selectFecha" }}
 {{/paper-content}}
 
 
 {{#paper-content class="md-padding md-whiteframe-z3"}}
-    
+
     {{#paper-button action='saveSolicitud' raised=true primary=true disabled=savingDisabled}}Enviar solicitud{{/paper-button}}
 
 {{/paper-content}}
-    

@@ -1,9 +1,21 @@
-{{#paper-list}}
-    <div layout="column">
-    {{#each model as |fecha|}}
-        {{#paper-item  param=job action="toggleJob"}}
-             {{fecha.fechaDisplay}}
+
+    <div layout="row">
+    {{#each model as |horaminuto|}}
+        {{#paper-item}}
+        {{#paper-button icon-button=true param=horaminuto action="toggleHora"}}
+
+            {{#if horaminuto.selected}}
+
+              {{paper-icon icon="check-circle" }}
+          
+            {{else}}
+              {{paper-icon ipaper-icon icon="access-time" }}
+            {{/if}}
+
+
+        {{/paper-button}}
+
+
         {{/paper-item}}
     {{/each}}
 	</div>
-{{/paper-list}}

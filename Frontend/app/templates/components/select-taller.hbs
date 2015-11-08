@@ -1,7 +1,7 @@
 {{#paper-list}}
     <div layout-sm="column" layout-gt-lg="row">
     {{#each model as |taller|}}
-        {{#paper-item  layout-align="start start"}} 
+        {{#paper-item  layout-align="start start"}}
             {{#if taller.geoVisible}}
                 <div layout="column">
                     {{taller.direccion}}
@@ -13,18 +13,16 @@
                 {{#paper-radio value=taller selected=taller.choosed param=taller param=taller changed="chooseTaller"}}
                     {{taller.descripcion}}
                 {{/paper-radio}}
-            {{/if}}  
+            {{/if}}
             {{#paper-button icon-button=true param=taller action="toggleGeo"}}
                 {{#if taller.geoVisible}}
-                    {{paper-icon icon="map" }}
+                    {{paper-icon icon="place" }}
                 {{else}}
-                    {{paper-icon icon="place"}}
+                    {{paper-icon icon="map"}}
                 {{/if}}
             {{/paper-button}}
-            
+
         {{/paper-item}}
     {{/each}}
 	</div>
 {{/paper-list}}
-
-

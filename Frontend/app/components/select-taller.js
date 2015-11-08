@@ -16,7 +16,7 @@ export default Ember.Component.extend({
             return true;
         },
         toggleGeo: function(taller) {
-            console.log ('Debug: Component. toggleGeo ' + taller.get('descripcion') + ' ' + taller.get('id'));            
+            console.log ('Debug: Component. toggleGeo ' + taller.get('descripcion') + ' ' + taller.get('id'));
             this.model.forEach(function(item){
                 if (item.get('id') === taller.get('id')) {item.toggleProperty ('geoVisible');}
                 else {item.set('geoVisible',false);}
@@ -26,4 +26,3 @@ export default Ember.Component.extend({
         },
     }
 });
-

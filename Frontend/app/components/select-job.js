@@ -5,7 +5,6 @@ export default Ember.Component.extend({
     actions: {
         toggleJob: function(job) {
             console.log ('Debug: Component. ToggleJob ' + job.id );
-            //this.toggleProperty('isShowingConfirmation');
             if (job.get('selected')) {
                 console.log ('Debug: Component. sendAction selectJob');
                 this.sendAction('selectJob', job.get('id'));

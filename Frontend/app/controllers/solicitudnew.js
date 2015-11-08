@@ -52,8 +52,8 @@ export default Ember.Controller.extend({
         return retorno;
     }.property('isDirty'),
 
-    listHora: function(){
-        console.log ('Debug: Loading controller.listHora');
+    listFecha: function(){
+        console.log ('Debug: Loading controller.listFecha');
         var retorno = [];
         var x=0;
         var y=0;
@@ -64,21 +64,26 @@ export default Ember.Controller.extend({
         for (; x<6; x++) {
             xfecha.add(1,'days');
             dfecha = xfecha.calendar();
-            console.log ('Debug: Loading controller.listHora ' + dfecha);
+            //console.log ('Debug: Loading controller.listHora ' + dfecha);
             var fecha = Ember.Object.create();
-            fecha.set ('fechaValue',xfecha);
+            fecha.set ('fecha',xfecha);
             fecha.set ('fechaDisplay',dfecha);
             fecha.set ('listHora',[]);
 
             for (y=0;y<8;y++)
             {
+
               var hora = Ember.Object.create();
-              hora.set ('fechaValue',xfecha);
+              hora.set ('fecha',xfecha);
+              hora.set ('fechaDisplay',dfecha);
               hora.set ('hora', 8 + y);
+              hora.set ('minuto', 0);
+              hora.set ('selected', false);
+              //console.log ('Debug: Generaring hour:' + hora);
               fecha.listHora.pushObject(hora);
-            };
-            retorno.pushObject (fecha);            
-        };
+            }
+            retorno.pushObject (fecha);
+        }
         return retorno;
     }.property('isDirty'),
 
@@ -124,6 +129,7 @@ export default Ember.Controller.extend({
     },
 
     addJob: function (id){
+        deleteJob (id);
         var job = this.store.createRecord('solicitudJob',
          {
              solicitud: this.model
@@ -145,16 +151,37 @@ export default Ember.Controller.extend({
     },
 
 
+
+
     addFecha: function(fecha){
 
     },
 
-    addHora: function(fecha,hora){
+    addHora: function (fecha,hora,minuto){
+        deleteHora (fecha,hora,minuto);
+        var hora = this.store.createRecord('solicitudHora',
+         {
+             solicitud: this.model
+         }
+         );
+
+        hora.set('fecha',fecha);
+        hora.set('hora',hora);
+        hora.set('minuto',minuto);
+        this.model.get("solicitudHoras").pushObject(job);
 
     },
 
-    deleteHora: function(fecha,hora){
+    deleteHora: function (fecha,hora,minuto){
+        var lista = this.model.get("solicitudHoras");
+        var count = lista.get('length');
+        for (var i = 0; i < count; i++){
+            var pepe = lista.objectAt(i);
+            if (pepe.get('fecha') === fecha && pepe.get('hora') === hora && pepe.get('minuto') === minuto) {this.store.deleteRecord(pepe);}
+        }
+
     },
+
 
     actions: {
 
@@ -200,6 +227,11 @@ export default Ember.Controller.extend({
             this.addFecha (fecha);
         },
 
+        toggleHora: function (hora)
+        {
+          console.log ('Debug: Controller toggleHora ' + hora.get('hora') + ':' + hora.get('minuto'));
+          hora.toggleProperty ('selected');
+        },
         selectHora: function(fecha,hora)
         {
             console.log('Debug: Controller selectHora: ' + fecha + " " + hora);
