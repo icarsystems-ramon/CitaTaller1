@@ -4,6 +4,6 @@ export default Ember.Route.extend({
 
     beforeModel: function(){
         console.log ('Debug: transitionTo(solicitudnew)');
-        this.transitionTo('solicitudnew');
+        //this.transitionTo('solicitudnew');
     }
 });

@@ -3,8 +3,6 @@ import moment from 'moment';
 
 export default Ember.Controller.extend({
 
-
-
     multiTaller: function(){
         console.log ('Debug: Evaluating controller.multiTaller');
         var dmstaller = this.store.peekAll('dmsTaller')|| [];
@@ -22,33 +20,72 @@ export default Ember.Controller.extend({
 
 
 
+    
+    //jobObserver: function(){
+    //    console.log ('Debug: jobObserver');
+    //    var lista = this.get('listJob');
+       
+    //    lista.forEach(function(item){
+    //        //console.log ('Debug: jobObserver ' + item.get('id'));
+    //        //if (item.get('selected')) {}
+    //        //else {}
+    //    });
+
+    //}.observes('listJob.@each.selected'),
+
+    //tallerObserver: function(){
+    //    console.log ('Debug: tallerObserver');
+    //}.observes('listTaller.@each.choosed'),
+
+    //horaObserver: function(){
+    //    console.log ('Debug: horaObserver');
+    //}.observes('listFecha.@each.listHora'),
+   
+
+
 
     listTaller: function(){
         console.log ('Debug: Loading controller.ListTaller');
+       
         var modelTaller = this.store.peekAll('dmsTaller')|| [];
         var retorno = modelTaller.map(function(obj){
             return Ember.Object.create().setProperties(obj);
         });
 
-        //retorno.setEach ('choosed',false);
         retorno.forEach(function(item){
             item.set('choosed',false);
             item.set('geoVisible',false);
         });
 
-
         retorno.objectAt(0).set ('choosed',true);
-        //this.setChooseTaller (retorno.objectAt(0).get('id'));
         return retorno;
     }.property('isDirty'),
 
+
+
+
     listJob: function(){
         console.log ('Debug: Loading controller.listJob');
-        var modelJob = this.store.peekAll('dmsJob')|| [];
+        var retorno = [];
+        var modelJob = this.store.peekAll('dmsJob')|| [];  
+        
         var retorno = modelJob.map(function(obj){
             return Ember.Object.create().setProperties(obj);
         });
-        //return this.store.peekAll('dmsJob')|| [];
+
+        retorno.forEach(function(item){
+            item.set('selected',false);
+           
+        });
+
+        //modelJob.forEach(function(item){
+        //    var viewJob = Ember.Object.create().setProperties({
+        //        'id': item.get('id'),
+        //        'descripcion': item.get('descripcion') ,
+        //        'selected': false
+        //    }); 
+        //    retorno.pushObject(viewJob);
+        //});
         return retorno;
     }.property('isDirty'),
 
@@ -63,24 +100,24 @@ export default Ember.Controller.extend({
         var dfecha;
         for (; x<6; x++) {
             xfecha.add(1,'days');
-            dfecha = xfecha.calendar();
-            //console.log ('Debug: Loading controller.listHora ' + dfecha);
+            dfecha = xfecha.format('dddd');  //xfecha.calendar();           
             var fecha = Ember.Object.create();
-            fecha.set ('fecha',xfecha);
+            fecha.set ('fecha',xfecha.format());
             fecha.set ('fechaDisplay',dfecha);
+            fecha.set ('selected',false);
             fecha.set ('listHora',[]);
 
             for (y=0;y<8;y++)
             {
-
-              var hora = Ember.Object.create();
-              hora.set ('fecha',xfecha);
-              hora.set ('fechaDisplay',dfecha);
-              hora.set ('hora', 8 + y);
-              hora.set ('minuto', 0);
-              hora.set ('selected', false);
-              //console.log ('Debug: Generaring hour:' + hora);
-              fecha.listHora.pushObject(hora);
+                var hora = Ember.Object.create();
+                hora.set ('parent',fecha);
+                hora.set ('momentObj',xfecha);
+                hora.set ('fecha',xfecha.format());
+                hora.set ('fechaDisplay',dfecha);
+                hora.set ('hora', 8 + y);
+                hora.set ('minuto', 0);
+                hora.set ('selected', false);                
+                fecha.listHora.pushObject(hora);
             }
             retorno.pushObject (fecha);
         }
@@ -102,8 +139,6 @@ export default Ember.Controller.extend({
         if (typeof solicitud.get('apellidos') === 'undefined') {mandatory = false;}
         else {if (solicitud.get('apellidos').length < 3) {mandatory = false;}}
 
-
-
         return mandatory && solicitud.get('hasDirtyAttributes') && !solicitud.get('isSaving');
     }.property('isDirty', 'isSaving', 'model.numgsm', 'model.apellidos', 'model.email'),
 
@@ -112,7 +147,6 @@ export default Ember.Controller.extend({
 
 
     emailValidation: {
-
         'errorMessage': 'Introduzca un email válido',
         'isError': (inputValue) => {
             console.log ('Debug: Evaluating emailValidation');
@@ -121,126 +155,105 @@ export default Ember.Controller.extend({
         }
     },
 
-    setChooseTaller: function (id){
-        var pepe = this.store.peekRecord('dmsTaller',id);
-        this.model.set('dmsTaller',pepe);
-        //this.set('geoLat',pepe.get('geoLat'));
-        //this.set('geoLng',pepe.get('geoLng'));
-    },
+    setChooseTaller: function (taller){
+        //var pepe = this.store.peekRecord('dmsTaller',id);
+        this.model.set('dmsTaller',taller);
+      },
 
-    addJob: function (id){
-        deleteJob (id);
-        var job = this.store.createRecord('solicitudJob',
-         {
-             solicitud: this.model
-         }
-         );
+    //addJob: function (id){
+    //    deleteJob (id);
+    //    var job = this.store.createRecord('solicitudJob',
+    //     {
+    //         solicitud: this.model
+    //     }
+    //     );
 
-        job.set('dmsJob',this.store.peekRecord('dmsJob',id));
-        this.model.get("solicitudJobs").pushObject(job);
+    //    job.set('dmsJob',this.store.peekRecord('dmsJob',id));
+    //    this.model.get("solicitudJobs").pushObject(job);
 
-    },
-    deleteJob: function (id){
-        var lista = this.model.get("solicitudJobs");
-        var count = lista.get('length');
-        for (var i = 0; i < count; i++){
-            var pepe = lista.objectAt(i);
-            if (pepe.get('dmsJob').get('id') === id) {this.store.deleteRecord(pepe);}
-        }
-
-    },
+    //},
+    //deleteJob: function (id){
+    //    var lista = this.model.get("solicitudJobs");
+    //    var count = lista.get('length');
+    //    for (var i = 0; i < count; i++){
+    //        var pepe = lista.objectAt(i);
+    //        if (pepe.get('dmsJob').get('id') === id) {this.store.deleteRecord(pepe);}
+    //    }
+    //},
 
 
 
 
-    addFecha: function(fecha){
+    //addFecha: function(fecha){
 
-    },
+    //},
 
-    addHora: function (fecha,hora,minuto){
-        deleteHora (fecha,hora,minuto);
-        var hora = this.store.createRecord('solicitudHora',
-         {
-             solicitud: this.model
-         }
-         );
+    //addHora: function (fecha,hora,minuto){
+    //    deleteHora (fecha,hora,minuto);
+    //    var hora = this.store.createRecord('solicitudHora',
+    //     {
+    //         solicitud: this.model
+    //     }
+    //     );
 
-        hora.set('fecha',fecha);
-        hora.set('hora',hora);
-        hora.set('minuto',minuto);
-        this.model.get("solicitudHoras").pushObject(job);
+    //    hora.set('fecha',fecha);
+    //    hora.set('hora',hora);
+    //    hora.set('minuto',minuto);
+    //    this.model.get("solicitudHoras").pushObject(job);
 
-    },
+    //},
 
-    deleteHora: function (fecha,hora,minuto){
-        var lista = this.model.get("solicitudHoras");
-        var count = lista.get('length');
-        for (var i = 0; i < count; i++){
-            var pepe = lista.objectAt(i);
-            if (pepe.get('fecha') === fecha && pepe.get('hora') === hora && pepe.get('minuto') === minuto) {this.store.deleteRecord(pepe);}
-        }
+    //deleteHora: function (fecha,hora,minuto){
+    //    var lista = this.model.get("solicitudHoras");
+    //    var count = lista.get('length');
+    //    for (var i = 0; i < count; i++){
+    //        var pepe = lista.objectAt(i);
+    //        if (pepe.get('fecha') === fecha && pepe.get('hora') === hora && pepe.get('minuto') === minuto) {this.store.deleteRecord(pepe);}
+    //    }
 
-    },
+    //},
 
 
-    actions: {
-
-        toggleGeo: function(taller)
-        {
-            var id = taller.get('id');
-            console.log ('Debug: Controller xxxxxx: ' + id);
-            //this.setChooseTaller (id);
-           // this.toggleGeoVisible();
-        },
+    actions: {        
 
         emailValidation: function()
         {
             console.log ('Debug: Controller emailValidation: ' );
         },
 
-        //toggleGeo: function(id)
+   
+        chooseTaller: function(taller)
+        {
+            console.log ('Debug: Controller chooseTaller: ' + taller.get('descripcion'));
+            this.setChooseTaller (taller);
+        },
+
+        //toggleJob: function (job)
         //{
-        //    console.log ('Debug: Controller. toggleGeo' + id);
-        //    this.toggleGeoVisible();
+        //    console.log ('Debug: Controller toggleJob: ' + job.get('id'));
+        //    console.log ('Debug: Controller toggleJob: ' + job.get('selected'));
+        //    //this.addJob(id);
+        //},
+        //unselectJob: function(id)
+        //{
+        //    console.log ('Debug: Controller unselectJob: ' + id);
+        //    this.deleteJob(id);
         //},
 
-        chooseTaller: function(id)
+        toggleFecha: function(fecha)
         {
-            console.log ('Debug: Controller chooseTaller: ' + id);
-            this.setChooseTaller (id);
-        },
-
-        selectJob: function (id)
-        {
-            console.log ('Debug: Controller selectJob: ' + id);
-            this.addJob(id);
-        },
-        unselectJob: function(id)
-        {
-            console.log ('Debug: Controller unselectJob: ' + id);
-            this.deleteJob(id);
-        },
-
-        selectFecha: function(fecha)
-        {
-            console.log('Debug: Controller selectFecha: ' + fecha);
-            this.addFecha (fecha);
+            console.log('Debug: Controller toggleFecha: ' + fecha.get('fecha'));
+            fecha.toggleProperty ('selected');            
+            fecha.get('listHora').forEach(function(itemHora){
+                itemHora.set ('selected',fecha.get('selected'));         
+            });
         },
 
         toggleHora: function (hora)
         {
-          console.log ('Debug: Controller toggleHora ' + hora.get('hora') + ':' + hora.get('minuto'));
+          console.log ('Debug: Controller toggleHora ' + hora.get('fecha') + ', ' + hora.get('hora') + ':' + hora.get('minuto'));
           hora.toggleProperty ('selected');
-        },
-        selectHora: function(fecha,hora)
-        {
-            console.log('Debug: Controller selectHora: ' + fecha + " " + hora);
-            this.addHora (fecha,hora);
-        },
-        unselectHora: function(fecha,hora)
-        {
-            console.log('Debug: Controller unselectHora: ' + fecha + " " + hora);
-            this.deleteHora (fecha,hora);
+          hora.get('parent').set('selected',false);
         }
 
     }

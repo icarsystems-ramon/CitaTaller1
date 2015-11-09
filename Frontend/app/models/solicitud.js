@@ -10,6 +10,7 @@ export default DS.Model.extend({
   chasis: DS.attr('string'),
   descripcion: DS.attr('string'),
   creacionDevice: DS.attr('string'),
+  creacionFecha: DS.attr('date'),
   vehiculoCortesia: DS.attr('boolean', { defaultValue: false }),
   dmsTaller: DS.belongsTo('dmsTaller'),
   solicitudJobs: DS.hasMany('solicitudJob'),

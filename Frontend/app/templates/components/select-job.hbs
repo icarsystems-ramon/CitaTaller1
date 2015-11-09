@@ -1,10 +1,9 @@
 {{#paper-list}}
     <div layout-sm="column" layout-gt-lg="row">
     {{#each model as |job|}}
-        {{#paper-item  param=job action="toggleJob"}}    
-            {{#paper-switch checked=model.vehiculoCortesia checked=job.selected value=job param=job action="toggleJob"}}
-                 {{job.descripcion}}
-            {{/paper-switch}}
+        {{#paper-item param=job }}           
+            {{#paper-switch  checked=job.selected }}{{/paper-switch}}
+            {{job.descripcion}}                   
         {{/paper-item}}
     {{/each}}
 	</div>

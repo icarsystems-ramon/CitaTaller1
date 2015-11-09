@@ -1,9 +1,6 @@
-//import DS from 'ember-data';
-
-//export default DS.RESTSerializer.extend({
-//});
-
 import DS from 'ember-data';
+
+// Indicamos al serializer que componga el payload con registros embebidos y no sideloaded.
 
 export default DS.RESTSerializer.extend(DS.EmbeddedRecordsMixin, {
     attrs: {

@@ -46,17 +46,46 @@ export default Ember.Route.extend({
 
     saveModel: function(){
         var self = this;     
-        var modelo = self.modelFor('solicitudnew');
-        modelo.save().then(function(){
-            self.localStoreSolicitud (modelo);
+        var solicitud = this.get ('currentModel');
+
+        var listJob   = this.get('controller').get('listJob');
+        var listFecha = this.get('controller').get('listFecha');
+
+        listJob.forEach(function(itemJob){            
+            if (itemJob.get('selected')){
+                var newJob = self.store.createRecord('solicitudJob',{                    
+                    solicitud: solicitud,
+                    dmsJob: self.store.peekRecord('dmsJob',itemJob.get('id'))
+                    });                
+                solicitud.get("solicitudJobs").pushObject(newJob);            
+            }            
+        });
+
+        listFecha.forEach(function(itemFecha){   
+            var listHora = itemFecha.get('listHora');
+            listHora.forEach(function(itemHora){
+                if (itemHora.get('selected')){
+                    var newHora = self.store.createRecord('solicitudHora',{                    
+                        solicitud: solicitud,           
+                        fecha: itemHora.get('momentObj').format('YYYY-MM-DD HH:mm:ssZ'),
+                        hora: itemHora.get('hora'),
+                        minuto: itemHora.get('minuto')
+                    });                
+                    solicitud.get("solicitudHoras").pushObject(newHora); 
+                    console.log ('newHora.fecha ' + newHora.get('fecha') );
+                }
+            });           
+        });
+
+        solicitud.save().then(function(){
+            self.localStoreSolicitud (solicitud);
             self.transitionTo('solicitudok');
         });
     },
 
     actions: {
-        saveSolicitud: function()
-            {
-                this.saveModel();           
+        saveSolicitud: function(){
+            this.saveModel();           
             }
         }
  

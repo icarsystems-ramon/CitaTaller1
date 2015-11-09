@@ -14,7 +14,7 @@
             {{paper-input  label="Apellidos" value=model.apellidos icon="person" icon-class="name" required=true required-errortext="Se requiere apellidos"}}
         </div>
         <div flex-gt-lg="33">
-            {{paper-input label="Teléfono"  value=model.numgsm required=true type="tel"    icon="phone" md-no-float='' required-errortext="Se requiere teléfono"}}
+            {{paper-input label="Teléfono"   value=model.numgsm required=true type="tel"    icon="phone" md-no-float='' required-errortext="Se requiere teléfono"}}
             {{paper-input  label="Email"     value=model.email required=true type="email"   customValidation=emailValidation icon="email" icon-class="email" required-errortext="Se requiere email" }}
         </div>
         <div flex-gt-lg="33">
@@ -55,7 +55,7 @@
         <div>{{paper-icon icon="build"}}</div>
         <div>{{#paper-subheader class="md-no-sticky"}}Escoja lo más conveniente{{/paper-subheader}}</div>
     </div>
-    {{select-job model=listJob selectJob="selectJob" unselectJob="unselectJob"}}
+    {{select-job model=listJob toggleJob="toggleJob" }}
 {{/paper-content}}
 
 
@@ -73,12 +73,10 @@
         <div>{{paper-icon icon="access-time"}}</div>
         <div>{{#paper-subheader class="md-no-sticky"}}¿A qué hora le va bien?{{/paper-subheader}}</div>
     </div>
-    {{select-fecha model=listFecha toggleHora="toggleHora" selectFecha="selectFecha" }}
+    {{select-fecha model=listFecha toggleHora="toggleHora" toggleFecha="toggleFecha" }}
 {{/paper-content}}
 
 
 {{#paper-content class="md-padding md-whiteframe-z3"}}
-
     {{#paper-button action='saveSolicitud' raised=true primary=true disabled=savingDisabled}}Enviar solicitud{{/paper-button}}
-
 {{/paper-content}}

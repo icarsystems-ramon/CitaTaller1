@@ -3,7 +3,9 @@
     {{#each model as |fecha|}}
         {{#paper-item}}
         <div layout="row" layout-align="start center">
-            <div>{{fecha.fechaDisplay}}</div>
+            {{#paper-button param=fecha action="toggleFecha"}}
+                <div>{{fecha.fechaDisplay}}</div>
+            {{/paper-button}}
             <div>{{select-hora model=fecha.listHora toggleHora="toggleHora"}}</div>
         </div>
         {{/paper-item}}
