@@ -6,21 +6,20 @@
 </div>
 {{/paper-toolbar}}
 
-
 {{#paper-content class="md-padding md-whiteframe-z3"}}
 <div class="doc-content">
     <div layout-sm="column" layout-gt-lg="row">
-        <div layout="column" flex="33">
-            {{paper-input flex=50 label="Nombre"    value=model.nombre    icon="person" icon-class="name"}}
-            {{paper-input flex=50 label="Apellidos" value=model.apellidos icon="person" icon-class="name" required=true required-errortext="Se requiere apellidos"}}
+        <div flex-gt-lg="33">
+            {{paper-input  label="Nombre"    value=model.nombre    icon="person" icon-class="name"}}
+            {{paper-input  label="Apellidos" value=model.apellidos icon="person" icon-class="name" required=true required-errortext="Se requiere apellidos"}}
         </div>
-        <div layout="column" flex="33">
-            {{paper-input flex=50 label="Teléfono"  value=model.numgsm required=true type="tel"    icon="phone" md-no-float='' required-errortext="Se requiere teléfono"}}
-            {{paper-input flex=50 label="Email"     value=model.email required=true type="email"   customValidation=emailValidation icon="email" icon-class="email" required-errortext="Se requiere email" }}
+        <div flex-gt-lg="33">
+            {{paper-input label="Teléfono"  value=model.numgsm required=true type="tel"    icon="phone" md-no-float='' required-errortext="Se requiere teléfono"}}
+            {{paper-input  label="Email"     value=model.email required=true type="email"   customValidation=emailValidation icon="email" icon-class="email" required-errortext="Se requiere email" }}
         </div>
-        <div layout="column" flex="33">
-            {{paper-input flex=50 label='Matrícula' value=model.matric icon="maps" icon-class="directions-car"}}
-            {{paper-input flex=50 label='Chasis'    value=model.chasis icon="maps" icon-class="directions-car"}}
+        <div flex-gt-lg="33">
+            {{paper-input  label='Matrícula' value=model.matric icon="maps" icon-class="directions-car"}}
+            {{paper-input  label='Chasis'    value=model.chasis icon="maps" icon-class="directions-car"}}
         </div>
     </div>
 </div>

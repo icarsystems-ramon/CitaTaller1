@@ -57,7 +57,7 @@ export default Ember.Controller.extend({
         var retorno = [];
         var x=0;
         var y=0;
-        moment.locale('es');
+        //moment.locale('es');
         var now = moment();
         var xfecha = now.startOf('day');
         var dfecha;
