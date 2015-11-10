@@ -54,6 +54,8 @@ namespace CitaTaller.ServiceModel
         public string Matric { get; set; }
         [DataMember]
         public string Chasis { get; set; }
+        [DataMember]
+        public int Km { get; set; } 
         [DataMember(Name = "dmsTaller")]
         public Guid DmsTallerId { get; set; }
         [DataMember]

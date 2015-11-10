@@ -8,6 +8,7 @@ export default DS.Model.extend({
   apellidos: DS.attr('string'),
   matric: DS.attr('string'),
   chasis: DS.attr('string'),
+  km: DS.attr('number'),
   descripcion: DS.attr('string'),
   creacionDevice: DS.attr('string'),
   creacionFecha: DS.attr('date'),

@@ -59,6 +59,7 @@ CREATE TABLE [dbo].[Solicitud](
 	[Apellidos] [nvarchar](50) NULL,
 	[Matric] [nvarchar](15) NULL,
 	[Chasis] [nvarchar](17) NULL,
+	[Km] [integer] NULL DEFAULT 0,
 	[DmsTallerId] [uniqueidentifier] NOT NULL,
 	[Descripcion] [nvarchar](250) NULL,
 	[VehiculoCortesia] [bit] NULL DEFAULT 0,

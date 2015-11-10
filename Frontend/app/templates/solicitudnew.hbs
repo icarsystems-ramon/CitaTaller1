@@ -10,17 +10,17 @@
 <div class="doc-content">
     <div layout-sm="column" layout-gt-lg="row">
         <div flex-gt-lg="33">
+            {{paper-input  label='Matrícula' value=model.matric icon="maps" icon-class="directions-car"}}
+            {{paper-input  label='Kilometraje'    value=model.km icon="maps" icon-class="directions-car"}}
+        </div>
+        <div flex-gt-lg="33">
             {{paper-input  label="Nombre"    value=model.nombre    icon="person" icon-class="name"}}
             {{paper-input  label="Apellidos" value=model.apellidos icon="person" icon-class="name" required=true required-errortext="Se requiere apellidos"}}
         </div>
         <div flex-gt-lg="33">
             {{paper-input label="Teléfono"   value=model.numgsm required=true type="tel"    icon="phone" md-no-float='' required-errortext="Se requiere teléfono"}}
             {{paper-input  label="Email"     value=model.email required=true type="email"   customValidation=emailValidation icon="email" icon-class="email" required-errortext="Se requiere email" }}
-        </div>
-        <div flex-gt-lg="33">
-            {{paper-input  label='Matrícula' value=model.matric icon="maps" icon-class="directions-car"}}
-            {{paper-input  label='Chasis'    value=model.chasis icon="maps" icon-class="directions-car"}}
-        </div>
+        </div>   
     </div>
 </div>
 {{/paper-content}}

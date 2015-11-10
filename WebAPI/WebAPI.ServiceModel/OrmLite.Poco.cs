@@ -111,6 +111,7 @@ namespace CitaTaller.ServiceModel
         public string Apellidos { get; set;}
         public string Matric { get; set;}
         public string Chasis { get; set;}
+        public int Km { get; set; }
         [Required]
         public Guid DmsTallerId { get; set;}
         public string Descripcion { get; set;}
