@@ -11,4 +11,9 @@ Router.map(function() {
   this.route('solicitudok');
 });
 
+Router.reopen({
+    location: 'none'
+    //location: 'hash'
+});
+
 export default Router;

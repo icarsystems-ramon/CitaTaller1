@@ -6,7 +6,7 @@ export default Ember.Route.extend({
   
     beforeModel: function(){
         // Ojo! Devuelvo una promise
-        console.log ('Debug: Paso por route.beforModel()');
+        //console.log ('Debug: Paso por route.beforModel()');
         return this.store.findAll('dms'); 
         },
 
@@ -22,11 +22,11 @@ export default Ember.Route.extend({
             });
 
         var dmstaller = this.store.peekAll('dmsTaller')|| [];
-        console.log ('Debug: router.model. Tenemos ' + dmstaller.get('length') + ' talleres en memoria');
+        //console.log ('Debug: router.model. Tenemos ' + dmstaller.get('length') + ' talleres en memoria');
         if (dmstaller.get('length') === 1)
         {
             var firsttaller = dmstaller.objectAt(0);
-            solicitud.set('dmsTaller',firsttaller);
+            solicitud.set('dmsTaller',firsttaller);           
         }       
         return solicitud;
     },
@@ -51,31 +51,66 @@ export default Ember.Route.extend({
         var listJob   = this.get('controller').get('listJob');
         var listFecha = this.get('controller').get('listFecha');
 
-        listJob.forEach(function(itemJob){            
+        var x = 0;
+        var y = 0;
+
+        //listJob.forEach(function(itemJob){            
+        //    if (itemJob.get('selected')){
+        //        var newJob = self.store.createRecord('solicitudJob',{                    
+        //            solicitud: solicitud,
+        //            dmsJob: self.store.peekRecord('dmsJob',itemJob.get('id'))
+        //            });                
+        //        solicitud.get("solicitudJobs").pushObject(newJob);            
+        //    }            
+        //});
+
+        for (x = 0; x < listJob.get('length'); x++)
+        {
+            var itemJob = listJob.objectAt(x);
             if (itemJob.get('selected')){
                 var newJob = self.store.createRecord('solicitudJob',{                    
                     solicitud: solicitud,
                     dmsJob: self.store.peekRecord('dmsJob',itemJob.get('id'))
-                    });                
+                });                
                 solicitud.get("solicitudJobs").pushObject(newJob);            
-            }            
-        });
+            }                 
+        }
 
-        listFecha.forEach(function(itemFecha){   
-            var listHora = itemFecha.get('listHora');
-            listHora.forEach(function(itemHora){
+
+        
+        //listFecha.forEach(function(itemFecha){   
+        //    var listHora = itemFecha.get('listHora');
+        //    listHora.forEach(function(itemHora){
+        //        if (itemHora.get('selected')){
+        //            var newHora = self.store.createRecord('solicitudHora',{                    
+        //                solicitud: solicitud,           
+        //                fecha: new Date (itemHora.get('momentObj').format()),
+        //                hora: itemHora.get('hora'),
+        //                minuto: itemHora.get('minuto')
+        //            });                
+        //            solicitud.get("solicitudHoras").pushObject(newHora); 
+        //            console.log ('newHora.fecha ' + newHora.get('fecha') );
+        //        }
+        //    });           
+        //});
+
+        for (x = 0; x < listFecha.get('length'); x++){
+            var listHora = listFecha.objectAt(x).get('listHora');           
+            for (y = 0; y < listHora.get('length'); y++){
+                var itemHora = listHora.objectAt(y);
                 if (itemHora.get('selected')){
                     var newHora = self.store.createRecord('solicitudHora',{                    
                         solicitud: solicitud,           
-                        fecha: itemHora.get('momentObj').format('YYYY-MM-DD HH:mm:ssZ'),
+                        fecha: new Date (itemHora.get('fecha')),
                         hora: itemHora.get('hora'),
                         minuto: itemHora.get('minuto')
                     });                
                     solicitud.get("solicitudHoras").pushObject(newHora); 
-                    console.log ('newHora.fecha ' + newHora.get('fecha') );
+                    //console.log ('newHora.fecha ' + newHora.get('fecha') );
                 }
-            });           
-        });
+            }
+        }
+
 
         solicitud.save().then(function(){
             self.localStoreSolicitud (solicitud);

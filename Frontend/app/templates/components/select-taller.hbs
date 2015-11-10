@@ -3,14 +3,14 @@
     {{#each model as |taller|}}
         {{#paper-item  layout-align="start start"}}
             {{#if taller.geoVisible}}
-                <div layout="column">
-                    {{taller.direccion}}
-                    {{#g-map lat=taller.geoLat lng=taller.geoLng zoom=18 as |contexto|}}
-                        {{g-map-marker contexto lat=taller.geoLat lng=taller.geoLng}}
-                    {{/g-map}}
-                </div>
+            <div layout="column">
+                {{taller.direccion}}
+                {{#g-map lat=taller.geoLat lng=taller.geoLng zoom=18 as |contexto|}}
+                {{g-map-marker contexto lat=taller.geoLat lng=taller.geoLng}}
+                {{/g-map}}
+            </div>
             {{else}}
-                {{#paper-radio value=taller selected=taller.choosed param=taller changed="chooseTaller"}}
+                {{#paper-radio value=taller.value1 selected=taller.value2  changed="chooseTaller"}}
                     {{taller.descripcion}}
                 {{/paper-radio}}
             {{/if}}
@@ -20,7 +20,7 @@
                 {{else}}
                     {{paper-icon icon="map"}}
                 {{/if}}
-            {{/paper-button}}
+            {{/paper-button}}         
 
         {{/paper-item}}
     {{/each}}
