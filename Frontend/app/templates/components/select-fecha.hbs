@@ -1,14 +1,22 @@
-{{#paper-list}}
-    <div layout="column">
-    {{#each model as |fecha|}}
-        {{#paper-item}}
-        <div layout="row" layout-align="start center">
-            {{#paper-button param=fecha action="toggleFecha"}}
-                <div>{{fecha.fechaDisplay}}</div>
-            {{/paper-button}}
-            <div>{{select-hora model=fecha.listHora toggleHora="toggleHora"}}</div>
-        </div>
-        {{/paper-item}}
-    {{/each}}
-	</div>
-{{/paper-list}}
+<table role="grid" tabindex="0" class="md-calendar" >    
+    <tbody role="rowgroup"   class="md-calendar-month "  md-item-size="265">
+         <tr role="row">
+             <td tabindex="-1" class="md-calendar-date" role="gridcell">
+                 <span style="font-size:12px">                     
+                 </span>
+             </td>
+         </tr>
+        {{select-hora model=fecha.listHead toggleDay="toggleDay"}}
+         {{#each model as |fecha|}}
+            <tr role="row" >
+            <td tabindex="-1" class="md-calendar-date" role="gridcell" >                       
+                 <span style="font-size:12px">                    
+                    {{fecha.fechaDisplay}}                    
+                </span>             
+            </td>
+            {{select-hora model=fecha.listHora toggleHora="toggleHora"}}
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+

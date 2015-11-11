@@ -1,17 +1,13 @@
+{{#each model as |horaminuto|}}
+    <td tabindex="-1" class="md-calendar-date" role="gridcell" >
+        <span class="md-calendar-date-selection-indicator">
+            
+            
+            {{icon-hora iconOff="access-time" iconOn="check-circle" checked=horaminuto.selected param=horaminuto action="toggleHora"}}
+            
+           
+        </span>
+    </td>
+{{/each}}
 
-    <div layout="row">
-    {{#each model as |horaminuto|}}
-        {{#paper-item}}
-        {{#paper-button icon-button=true param=horaminuto action="toggleHora"}}
-
-            {{#if horaminuto.selected}}
-              {{paper-icon icon="check-circle" }}          
-            {{else}}
-              {{paper-icon ipaper-icon icon="access-time" }}
-            {{/if}}
-
-
-        {{/paper-button}}
-        {{/paper-item}}
-    {{/each}}
-	</div>
+    

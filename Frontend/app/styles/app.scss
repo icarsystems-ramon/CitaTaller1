@@ -1,8 +1,12 @@
 
 @import 'ember-paper';
-
+@import 'icon-hora';
 
 md-toolbar.md-default-theme{background-color:#ff9800}
+
+md-hora-axis {
+    font-size: 12px;
+}
 
 /*
 body {

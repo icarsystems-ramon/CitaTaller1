@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     actions: {
         chooseTaller: function(choosenId){
-            var choosenTaller
+            var choosenTaller;
             this.model.forEach(function(item){
                 if (item.get('id') === choosenId) {
                     choosenTaller = item;
