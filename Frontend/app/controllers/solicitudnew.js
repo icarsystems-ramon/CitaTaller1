@@ -68,7 +68,7 @@ export default Ember.Controller.extend({
         itemDay.set ('dayHeader',false);
         itemDay.set ('atomCell',false);
         itemDay.set ('parent', itemMinuto);
-        itemDay.set ('selected',false);
+        itemDay.set ('checked',false);
         itemDay.set ('fecha','');
         itemDay.set ('hora',itemMinuto.get('hora'));
         itemDay.set ('minuto',itemMinuto.get('minuto'));                    
@@ -94,7 +94,7 @@ export default Ember.Controller.extend({
             itemDay.set ('atomCell',!itemDay.get('minuteHeader'));
             itemDay.set ('dayHeader',dayHeader);
             itemDay.set ('parent', itemMinuto);
-            itemDay.set ('selected',false);
+            itemDay.set ('checked',false);
             itemDay.set ('fecha',fecha.format());
             itemDay.set ('hora',itemMinuto.get('hora'));
             itemDay.set ('minuto',itemMinuto.get('minuto'));                    
@@ -113,7 +113,7 @@ export default Ember.Controller.extend({
 
         itemMinuto = Ember.Object.create();
         itemMinuto.set ('listDay',[]);
-        itemMinuto.set ('selected',false);
+        itemMinuto.set ('checked',false);
         itemMinuto.set ('hora',0);
         itemMinuto.set ('minuto',0);               
         itemMinuto.set ('horaShow', '');             
@@ -125,7 +125,7 @@ export default Ember.Controller.extend({
             for (m=0; m<60; m+=30){               
                 itemMinuto = Ember.Object.create();
                 itemMinuto.set ('listDay',[]);
-                itemMinuto.set ('selected',false);
+                itemMinuto.set ('checked',false);
                 itemMinuto.set ('hora',h);
                 itemMinuto.set ('minuto',m);               
                 itemMinuto.set ('horaShow', h + ':' + (m + '0').substring(0,2));             
@@ -194,24 +194,27 @@ export default Ember.Controller.extend({
         toggleMinuteHeader: function(minuto) {    
             //console.log ('toggleDayHeader: ' + minuto.get('hora') + ':' + minuto.get('minuto'));
             var parent;
-            var selected;
+            var checked;
             var x = 0;
+
+
             parent   = minuto.get('parent');
-            parent.set ('selected',!parent.get('selected'));
-            selected = parent.get('selected');
+            checked = minuto.get('checked');
+            minuto.set ('checked',!minuto.get('checked'));
+            checked = minuto.get('checked');
            
             for (x = 0; x <  parent.listDay.get('length'); x++)
             {
-                parent.listDay.objectAt(x).set('selected',selected);                       
+                parent.listDay.objectAt(x).set('checked',checked);                       
             }            
         },
         toggleDayHeader: function(day) {
             //console.log ('toggleDayHeader: ' + day.get('fecha'));
-            var parent;
+            //var parent;
             var fecha;
             var table;
             var list;
-            var selected;
+            var checked;
             var x;
             var y;
 
@@ -219,17 +222,22 @@ export default Ember.Controller.extend({
             //parent   = minuto.get('parent');
             //parent.set ('selected',!parent.get('selected'));
             //selected = parent.get('selected');
-            selected = true;
+            //selected = true;
+
+            checked = day.get('checked');
+            day.set ('checked',!day.get('checked'));
+            checked = day.get('checked');
+
             fecha = day.get('fecha');
             for (x = 0; x <  table.get('length'); x++){
                 list = table.objectAt(x).get('listDay');
                 for (y = 0; y <  list.get('length'); y++){
-                    if (list.objectAt(y).get('fecha') === fecha){list.objectAt(y).set('selected',selected) }
+                    if (list.objectAt(y).get('fecha') === fecha){list.objectAt(y).set('checked',checked);}
                 }
-            };
+            }
         },
         toggleHora: function(minuto) {
-            minuto.get('parent').set('selected',false);
+            minuto.get('parent').set('checked',false);
         },
     }
 

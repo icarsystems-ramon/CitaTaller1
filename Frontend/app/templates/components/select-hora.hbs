@@ -5,16 +5,16 @@
             {{#each minuto.listDay as |celda|}}
             <td>
                 {{#if celda.minuteHeader}}                
-                    {{#select-header checked=celda.selected param=celda action="toggleMinuteHeader"}}
+                    {{#select-header  param=celda action="toggleMinuteHeader"}}
                         {{celda.horaShow}}
                     {{/select-header}}
                 {{else}}
                     {{#if celda.dayHeader}}
-                        {{#select-header checked=celda.selected param=celda action="toggleDayHeader"}}
+                        {{#select-header  param=celda action="toggleDayHeader"}}
                             {{celda.dayShow}}
                         {{/select-header}}                
                     {{else}}
-                        {{icon-hora iconOff="access-time" iconOn="check-circle" checked=celda.selected param=celda action="toggleHora"}}
+                        {{icon-hora iconOff="access-time" iconOn="check-circle" checked=celda.checked param=celda action="toggleHora"}}
                     {{/if}}
                 {{/if}}
             </td>
