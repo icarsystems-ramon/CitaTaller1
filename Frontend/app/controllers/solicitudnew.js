@@ -20,8 +20,7 @@ export default Ember.Controller.extend({
 
     
     listTaller: function(){
-        //console.log ('Debug: Loading controller.ListTaller');
-       
+        //console.log ('Debug: Loading controller.ListTaller');       
         var modelTaller = this.store.peekAll('dmsTaller')|| [];
         var retorno = modelTaller.map(function(obj){
             return Ember.Object.create().setProperties(obj);
@@ -37,15 +36,7 @@ export default Ember.Controller.extend({
         retorno.objectAt(0).set ('selected',true);
         retorno.objectAt(0).set('value2',retorno.objectAt(0).get('id'));
         
-        this.setChooseTaller (modelTaller.objectAt(0));
-        
-
-        //retorno.forEach(function(item){
-        //    item.set('choosed',false);
-        //    item.set('geoVisible',false);
-        //});
-
-        //retorno.objectAt(0).set ('choosed',true);
+        this.setTaller (modelTaller.objectAt(0));   
         return retorno;
     }.property('isDirty'),
 
@@ -61,73 +52,92 @@ export default Ember.Controller.extend({
             item.set('selected',false);
            
         });
-
-        //modelJob.forEach(function(item){
-        //    var viewJob = Ember.Object.create().setProperties({
-        //        'id': item.get('id'),
-        //        'descripcion': item.get('descripcion') ,
-        //        'selected': false
-        //    }); 
-        //    retorno.pushObject(viewJob);
-        //});
         return retorno;
     }.property('isDirty'),
+    
+    createListDay: function(itemMinuto,dayHeader){
+        var itemDay;
+        var d=0;
+        var dow=0;
+        var now = moment();    
+        var weekdaysShort = 'Dom._Lun._Mar._Mié._Jue._Vie._Sáb.'.split('_'); 
+        var fecha = now.startOf('day');
 
-    listFecha: function(){
-        //console.log ('Debug: Loading controller.listFecha');
-        var retorno = [];
-        var x=0;
-        var y=0;
-        var z=0;
-        var dindex=0;
-        var weekdaysShort = 'Dom._Lun._Mar._Mié._Jue._Vie._Sáb.'.split('_');
-        var dow = 0;
-        //moment.locale('es');
-        var now = moment();
-        var xfecha = now.startOf('day');
-        var dfecha;
-        for (; x<6; x++) {
-            xfecha.add(1,'days');
-            dow = xfecha.day();
+        itemDay = Ember.Object.create();
+        itemDay.set ('minuteHeader',true);
+        itemDay.set ('dayHeader',false);
+        itemDay.set ('atomCell',false);
+        itemDay.set ('parent', itemMinuto);
+        itemDay.set ('selected',false);
+        itemDay.set ('fecha','');
+        itemDay.set ('hora',itemMinuto.get('hora'));
+        itemDay.set ('minuto',itemMinuto.get('minuto'));                    
+        itemDay.set ('horaShow',itemMinuto.get('horaShow'));
+        itemDay.set ('dayShow','');
+        itemMinuto.listDay.pushObject(itemDay);
+
+        for (d=0; d<6; d++) {
+            fecha.add(1,'days');    
+            dow = fecha.day();
             if (dow === 0 || dow === 6) {
-                xfecha.add(1,'days');
-                dindex ++;
-            };
-            if (dow === 0 || dow === 6) {
-                xfecha.add(1,'days');
-                dindex ++;
-            };
-            dindex ++;
-            dow = xfecha.day();
-            dfecha = weekdaysShort.objectAt(dow); //xfecha.format('dddd');  //xfecha.calendar(); 
-            
-
-            var itemFecha = Ember.Object.create();
-            itemFecha.set ('fecha',xfecha.format());
-            itemFecha.set ('fechaDisplay',dfecha);
-            itemFecha.set ('selected',false);
-            itemFecha.set ('listHora',[]);
-
-            for (y=0; y<8; y++){
-
-                for (z=0; z<2; z++){
-                    var itemHora = Ember.Object.create();
-                    itemHora.set ('parent',itemFecha);
-                    itemHora.set ('momentObj',xfecha);
-                    itemHora.set ('fecha',xfecha.format());   
-                    itemHora.set ('hora', 8 + y);
-                    itemHora.set ('minuto', 30 * z);
-                    itemHora.set ('selected', false); 
-                    itemHora.set ('fechaDisplay',dfecha);
-                    itemHora.set ('horaDisplay',itemHora.get('hora') + ':' + itemHora.get('minuto'));
-                   
-                    itemFecha.listHora.pushObject(itemHora);
-                }
+                fecha.add(1,'days');  
+                dow = fecha.day();
             }
-            retorno.pushObject (itemFecha);
+            if (dow === 0 || dow === 6) {
+                fecha.add(1,'days');                      
+                dow = fecha.day();
+            }  
+
+            itemDay = Ember.Object.create();
+           
+            itemDay.set ('minuteHeader',false);
+            itemDay.set ('atomCell',!itemDay.get('minuteHeader'));
+            itemDay.set ('dayHeader',dayHeader);
+            itemDay.set ('parent', itemMinuto);
+            itemDay.set ('selected',false);
+            itemDay.set ('fecha',fecha.format());
+            itemDay.set ('hora',itemMinuto.get('hora'));
+            itemDay.set ('minuto',itemMinuto.get('minuto'));                    
+            itemDay.set ('horaShow',itemMinuto.get('horaShow'));
+            itemDay.set ('dayShow',weekdaysShort.objectAt(dow));
+            itemMinuto.listDay.pushObject(itemDay);           
+        }
+    },
+    
+    tableHora: function(){
+        //console.log ('Debug: Loading controller.listFecha');
+        var retorno = [];        
+        var itemMinuto;
+        var h = 0;
+        var m = 0;
+
+        itemMinuto = Ember.Object.create();
+        itemMinuto.set ('listDay',[]);
+        itemMinuto.set ('selected',false);
+        itemMinuto.set ('hora',0);
+        itemMinuto.set ('minuto',0);               
+        itemMinuto.set ('horaShow', '');             
+        itemMinuto.set ('dayShow','');   
+        this.createListDay (itemMinuto,true);              
+        retorno.pushObject (itemMinuto);
+
+        for (h=8; h<18; h++){            
+            for (m=0; m<60; m+=30){               
+                itemMinuto = Ember.Object.create();
+                itemMinuto.set ('listDay',[]);
+                itemMinuto.set ('selected',false);
+                itemMinuto.set ('hora',h);
+                itemMinuto.set ('minuto',m);               
+                itemMinuto.set ('horaShow', h + ':' + (m + '0').substring(0,2));             
+                itemMinuto.set ('dayShow','');   
+                this.createListDay (itemMinuto,false);              
+                retorno.pushObject (itemMinuto);
+            }
         }
         return retorno;
     }.property('isDirty'),
+
+
 
     // savingEnabled: Es una propiedad observer.
     // Indica si se puede grabar el registro.
@@ -163,7 +173,7 @@ export default Ember.Controller.extend({
         }
     },
 
-    setChooseTaller: function (taller){
+    setTaller: function (taller){
           this.model.set('dmsTaller',taller);
       },
 
@@ -174,38 +184,53 @@ export default Ember.Controller.extend({
         {
             //console.log ('Debug: Controller emailValidation: ' );
         },
-
    
         chooseTaller: function(taller)
         {
-            console.log ('Debug: Controller chooseTaller: ' + taller.get('descripcion'));
-            this.setChooseTaller (taller);
-        },   
+            //console.log ('Debug: Controller chooseTaller: ' + taller.get('descripcion'));
+            this.setTaller (taller);
+        },         
 
-        toggleFecha: function(fecha)
-        {
-            //console.log('Debug: Controller toggleFecha: ' + fecha.get('fecha'));
-            fecha.toggleProperty ('selected');            
-            fecha.get('listHora').forEach(function(itemHora){
-                itemHora.set ('selected',fecha.get('selected'))        
-            });
+        toggleMinuteHeader: function(minuto) {    
+            //console.log ('toggleDayHeader: ' + minuto.get('hora') + ':' + minuto.get('minuto'));
+            var parent;
+            var selected;
+            var x = 0;
+            parent   = minuto.get('parent');
+            parent.set ('selected',!parent.get('selected'));
+            selected = parent.get('selected');
+           
+            for (x = 0; x <  parent.listDay.get('length'); x++)
+            {
+                parent.listDay.objectAt(x).set('selected',selected);                       
+            }            
         },
+        toggleDayHeader: function(day) {
+            //console.log ('toggleDayHeader: ' + day.get('fecha'));
+            var parent;
+            var fecha;
+            var table;
+            var list;
+            var selected;
+            var x;
+            var y;
 
-        toggleDay: function(day)
-        {
-            //console.log('Debug: Controller toggleFecha: ' + fecha.get('fecha'));
-            //day.toggleProperty ('selected');            
-            //day.get('listHora').forEach(function(itemHora){
-            //    itemHora.set ('selected',fecha.get('selected'))        
-            //});
+            table    = this.get('tableHora');
+            //parent   = minuto.get('parent');
+            //parent.set ('selected',!parent.get('selected'));
+            //selected = parent.get('selected');
+            selected = true;
+            fecha = day.get('fecha');
+            for (x = 0; x <  table.get('length'); x++){
+                list = table.objectAt(x).get('listDay');
+                for (y = 0; y <  list.get('length'); y++){
+                    if (list.objectAt(y).get('fecha') === fecha){list.objectAt(y).set('selected',selected) }
+                }
+            };
         },
-
-        toggleHora: function (hora)
-        {
-          //console.log ('Debug: Controller toggleHora ' + hora.get('fecha') + ', ' + hora.get('hora') + ':' + hora.get('minuto'));          
-          hora.get('parent').set('selected',false);
-        }
-
+        toggleHora: function(minuto) {
+            minuto.get('parent').set('selected',false);
+        },
     }
 
 });

@@ -1,0 +1,85 @@
+
+
+/*
+icon-hora {
+  margin: auto;
+  background-repeat: no-repeat no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  fill: currentcolor;
+  height: 3 * $baseline-grid;
+  width: 3 * $baseline-grid;
+  line-height: 3 * $baseline-grid;
+}
+*/
+
+
+// Styles
+$icon-size: rem(2.4);
+
+select-header {
+  margin: auto;
+  background-repeat: no-repeat no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  fill: currentColor;
+ 
+  font-size: 12px;
+  cursor: pointer;
+
+   
+}
+
+//THEME
+select-header.md-#{$theme-name}-theme {
+  
+
+  &.hora-off {
+    color: color($foreground, '2');
+  }
+
+  &.hora-on {
+    color: rgba(color($accent), 0.87);
+  }
+
+  &.md-primary {
+    color: color($primary);
+  }
+
+  &.md-accent {
+    color: color($accent);
+  }
+
+  &.md-warn {
+    color: color($warn);
+  }
+}
+
+
+
+// Icon sizes
+.md-lg {
+    font-size: 1.5em;
+}
+
+.md-sm {
+    font-size: 1em;
+}
+
+.md-2x {
+    font-size: 2em;
+}
+
+.md-3x {
+    font-size: 3em;
+}
+
+.md-4x {
+    font-size: 4em;
+}
+
+.md-5x {
+    font-size: 5em;
+}
+
+

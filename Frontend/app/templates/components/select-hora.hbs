@@ -1,13 +1,29 @@
-{{#each model as |horaminuto|}}
-    <td tabindex="-1" class="md-calendar-date" role="gridcell" >
-        <span class="md-calendar-date-selection-indicator">
-            
-            
-            {{icon-hora iconOff="access-time" iconOn="check-circle" checked=horaminuto.selected param=horaminuto action="toggleHora"}}
-            
-           
-        </span>
-    </td>
-{{/each}}
+<table role="grid" tabindex="0" class="md-calendar">
+    <tbody role="rowgroup" class="md-calendar-month " md-item-size="265">
+        {{#each model as |minuto|}}
+        <tr>
+            {{#each minuto.listDay as |celda|}}
+            <td>
+                {{#if celda.minuteHeader}}                
+                    {{#select-header checked=celda.selected param=celda action="toggleMinuteHeader"}}
+                        {{celda.horaShow}}
+                    {{/select-header}}
+                {{else}}
+                    {{#if celda.dayHeader}}
+                        {{#select-header checked=celda.selected param=celda action="toggleDayHeader"}}
+                            {{celda.dayShow}}
+                        {{/select-header}}                
+                    {{else}}
+                        {{icon-hora iconOff="access-time" iconOn="check-circle" checked=celda.selected param=celda action="toggleHora"}}
+                    {{/if}}
+                {{/if}}
+            </td>
+            {{/each}}
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
 
-    
+
+<span style="font-size:12px">
+</span>

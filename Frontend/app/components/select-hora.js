@@ -1,11 +1,16 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  actions: {
-      toggleHora: function(hora) {
-          //console.log ('Debug: Component Hora. ToggleHora ' + hora.get('hora') + ':' + hora.get('minuto'));
-          this.sendAction('toggleHora',hora);
-      }
-  }
-
+    actions: {
+        toggleMinuteHeader: function(minuto) {
+            this.sendAction('toggleMinuteHeader',minuto);
+        },
+        toggleDayHeader: function(day) {
+            this.sendAction('toggleDayHeader',day);
+        },
+        toggleHora: function(minuto) {          
+            this.sendAction('toggleHora',minuto);
+        },
+       
+    }
 });

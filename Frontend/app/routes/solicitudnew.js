@@ -49,20 +49,11 @@ export default Ember.Route.extend({
         var solicitud = this.get ('currentModel');
 
         var listJob   = this.get('controller').get('listJob');
-        var listFecha = this.get('controller').get('listFecha');
+        var tableHora = this.get('controller').get('tableHora');
 
         var x = 0;
         var y = 0;
 
-        //listJob.forEach(function(itemJob){            
-        //    if (itemJob.get('selected')){
-        //        var newJob = self.store.createRecord('solicitudJob',{                    
-        //            solicitud: solicitud,
-        //            dmsJob: self.store.peekRecord('dmsJob',itemJob.get('id'))
-        //            });                
-        //        solicitud.get("solicitudJobs").pushObject(newJob);            
-        //    }            
-        //});
 
         for (x = 0; x < listJob.get('length'); x++)
         {
@@ -76,29 +67,11 @@ export default Ember.Route.extend({
             }                 
         }
 
-
-        
-        //listFecha.forEach(function(itemFecha){   
-        //    var listHora = itemFecha.get('listHora');
-        //    listHora.forEach(function(itemHora){
-        //        if (itemHora.get('selected')){
-        //            var newHora = self.store.createRecord('solicitudHora',{                    
-        //                solicitud: solicitud,           
-        //                fecha: new Date (itemHora.get('momentObj').format()),
-        //                hora: itemHora.get('hora'),
-        //                minuto: itemHora.get('minuto')
-        //            });                
-        //            solicitud.get("solicitudHoras").pushObject(newHora); 
-        //            console.log ('newHora.fecha ' + newHora.get('fecha') );
-        //        }
-        //    });           
-        //});
-
-        for (x = 0; x < listFecha.get('length'); x++){
-            var listHora = listFecha.objectAt(x).get('listHora');           
-            for (y = 0; y < listHora.get('length'); y++){
-                var itemHora = listHora.objectAt(y);
-                if (itemHora.get('selected')){
+        for (x = 0; x < tableHora.get('length'); x++){
+            var listDay = tableHora.objectAt(x).get('listDay');           
+            for (y = 0; y < listDay.get('length'); y++){
+                var itemHora = listDay.objectAt(y);
+                if (itemHora.get('selected') && itemHora.get('atomCell')){
                     var newHora = self.store.createRecord('solicitudHora',{                    
                         solicitud: solicitud,           
                         fecha: new Date (itemHora.get('fecha')),
