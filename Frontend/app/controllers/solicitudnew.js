@@ -91,7 +91,7 @@ export default Ember.Controller.extend({
             itemDay = Ember.Object.create();
            
             itemDay.set ('minuteHeader',false);
-            itemDay.set ('atomCell',!itemDay.get('minuteHeader'));
+            itemDay.set ('atomCell',!dayHeader);
             itemDay.set ('dayHeader',dayHeader);
             itemDay.set ('parent', itemMinuto);
             itemDay.set ('checked',false);
@@ -210,7 +210,6 @@ export default Ember.Controller.extend({
         },
         toggleDayHeader: function(day) {
             //console.log ('toggleDayHeader: ' + day.get('fecha'));
-            //var parent;
             var fecha;
             var table;
             var list;
@@ -219,11 +218,6 @@ export default Ember.Controller.extend({
             var y;
 
             table    = this.get('tableHora');
-            //parent   = minuto.get('parent');
-            //parent.set ('selected',!parent.get('selected'));
-            //selected = parent.get('selected');
-            //selected = true;
-
             checked = day.get('checked');
             day.set ('checked',!day.get('checked'));
             checked = day.get('checked');

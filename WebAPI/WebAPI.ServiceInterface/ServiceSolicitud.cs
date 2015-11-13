@@ -37,15 +37,13 @@ namespace CitaTaller.ServiceInterface
         {
             
             List<Solicitud> solicitudlist = new List<Solicitud>();
-            //List<SolicitudJob> solicitudjoblist = new List<SolicitudJob>();
-            //List<SolicitudHora> solicitudhoralist = new List<SolicitudHora>();
-
             solicitudlist = dbsolicitud.ConvertAll(x => x.ConvertTo<Solicitud>());
             foreach (Solicitud itemsolicitud in solicitudlist)
             {
-
-                itemsolicitud.solicitudjobs = Db.Select<SolicitudJob>(q => q.SolicitudId == itemsolicitud.Id).ConvertAll(x => x.ConvertTo<SolicitudJob>());
-                itemsolicitud.solicitudhoras = Db.Select<modelSolicitudHora>(q => q.SolicitudId == itemsolicitud.Id).ConvertAll(x => x.ConvertTo<SolicitudHora>());
+                itemsolicitud.solicitudjobs = Db.Select<SolicitudJob>(q => q.SolicitudId == itemsolicitud.Id).ConvertAll(x => x.ConvertTo<SolicitudJob>());              
+                var h = Db.From<modelSolicitudHora>().Where (q => q.SolicitudId == itemsolicitud.Id).OrderBy(o=>o.Fecha).ThenBy(o=>o.Hora).ThenBy(o => o.Minuto);
+                itemsolicitud.solicitudhoras = Db.Select(h).ConvertAll(x => x.ConvertTo<SolicitudHora>());
+                //itemsolicitud.solicitudhoras = Db.Select<modelSolicitudHora>(q => q.SolicitudId == itemsolicitud.Id).ConvertAll(x => x.ConvertTo<SolicitudHora>());
             };
 
             SolicitudResponse payload = new SolicitudResponse();
@@ -58,7 +56,6 @@ namespace CitaTaller.ServiceInterface
         public object Get(GetSolicitudes request)
         {           
             if (logger.IsDebugEnabled) logger.Debug("Request GetSolicitudes");
-            //dbsolicitud = Db.Select<modelSolicitud>();
             var q = Db.From<modelSolicitud>().OrderByDescending(o => o.CreacionFecha);
             dbsolicitud = Db.Select(q);            
 
@@ -119,9 +116,7 @@ namespace CitaTaller.ServiceInterface
                 }
 
                 //if (dbsolicitud.CreacionDevice == nullGuid) dbsolicitud.CreacionDevice = Guid.NewGuid();
-                
-
-
+                           
                 Db.Insert(dbsolicitud);
 
                 if (dbsolicitudJob != null)

@@ -71,7 +71,7 @@ export default Ember.Route.extend({
             var listDay = tableHora.objectAt(x).get('listDay');           
             for (y = 0; y < listDay.get('length'); y++){
                 var itemHora = listDay.objectAt(y);
-                if (itemHora.get('selected') && itemHora.get('atomCell')){
+                if (itemHora.get('checked') && itemHora.get('hora') > 0 && itemHora.get('atomCell')){
                     var newHora = self.store.createRecord('solicitudHora',{                    
                         solicitud: solicitud,           
                         fecha: new Date (itemHora.get('fecha')),
