@@ -7,7 +7,7 @@ using ServiceStack.OrmLite;
 using ServiceStack.Logging;
 using Microsoft.Azure;
 //using Microsoft.WindowsAzure.Configuration;
-//using Microsoft.ServiceBus;
+using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 
 
@@ -139,10 +139,39 @@ namespace CitaTaller.ServiceInterface
                     }
                 }     
             }
-            string connectionString = CloudConfigurationManager.GetSetting("CitaTallerAzureBus");       
-            TopicClient Client = TopicClient.CreateFromConnectionString(connectionString, "solicitudcitataller");
 
+            // Obtengo la Conexión al ServiceBus
+            string topicName = "solicitudcitataller";
+            string filterName = "DmsTallerId-" + solicitud.DmsTallerId.ToString();
+            string connectionString = CloudConfigurationManager.GetSetting("CitaTallerAzureBusManager");
 
+            // Como me he conectado como manager. Verifico la existencia del Topic.
+            var namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
+            if (!namespaceManager.TopicExists(topicName))
+            {
+                namespaceManager.CreateTopic(topicName);
+            }
+
+            // También creo la suscripción "Allmessages" sin filtro.
+            if (!namespaceManager.SubscriptionExists(topicName, "AllMessages"))
+            {
+                namespaceManager.CreateSubscription(topicName, "AllMessages");
+            }
+
+            // También creo la suscripción "Allmessages" sin filtro.
+            if (!namespaceManager.SubscriptionExists(topicName, "AllMessages"))
+            {
+                namespaceManager.CreateSubscription(topicName, "AllMessages");
+            }
+
+            // También creo la suscripción para un taller en concreto
+            if (!namespaceManager.SubscriptionExists(topicName, filterName))
+            {
+                SqlFilter DmsTallerIdFilter = new SqlFilter("DmsTallerId = '" + solicitud.DmsTallerId.ToString() + "'");
+                namespaceManager.CreateSubscription(topicName, filterName, DmsTallerIdFilter);
+            }           
+
+            TopicClient Client = TopicClient.CreateFromConnectionString(connectionString, topicName);
             BrokeredMessage message = new BrokeredMessage("Solicitud " + solicitudId.ToString());
             message.Label = "Solicitud " + solicitudId.ToString();
             message.Properties["SolicitudID"] = solicitudId.ToString();
