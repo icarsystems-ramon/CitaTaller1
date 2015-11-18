@@ -169,17 +169,20 @@ namespace CitaTaller.ServiceInterface
             {
                 SqlFilter DmsTallerIdFilter = new SqlFilter("DmsTallerId = '" + solicitud.DmsTallerId.ToString() + "'");
                 namespaceManager.CreateSubscription(topicName, filterName, DmsTallerIdFilter);
-            }           
+            }         
 
-            TopicClient Client = TopicClient.CreateFromConnectionString(connectionString, topicName);
+            
+            // Creo el mensaje a enviar
             BrokeredMessage message = new BrokeredMessage("Solicitud " + solicitudId.ToString());
             message.Label = "Solicitud " + solicitudId.ToString();
             message.Properties["SolicitudID"] = solicitudId.ToString();
             message.Properties["DmsTallerId"] = solicitud.DmsTallerId.ToString();
 
+            // Envio el mensaje al bus.
+            TopicClient Client = TopicClient.CreateFromConnectionString(connectionString, topicName);
             Client.Send(message);
 
-
+            // Resuelvo la response al cliente Rest.
             return BuildPayload(solicitudId);
         }
 
