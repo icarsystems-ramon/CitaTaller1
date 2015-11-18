@@ -152,24 +152,20 @@ namespace CitaTaller.ServiceInterface
                 namespaceManager.CreateTopic(topicName);
             }
 
-            // También creo la suscripción "Allmessages" sin filtro.
-            if (!namespaceManager.SubscriptionExists(topicName, "AllMessages"))
-            {
-                namespaceManager.CreateSubscription(topicName, "AllMessages");
-            }
+            //// También creo la suscripción "Allmessages" sin filtro.
+            //if (!namespaceManager.SubscriptionExists(topicName, "AllMessages"))
+            //{
+            //    namespaceManager.CreateSubscription(topicName, "AllMessages");
+            //}
 
-            // También creo la suscripción "Allmessages" sin filtro.
-            if (!namespaceManager.SubscriptionExists(topicName, "AllMessages"))
-            {
-                namespaceManager.CreateSubscription(topicName, "AllMessages");
-            }
+           
 
-            // También creo la suscripción para un taller en concreto
-            if (!namespaceManager.SubscriptionExists(topicName, filterName))
-            {
-                SqlFilter DmsTallerIdFilter = new SqlFilter("DmsTallerId = '" + solicitud.DmsTallerId.ToString() + "'");
-                namespaceManager.CreateSubscription(topicName, filterName, DmsTallerIdFilter);
-            }         
+            //// También creo la suscripción para un taller en concreto
+            //if (!namespaceManager.SubscriptionExists(topicName, filterName))
+            //{
+            //    SqlFilter DmsTallerIdFilter = new SqlFilter("DmsTallerId = '" + solicitud.DmsTallerId.ToString() + "'");
+            //    namespaceManager.CreateSubscription(topicName, filterName, DmsTallerIdFilter);
+            //}         
 
             
             // Creo el mensaje a enviar
