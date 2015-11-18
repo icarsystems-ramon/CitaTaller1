@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ServiceStack;
 using CitaTaller.ServiceModel;
 using ServiceStack.OrmLite;
 using ServiceStack.Logging;
-using System.Net;
+using Microsoft.Azure;
+//using Microsoft.WindowsAzure.Configuration;
+//using Microsoft.ServiceBus;
+using Microsoft.ServiceBus.Messaging;
 
-//using ServiceStack.Web;
 
 namespace CitaTaller.ServiceInterface
 {
@@ -139,6 +139,18 @@ namespace CitaTaller.ServiceInterface
                     }
                 }     
             }
+            string connectionString = CloudConfigurationManager.GetSetting("CitaTallerAzureBus");       
+            TopicClient Client = TopicClient.CreateFromConnectionString(connectionString, "solicitudcitataller");
+
+
+            BrokeredMessage message = new BrokeredMessage("Solicitud " + solicitudId.ToString());
+            message.Label = "Solicitud " + solicitudId.ToString();
+            message.Properties["SolicitudID"] = solicitudId.ToString();
+            message.Properties["DmsTallerId"] = solicitud.DmsTallerId.ToString();
+
+            Client.Send(message);
+
+
             return BuildPayload(solicitudId);
         }
 
@@ -166,4 +178,5 @@ namespace CitaTaller.ServiceInterface
             Db.Delete<modelSolicitud>(s => s.Id == request.Id);
         }
     }
+    
 }
