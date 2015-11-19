@@ -49,6 +49,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Frontend", "Frontend\", "{3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBusConsoleTest", "ServiceBusConsoleTest\ServiceBusConsoleTest.csproj", "{0E8DE22C-16FD-4B16-A717-C9199EDE8BC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICarDMS_CitaTallerWeb", "ICarDMS_CitaTallerWeb\ICarDMS_CitaTallerWeb.csproj", "{51BA36F1-B4E8-4889-87AC-6CA4311FAC74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{0E8DE22C-16FD-4B16-A717-C9199EDE8BC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E8DE22C-16FD-4B16-A717-C9199EDE8BC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E8DE22C-16FD-4B16-A717-C9199EDE8BC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51BA36F1-B4E8-4889-87AC-6CA4311FAC74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51BA36F1-B4E8-4889-87AC-6CA4311FAC74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51BA36F1-B4E8-4889-87AC-6CA4311FAC74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51BA36F1-B4E8-4889-87AC-6CA4311FAC74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
