@@ -6,7 +6,6 @@ using CitaTaller.ServiceModel;
 using ServiceStack.OrmLite;
 using ServiceStack.Logging;
 using Microsoft.Azure;
-//using Microsoft.WindowsAzure.Configuration;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 
@@ -140,12 +139,14 @@ namespace CitaTaller.ServiceInterface
                 }     
             }
 
-            // Obtengo la Conexión al ServiceBus
-            string topicName = "solicitudcitataller";
-            string filterName = "DmsTallerId-" + solicitud.DmsTallerId.ToString();
+            // Obtengo la Conexión al ServiceBus que ha sido almacenada en web.config
             string connectionString = CloudConfigurationManager.GetSetting("CitaTallerAzureBusManager");
-
-            // Como me he conectado como manager. Verifico la existencia del Topic.
+            // Este el "topic" por el que publicaremos en el service bus.
+            string topicName = "solicitudcitataller";
+            
+            //string filterName = "DmsTallerId-" + solicitud.DmsTallerId.ToString();         
+            // Verifico la existencia del Topic. Si no existe, lo creo.
+            // Pero, necesito conectarmet como RootManager. Ojo con la connectionString!
             var namespaceManager = NamespaceManager.CreateFromConnectionString(connectionString);
             if (!namespaceManager.TopicExists(topicName))
             {
@@ -158,7 +159,7 @@ namespace CitaTaller.ServiceInterface
             //    namespaceManager.CreateSubscription(topicName, "AllMessages");
             //}
 
-           
+
 
             //// También creo la suscripción para un taller en concreto
             //if (!namespaceManager.SubscriptionExists(topicName, filterName))
@@ -167,18 +168,19 @@ namespace CitaTaller.ServiceInterface
             //    namespaceManager.CreateSubscription(topicName, filterName, DmsTallerIdFilter);
             //}         
 
-            
-            // Creo el mensaje a enviar
+
+            // Creo el mensaje a enviar. 
+            // Le añado 2 propiedades: SolicitudID y DmsTallerId
             BrokeredMessage message = new BrokeredMessage("Solicitud " + solicitudId.ToString());
             message.Label = "Solicitud " + solicitudId.ToString();
             message.Properties["SolicitudID"] = solicitudId.ToString();
             message.Properties["DmsTallerId"] = solicitud.DmsTallerId.ToString();
 
-            // Envio el mensaje al bus.
+            // Publico el mensaje en el Topic.
             TopicClient Client = TopicClient.CreateFromConnectionString(connectionString, topicName);
             Client.Send(message);
 
-            // Resuelvo la response al cliente Rest.
+            // Ahora si. Resuelvo la response al cliente Rest diciendo que la Solicitud ha sido grabada.
             return BuildPayload(solicitudId);
         }
 
