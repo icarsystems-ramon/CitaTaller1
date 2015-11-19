@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ICarDMS_CitaTallerWeb.Properties {
+namespace ICarDMS_ServiceBusClient.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -20,17 +20,6 @@ namespace ICarDMS_CitaTallerWeb.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Drawing.Font Setting {
-            get {
-                return ((global::System.Drawing.Font)(this["Setting"]));
-            }
-            set {
-                this["Setting"] = value;
             }
         }
     }

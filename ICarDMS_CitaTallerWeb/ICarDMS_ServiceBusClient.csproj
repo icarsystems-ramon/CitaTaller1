@@ -7,8 +7,8 @@
     <ProjectGuid>{51BA36F1-B4E8-4889-87AC-6CA4311FAC74}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ICarDMS_CitaTallerWeb</RootNamespace>
-    <AssemblyName>ICarDMS_CitaTallerWeb</AssemblyName>
+    <RootNamespace>ICarDMS_ServiceBusClient</RootNamespace>
+    <AssemblyName>ICarDMS_ServiceBusClient</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,7 +33,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>IcarDMS_CitaTallerWeb.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>ICarDMS_ServiceBusClient.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.ServiceBus, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -53,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,7 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -73,10 +73,17 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ServiceBusClient\ServiceBusClientApp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ServiceBusClient\ActiveXControlHelper.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ServiceBusClient\Verify.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="IcarDMS_CitaTallerWeb.pfx" />
+    <None Include="ICarDMS_ServiceBusClient.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -98,10 +105,7 @@
   <ItemGroup>
     <None Include="Resources\ServiceBus.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Restfull.Client\" />
-    <Folder Include="ServiceBus.Client\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
