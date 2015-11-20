@@ -85,10 +85,11 @@ namespace ServiceBusConsoleTest
                         // Eliminamos el mensaje de la suscripción
                         message.Complete();
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
                         // Hemos tenido un crash. Liberamos el mensaje y quedará pendiente.                             
                         message.Abandon();
+                        Console.WriteLine(ex.Message);
                     }
                 }, options);
             while (true)
