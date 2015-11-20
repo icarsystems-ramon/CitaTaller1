@@ -174,7 +174,9 @@ namespace CitaTaller.ServiceInterface
             BrokeredMessage message = new BrokeredMessage("Solicitud " + solicitudId.ToString());
             message.Label = "Solicitud " + solicitudId.ToString();
             message.Properties["SolicitudID"] = solicitudId.ToString();
-            message.Properties["DmsTallerId"] = solicitud.DmsTallerId.ToString();
+            message.Properties["DmsTallerId"] = solicitud.DmsTallerId.ToString().Replace("-", "").Trim().ToUpper(); 
+
+            
 
             // Publico el mensaje en el Topic.
             TopicClient Client = TopicClient.CreateFromConnectionString(connectionString, topicName);

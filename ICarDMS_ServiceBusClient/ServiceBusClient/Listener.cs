@@ -49,7 +49,7 @@ namespace ICarDMS_ServiceBusClient
                 if (!namespaceManager.SubscriptionExists(topicName, SubscripName))
                 {
                     // Defino un filtro para un taller. Y creo la suscripción con ese filtro.  
-                    dmsTallerId = dmsTallerId.Trim().ToUpper();
+                    dmsTallerId = dmsTallerId.Replace("-", "").Trim().ToUpper();
                     if (string.IsNullOrEmpty(dmsTallerId))
                         {
                         namespaceManager.CreateSubscription(topicName, SubscripName);
