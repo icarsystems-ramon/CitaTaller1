@@ -11,10 +11,10 @@ namespace ICarDMS_ServiceBusClient
 {
     [ComVisible(true)]
     [ClassInterface(ClassInterfaceType.None)]
-    [Guid("A27504EB-EA39-4714-8DE7-4401ED917805")]
-    [ProgId("ICarDMS_CitaTallerWeb.ServiceBusClientApplication")]
-    [ComSourceInterfaces(typeof(IWebServerEvents))]
-    public class ServiceBusClientApp : UserControl, IWebServer
+    [Guid("AF80DBAC-33FA-43D2-8040-8D9CCA29EE2E")]
+    [ProgId("ICarDMS_ServiceBusClient.ServiceBusClientApplication")]
+    [ComSourceInterfaces(typeof(IServiceBusClientEvents))]
+    public class ServiceBusClientApp : UserControl, IServiceBusClient
     {
         private PictureBox pictureBoxLogo;
         private Listener listener = new Listener();
@@ -24,17 +24,16 @@ namespace ICarDMS_ServiceBusClient
         {
             InitializeComponent();
             listener.ErrorMsg += new Listener.ListenerErrorMsgEventHandler(ListenerErrorMsg);
-            listener.OcxGet += new Listener.ListenerOcxGetEventHandler(ListenerOcxGet);
-            listener.OcxPost += new Listener.ListenerOcxPostEventHandler(ListenerOcxPost);
-            listener.OcxOther += new Listener.ListenerOcxOtherEventHandler(ListenerOcxOther);
+            listener.OcxOnMessage += new Listener.ListenerOcxOnMessageEventHandler(ListenerOcxOnMessage);
+           
         }
         #endregion
 
         #region IWebServer Members
 
-        public bool Start(int startPort)
+        public bool Start(string DmsTallerId)
         {
-            return listener.Start(startPort);
+            return listener.Start(DmsTallerId);
         }
         public void Stop()
         {
@@ -45,10 +44,10 @@ namespace ICarDMS_ServiceBusClient
             listener.Pause();
 
         }
-        public void ConsumerReady()
-        {
-            listener.ConsumerReady();
-        }
+        //public void ConsumerReady()
+        //{
+        //    listener.ConsumerReady();
+        //}
         #endregion
 
         //public void soloparacompilar()
@@ -64,39 +63,23 @@ namespace ICarDMS_ServiceBusClient
             Ocx_Error(msg);
         }
 
-        private void ListenerOcxGet(Request request, Response response)
+        private void ListenerOcxOnMessage(Message message)
         {
-            Ocx_Get(request, response);
+            Ocx_OnMessage (message);
         }
-
-        private void ListenerOcxPost(Request request, Response response)
-        {
-            Ocx_Post(request, response);
-        }
-
-        private void ListenerOcxOther(Request request, Response response)
-        {
-            Ocx_Other(request, response);
-        }
+       
 
         #endregion        
         #region Delegados
 
         [ComVisible(false)]
-        public delegate void ServiceBusClientAppOcxGetEventHandler(Request request, Response response);
-        [ComVisible(false)]
-        public delegate void ServiceBusClientAppOcxPostEventHandler(Request request, Response response);
-        [ComVisible(false)]
-        public delegate void ServiceBusClientAppOcxOtherEventHandler(Request request, Response response);
-        [ComVisible(false)]
+        public delegate void ServiceBusClientAppOcxOnMessageEventHandler(Message message);       
         public delegate void ServiceBusClientAppOcxErrorEventHandler(string msg);
 
         #endregion        
         #region Eventos
 
-        public event ServiceBusClientAppOcxGetEventHandler Ocx_Get;
-        public event ServiceBusClientAppOcxPostEventHandler Ocx_Post;
-        public event ServiceBusClientAppOcxOtherEventHandler Ocx_Other;
+        public event ServiceBusClientAppOcxOnMessageEventHandler Ocx_OnMessage; 
         public event ServiceBusClientAppOcxErrorEventHandler Ocx_Error;
 
         #endregion
@@ -146,8 +129,8 @@ namespace ICarDMS_ServiceBusClient
             // pictureBoxLogo
             // 
             this.pictureBoxLogo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxLogo.Image = global::ICarDMS_ServiceBusClient.Properties.Resources.webserver;
-            this.pictureBoxLogo.InitialImage = global::ICarDMS_ServiceBusClient.Properties.Resources.webserver;
+            this.pictureBoxLogo.Image = global::ICarDMS_ServiceBusClient.Properties.Resources.ServiceBus;
+            this.pictureBoxLogo.InitialImage = global::ICarDMS_ServiceBusClient.Properties.Resources.ServiceBus;
             this.pictureBoxLogo.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxLogo.Name = "pictureBoxLogo";
             this.pictureBoxLogo.Size = new System.Drawing.Size(51, 52);
