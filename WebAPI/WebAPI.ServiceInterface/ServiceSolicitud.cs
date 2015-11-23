@@ -18,52 +18,73 @@ namespace CitaTaller.ServiceInterface
         private static ILog logger = LogManager.GetLogger(typeof(ServiceDms));
         private Guid nullGuid = new Guid();
         private List<modelSolicitud> dbsolicitud;
-
-        private SolicitudResponse BuildPayload (Guid id)
+  
+        private Solicitud BuildPayloadSolicitudId(Guid id)
         {
-            List<modelSolicitud> mysolicitud;
-            //if (id == nullGuid) return;
+            List<modelSolicitud> mysolicitud;            
             mysolicitud = Db.Select<modelSolicitud>(q => q.Id == id);
+           
             if (mysolicitud.Count == 0)
             {
                 if (logger.IsDebugEnabled) logger.Debug("Not Found: " + id.ToString());
                 throw HttpError.NotFound("No encontrado");
             }
-            return BuildSolicitudResponse(mysolicitud);
+            return BuildPayloadSolicitud(mysolicitud).First();
         }
 
-        private SolicitudResponse BuildSolicitudResponse (List<modelSolicitud> dbsolicitud)
+        private List<Solicitud> BuildPayloadSolicitud(List<modelSolicitud> dbsolicitud)
         {
-            
-            List<Solicitud> solicitudlist = new List<Solicitud>();
-            solicitudlist = dbsolicitud.ConvertAll(x => x.ConvertTo<Solicitud>());
-            foreach (Solicitud itemsolicitud in solicitudlist)
-            {
-                itemsolicitud.solicitudjobs = Db.Select<SolicitudJob>(q => q.SolicitudId == itemsolicitud.Id).ConvertAll(x => x.ConvertTo<SolicitudJob>());              
-                var h = Db.From<modelSolicitudHora>().Where (q => q.SolicitudId == itemsolicitud.Id).OrderBy(o=>o.Fecha).ThenBy(o=>o.Hora).ThenBy(o => o.Minuto);
-                itemsolicitud.solicitudhoras = Db.Select(h).ConvertAll(x => x.ConvertTo<SolicitudHora>());
-                //itemsolicitud.solicitudhoras = Db.Select<modelSolicitudHora>(q => q.SolicitudId == itemsolicitud.Id).ConvertAll(x => x.ConvertTo<SolicitudHora>());
-            };
 
-            SolicitudResponse payload = new SolicitudResponse();
-            if (solicitudlist.Count > 1) payload.solicitudes = solicitudlist;
-            else payload.solicitud = solicitudlist.First();           
- 
+            List<Solicitud> payload = new List<Solicitud>();
+            payload = dbsolicitud.ConvertAll(x => x.ConvertTo<Solicitud>());
+            foreach (Solicitud itemsolicitud in payload)
+            {
+                itemsolicitud.solicitudjobs = Db.Select<SolicitudJob>(q => q.SolicitudId == itemsolicitud.Id).ConvertAll(x => x.ConvertTo<SolicitudJob>());
+                var h = Db.From<modelSolicitudHora>().Where(q => q.SolicitudId == itemsolicitud.Id).OrderBy(o => o.Fecha).ThenBy(o => o.Hora).ThenBy(o => o.Minuto);
+                itemsolicitud.solicitudhoras = Db.Select(h).ConvertAll(x => x.ConvertTo<SolicitudHora>());
+            };
             return payload;
         }
 
+
         public object Get(GetSolicitudes request)
-        {           
+        {
+            
             if (logger.IsDebugEnabled) logger.Debug("Request GetSolicitudes");
-            var q = Db.From<modelSolicitud>().OrderByDescending(o => o.CreacionFecha);
-            dbsolicitud = Db.Select(q);            
+            if (string.IsNullOrEmpty(request.dmsTallerId))
+            {
+
+                var q = Db.From<modelSolicitud>().OrderByDescending(o => o.CreacionFecha);
+                dbsolicitud = Db.Select(q);
+            }
+            else
+            {
+                Guid dmsTallerIdGuid = new Guid(request.dmsTallerId);
+                var q = Db.From<modelSolicitud>().Where(t => t.DmsTallerId == dmsTallerIdGuid).OrderByDescending(o => o.CreacionFecha);
+                dbsolicitud = Db.Select(q);
+
+            }
+              
 
             if (dbsolicitud.Count == 0)
             {
                 if (logger.IsDebugEnabled) logger.Debug("Not Found: ");
                 throw HttpError.NotFound("No encontrado");                
             }
-            return BuildSolicitudResponse(dbsolicitud);
+
+            List<Solicitud> payload;
+            SolicitudesResponse response = new SolicitudesResponse();
+            if (request.excludeDetail)
+            {
+                payload = dbsolicitud.ConvertAll(x => x.ConvertTo<Solicitud>());
+            }
+            else
+            {
+                payload = BuildPayloadSolicitud(dbsolicitud);
+            }
+           
+            response.solicitudes = payload;
+            return response;
          }
 
 
@@ -75,9 +96,17 @@ namespace CitaTaller.ServiceInterface
                 if (logger.IsDebugEnabled) logger.Debug("Not Found: " + request.Id.ToString());
                 throw HttpError.NotFound("No encontrado");
             }
-
-            if (Db.Exists<modelSolicitud>(q => q.Id == request.Id)) return BuildPayload(request.Id);
-            else throw HttpError.NotFound("No encontrado");
+            dbsolicitud = Db.Select<modelSolicitud>(q => q.Id == request.Id);
+            if (dbsolicitud.Count == 0)
+            {
+                if (logger.IsDebugEnabled) logger.Debug("Not Found: ");
+                throw HttpError.NotFound("No encontrado");
+            }
+            
+            List<Solicitud> payload = BuildPayloadSolicitud(dbsolicitud);
+            SolicitudResponse response = new SolicitudResponse();
+            response.solicitud = payload.First();
+            return response;
         }
 
         public object Post(CreateSolicitud request)
@@ -174,16 +203,19 @@ namespace CitaTaller.ServiceInterface
             BrokeredMessage message = new BrokeredMessage("Solicitud " + solicitudId.ToString());
             message.Label = "Solicitud " + solicitudId.ToString();
             message.Properties["SolicitudID"] = solicitudId.ToString();
-            message.Properties["DmsTallerId"] = solicitud.DmsTallerId.ToString().Replace("-", "").Trim().ToUpper(); 
-
-            
+            message.Properties["DmsTallerId"] = solicitud.DmsTallerId.ToString().Replace("-", "").Trim().ToUpper();             
 
             // Publico el mensaje en el Topic.
             TopicClient Client = TopicClient.CreateFromConnectionString(connectionString, topicName);
             Client.Send(message);
 
-            // Ahora si. Resuelvo la response al cliente Rest diciendo que la Solicitud ha sido grabada.
-            return BuildPayload(solicitudId);
+            // Ahora si. Resuelvo la response al cliente Rest diciendo que la Solicitud ha sido grabada.           
+
+            Solicitud payload = BuildPayloadSolicitudId(solicitudId);
+            SolicitudResponse response = new SolicitudResponse();
+            response.solicitud = payload;
+            return response;
+
         }
 
         //public object Put(UpdateSolicitud request)

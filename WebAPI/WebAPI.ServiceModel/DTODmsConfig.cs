@@ -54,11 +54,11 @@ namespace CitaTaller.ServiceModel
     [DataContract]
     public class DmsJob
     {
-        [DataMember]
+        [DataMember(Order = 0)]
         public Guid Id { get; set; }
-        [DataMember(Name = "dms")]
+        [DataMember(Name = "dms", Order = 1)]
         public Guid DmsId { get; set; }
-        [DataMember]
+        [DataMember(Order = 2)]
         public string Descripcion { get; set; }
     }
 
