@@ -10,25 +10,25 @@ namespace CitaTaller.Tests
     [TestFixture]
     public class UnitTests
     {
-        private readonly ServiceStackHost appHost;
+        //private readonly ServiceStackHost appHost;
 
-        public UnitTests()
-        {
-            appHost = new BasicAppHost(typeof(MyServices).Assembly)
-            {
-                ConfigureContainer = container =>
-                {
-                    //Add your IoC dependencies here
-                }
-            }
-            .Init();
-        }
+        //public UnitTests()
+        //{
+        //    appHost = new BasicAppHost(typeof(MyServices).Assembly)
+        //    {
+        //        ConfigureContainer = container =>
+        //        {
+        //            //Add your IoC dependencies here
+        //        }
+        //    }
+        //    .Init();
+        //}
 
-        [TestFixtureTearDown]
-        public void TestFixtureTearDown()
-        {
-            appHost.Dispose();
-        }
+        //[TestFixtureTearDown]
+        //public void TestFixtureTearDown()
+        //{
+        //    appHost.Dispose();
+        //}
 
         
     }
