@@ -85,6 +85,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Codigo.Powerbuilder\dw_solictud_detail.srd" />
+    <None Include="Codigo.Powerbuilder\dw_solictud_list.srd" />
+    <None Include="Codigo.Powerbuilder\dw_xml_dmsjob.srd" />
+    <None Include="Codigo.Powerbuilder\dw_xml_solicitudes.srd" />
+    <None Include="Codigo.Powerbuilder\dw_xml_solicitudhora.srd" />
+    <None Include="Codigo.Powerbuilder\dw_xml_solicitudjob.srd" />
+    <None Include="Codigo.Powerbuilder\n_cst_internetresult.sru" />
+    <None Include="Codigo.Powerbuilder\n_cst_solicitudcitatallerweb.sru" />
+    <None Include="Codigo.Powerbuilder\uo_solicitudcitatallerweb.sru" />
+    <None Include="Codigo.Powerbuilder\u_calendar_ot.sru" />
+    <None Include="Codigo.Powerbuilder\u_hoverbutton_solicitud.sru" />
+    <None Include="Codigo.Powerbuilder\w_show_solicitudes.srw" />
     <None Include="ICarDMS_ServiceBusClient.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
