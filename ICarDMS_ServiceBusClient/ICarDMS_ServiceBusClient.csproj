@@ -91,6 +91,7 @@
     <None Include="Codigo.Powerbuilder\dw_xml_solicitudes.srd" />
     <None Include="Codigo.Powerbuilder\dw_xml_solicitudhora.srd" />
     <None Include="Codigo.Powerbuilder\dw_xml_solicitudjob.srd" />
+    <None Include="Codigo.Powerbuilder\ICarDMS_ServiceBusClient.bat" />
     <None Include="Codigo.Powerbuilder\n_cst_internetresult.sru" />
     <None Include="Codigo.Powerbuilder\n_cst_solicitudcitatallerweb.sru" />
     <None Include="Codigo.Powerbuilder\uo_solicitudcitatallerweb.sru" />
