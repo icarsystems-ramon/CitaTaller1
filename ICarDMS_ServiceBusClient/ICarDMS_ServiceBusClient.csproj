@@ -114,7 +114,9 @@
   <ItemGroup>
     <None Include="Resources\ServiceBus.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Codigo.Powerbuilder\toolbar24_iphone.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)PARA INSTALACION"
