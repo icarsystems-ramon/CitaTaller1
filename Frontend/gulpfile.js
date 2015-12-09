@@ -3,21 +3,30 @@
     bower = require('gulp-bower');
 
 // build
-gulp.task('ember_build_development', shell.task([
+gulp.task('ember:build_development', shell.task([
     'ember build --environment development'
 ]));
 
 // build
-gulp.task('ember_build_production', shell.task([
+gulp.task('ember:build_production', shell.task([
     'ember build --environment production'
 ]));
 
-gulp.task('ember_build_test', shell.task([
+// build
+gulp.task('ember:build_ios', shell.task([
+    'ember cordova:build --environment production --platform=ios'
+]));
+
+gulp.task('ember:build_android', shell.task([
+    'ember cordova:build --environment production --platform=android'
+]));
+
+gulp.task('ember:build_test', shell.task([
     'ember build --environment test'
 ]));
 
 // serve
-gulp.task('ember_server', shell.task([
+gulp.task('ember:server', shell.task([
     'ember server'
 ]));
 
@@ -34,7 +43,7 @@ gulp.task('bower:update', function () {
     });
 });
 
-gulp.task('deploy_azure', function () {
+gulp.task('deploy:azure', function () {
     return bower({
         cmd: ''
     });
