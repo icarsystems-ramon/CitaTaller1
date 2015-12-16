@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CitaTaller", "WebAPI\WebAPI\CitaTaller.csproj", "{4389B305-B381-4B50-B1A8-BBB5259A0524}"
 EndProject
@@ -53,6 +53,26 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICarDMS_ServiceBusClient", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureKeepWarm", "AzureKeepWarm\AzureKeepWarm.csproj", "{F3645598-1C4A-4F90-BE0C-0EAD110A24A7}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "FrontAdmin", "FrontAdmin\", "{C9994E44-7674-41C3-9218-63341F02307C}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_58293"
+		Debug.AspNetCompiler.PhysicalPath = "FrontAdmin\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58293\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_58293"
+		Release.AspNetCompiler.PhysicalPath = "FrontAdmin\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_58293\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "58293"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +111,10 @@ Global
 		{F3645598-1C4A-4F90-BE0C-0EAD110A24A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3645598-1C4A-4F90-BE0C-0EAD110A24A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3645598-1C4A-4F90-BE0C-0EAD110A24A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9994E44-7674-41C3-9218-63341F02307C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9994E44-7674-41C3-9218-63341F02307C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9994E44-7674-41C3-9218-63341F02307C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9994E44-7674-41C3-9218-63341F02307C}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
